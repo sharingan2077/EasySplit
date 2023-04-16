@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "236271162439",
+    "firebase_url": "https://easysplit-434e6-default-rtdb.firebaseio.com",
+    "project_id": "easysplit-434e6",
+    "storage_bucket": "easysplit-434e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:236271162439:android:82b7b3ca49ca665b510d62",
+        "android_client_info": {
+          "package_name": "com.example.easysplit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "236271162439-4v6mkpid88lkf1a8rham0ra6e9s0kfg2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZZ6XcWdNPZaR1Q82ckCXInxus6nkeFqQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "236271162439-4v6mkpid88lkf1a8rham0ra6e9s0kfg2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
