@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/groups"
+        android:title="Группы"
+        android:icon="@drawable/ic_member"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/friends"
+        android:title="Друзья"
+        android:icon="@drawable/ic_user"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/delete"
+        android:title=""
+        app:showAsAction="ifRoom"
+        android:enabled="false"/>
+    <item
+        android:id="@+id/activities"
+        android:title="Расходы"
+        android:icon="@drawable/ic_notepad"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/profile"
+        android:title="Профиль"
+        android:icon="@drawable/ic_user_6"
+        app:showAsAction="ifRoom"/>
+
+</menu>

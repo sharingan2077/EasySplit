@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name = "InterSemiBoldItalic54">
+        <item name="android:fontFamily">@font/inter_semi_bold</item>
+        <item name="fontFamily">@font/inter_semi_bold</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textSize">54sp</item>
+    </style>
+    <style name = "InterSemiBoldItalic40">
+        <item name="android:fontFamily">@font/inter_semi_bold</item>
+        <item name="fontFamily">@font/inter_semi_bold</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textSize">40sp</item>
+    </style>
+    <style name = "InterSemiBoldItalic14">
+        <item name="android:fontFamily">@font/inter_semi_bold</item>
+        <item name="fontFamily">@font/inter_semi_bold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="InterSemiBold15">
+        <item name="android:fontFamily">@font/inter_semi_bold</item>
+        <item name="fontFamily">@font/inter_semi_bold</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+    <style name="InterSemiBold16">
+        <item name="android:fontFamily">@font/inter_semi_bold</item>
+        <item name="fontFamily">@font/inter_semi_bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="InterSemiBold17">
+        <item name="android:fontFamily">@font/inter_semi_bold</item>
+        <item name="fontFamily">@font/inter_semi_bold</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+    <style name="InterSemiBold18">
+        <item name="android:fontFamily">@font/inter_semi_bold</item>
+        <item name="fontFamily">@font/inter_semi_bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="InterSemiBold20">
+        <item name="android:fontFamily">@font/inter_semi_bold</item>
+        <item name="fontFamily">@font/inter_semi_bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="InterSemiBold24">
+        <item name="android:fontFamily">@font/inter_semi_bold</item>
+        <item name="fontFamily">@font/inter_semi_bold</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+
+    <style name="InterLight12">
+        <item name="android:fontFamily">@font/inter_light</item>
+        <item name="fontFamily">@font/inter_light</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="InterLight13">
+        <item name="android:fontFamily">@font/inter_light</item>
+        <item name="fontFamily">@font/inter_light</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+    <style name="InterLight16">
+        <item name="android:fontFamily">@font/inter_light</item>
+        <item name="fontFamily">@font/inter_light</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="InterLight18">
+        <item name="android:fontFamily">@font/inter_light</item>
+        <item name="fontFamily">@font/inter_light</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="InterLight22">
+        <item name="android:fontFamily">@font/inter_light</item>
+        <item name="fontFamily">@font/inter_light</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+
+
+    <style name="InterRegular12">
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="fontFamily">@font/inter_regular</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="InterRegular16">
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="fontFamily">@font/inter_regular</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="InterRegular17">
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="fontFamily">@font/inter_regular</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+    <style name="InterRegular18">
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="fontFamily">@font/inter_regular</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="InterRegular20">
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="fontFamily">@font/inter_regular</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="InterRegular24">
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="fontFamily">@font/inter_regular</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+
+    <style name="InterExtraLight14">
+        <item name="android:fontFamily">@font/inter_extra_light</item>
+        <item name="fontFamily">@font/inter_extra_light</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+
+    <style name="InterMedium14">
+        <item name="android:fontFamily">@font/inter_medium</item>
+        <item name="fontFamily">@font/inter_medium</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="InterMedium16">
+        <item name="android:fontFamily">@font/inter_medium</item>
+        <item name="fontFamily">@font/inter_medium</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="InterMedium18">
+        <item name="android:fontFamily">@font/inter_medium</item>
+        <item name="fontFamily">@font/inter_medium</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="InterMedium20">
+        <item name="android:fontFamily">@font/inter_medium</item>
+        <item name="fontFamily">@font/inter_medium</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="InterMedium24">
+        <item name="android:fontFamily">@font/inter_medium</item>
+        <item name="fontFamily">@font/inter_medium</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+    <style name="InterBold16">
+        <item name="android:fontFamily">@font/inter_bold</item>
+        <item name="fontFamily">@font/inter_bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="InterBold24">
+        <item name="android:fontFamily">@font/inter_bold</item>
+        <item name="fontFamily">@font/inter_bold</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+</resources>
