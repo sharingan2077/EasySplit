@@ -39,17 +39,19 @@ public class MainActivity extends AppCompatActivity {
         setBackgroundToBottomNavigation();
 
         mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        mainActivityViewModel.init();
         final Observer<Boolean> booleanObserver = new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable final Boolean aBoolean) {
                 if (aBoolean)
                 {
-                    Log.d(TAG, "Showing");
                     showBottomNavigationBar();
+                    Log.d("MyTag", "Showing bottomNavigationBar");
                 }
                 else
                 {
                     hideBottomNavigationBar();
+                    Log.d("MyTag", "Hide bottomNavigationBar");
                 }
             }
         };
@@ -58,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
 
         binding.bottomNavigationBar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Log.d("MyTag", "setBottomNavigationItem - " + item.getItemId());
                 mainActivityViewModel.setBottomNavigationItem(item.getItemId());
                 return true;
             }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    tools:context=".view.fragments.RegistrationFragment">
+    tools:context=".view.fragments.authentication.RegistrationFragment">
 
     <View
         android:id="@+id/view2"

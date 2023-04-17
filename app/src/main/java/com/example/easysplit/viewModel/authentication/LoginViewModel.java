@@ -1,4 +1,4 @@
-package com.example.easysplit.viewModel;
+package com.example.easysplit.viewModel.authentication;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

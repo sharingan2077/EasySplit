@@ -10,6 +10,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="white_borders">#e9dddd</color>
     <color name="aqua">#08FFC8</color>
+    <color name="aqua_white">#D9FEF6</color>
     <color name="blue">#1ACEE7</color>
     <color name="light_grey">#DADADA</color>
     <color name="grey">#8b8687</color>

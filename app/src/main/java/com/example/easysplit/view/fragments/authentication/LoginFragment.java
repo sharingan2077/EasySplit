@@ -1,4 +1,4 @@
-package com.example.easysplit.view.fragments;
+package com.example.easysplit.view.fragments.authentication;
 
 import android.os.Bundle;
 
@@ -8,12 +8,11 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.LoginFragmentBinding;
-import com.example.easysplit.viewModel.LoginViewModel;
+import com.example.easysplit.viewModel.authentication.LoginViewModel;
 
 
 public class LoginFragment extends Fragment {

@@ -8,22 +8,28 @@ import androidx.lifecycle.ViewModel;
 
 public class MainActivityViewModel extends ViewModel {
     private static final String TAG = "MainActivityViewModel";
-    private MutableLiveData<Boolean> isShowBottomBar = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isShowBottomBar = new MutableLiveData<>();
 
-    private MutableLiveData<Integer> bottomNavigationItem = new MutableLiveData<>();
+    private final MutableLiveData<Integer> bottomNavigationItem = new MutableLiveData<>();
+
+    public void init()
+    {
+        isShowBottomBar.setValue(false);
+    }
 
     public void showBottomNavigationBar()
     {
         Log.d(TAG, "Setting true");
-        isShowBottomBar.setValue(true);
+        if (isShowBottomBar.getValue() == false)
+        {
+            isShowBottomBar.setValue(true);
+        }
     }
     public void setBottomNavigationItem(int itemId)
     {
         bottomNavigationItem.setValue(itemId);
+        Log.d("MyTag", "Setting itemId Successful");
     }
-
-
-
     public void hideBottomNavigationBar()
     {
         isShowBottomBar.setValue(false);
