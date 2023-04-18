@@ -1,4 +1,4 @@
-package com.example.easysplit.view.fragments;
+package com.example.easysplit.view.fragments.groups;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,9 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.easysplit.model.Group;
 import com.example.easysplit.utils.NavigationUtils;
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.FragmentGroupCreateBinding;
+import com.example.easysplit.viewModel.GroupsViewModel;
 import com.example.easysplit.viewModel.MainActivityViewModel;
 
 public class GroupCreateFragment extends Fragment {
@@ -30,6 +32,7 @@ public class GroupCreateFragment extends Fragment {
     private int groupItemId = 0;
     NavController navController;
     MainActivityViewModel mainActivityViewModel;
+    GroupsViewModel groupsViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,21 +44,24 @@ public class GroupCreateFragment extends Fragment {
         binding = FragmentGroupCreateBinding.inflate(inflater, container, false);
         navController = Navigation.findNavController(getActivity(), R.id.navHostFragment);
         mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
+        groupsViewModel = new ViewModelProvider(requireActivity()).get(GroupsViewModel.class);
         mainActivityViewModel.hideBottomNavigationBar();
         binding.toolbar.back.setOnClickListener(v -> {
             NavigationUtils.navigateSafe(navController, R.id.action_groupCreateFragment_to_groupsEmptyFragment, null);
         });
-        binding.addGroup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (groupItemId != 0)
-                {
-                    NavigationUtils.navigateSafe(navController, R.id.action_groupCreateFragment_to_groupsFragment, null);
-                }
-                else
-                {
-                    Toast.makeText(getActivity(), "Выберите назначение группы!", Toast.LENGTH_SHORT).show();
-                }
+        binding.addGroup.setOnClickListener(v -> {
+            if (binding.nameOfGroup.getText().toString().equals(""))
+            {
+                Toast.makeText(getActivity(), "Введите название группы!", Toast.LENGTH_SHORT).show();
+            }
+            else if (groupItemId == 0)
+            {
+                Toast.makeText(getActivity(), "Выберите назначение группы!", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                NavigationUtils.navigateSafe(navController, R.id.action_groupCreateFragment_to_groupsFragment, null);
+                groupsViewModel.addNewValue(new Group(binding.nameOfGroup.getText().toString(), 2));
             }
         });
 

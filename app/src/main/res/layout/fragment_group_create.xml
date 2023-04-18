@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragments.GroupCreateFragment"
+    tools:context=".view.fragments.groups.GroupCreateFragment"
     android:orientation="vertical">
 
     <include layout="@layout/toolbar"
@@ -32,6 +32,7 @@
                 style="@style/InterMedium16"
                 android:layout_marginTop="14dp"/>
             <EditText
+                android:id="@+id/nameOfGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Example"

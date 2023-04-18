@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.example.easysplit.utils.NavigationUtils;
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.FragmentProfileBinding;
+import com.example.easysplit.viewModel.AddExpenseViewModel;
 import com.example.easysplit.viewModel.MainActivityViewModel;
 
 public class ProfileFragment extends Fragment {
@@ -23,6 +24,8 @@ public class ProfileFragment extends Fragment {
 
     MainActivityViewModel mainActivityViewModel;
     FragmentProfileBinding binding;
+
+    AddExpenseViewModel addExpenseViewModel;
 
     NavController navController;
     @Override
@@ -38,6 +41,8 @@ public class ProfileFragment extends Fragment {
         navController = Navigation.findNavController(getActivity(), R.id.navHostFragment);
         mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
         mainActivityViewModel.showBottomNavigationBar();
+        addExpenseViewModel = new ViewModelProvider(requireActivity()).get(AddExpenseViewModel.class);
+        addExpenseViewModel.setLastFragmentAction(R.id.action_addExpenseFragment_to_profileFragment);
         final Observer<Integer> itemSelectedObserver = itemId -> {
             switch (itemId)
             {
@@ -53,7 +58,13 @@ public class ProfileFragment extends Fragment {
 
             }
         };
-        mainActivityViewModel.getBottomNavigationItem().observe(getViewLifecycleOwner(), itemSelectedObserver);
+        mainActivityViewModel.getBottomNavigationItem().observe(requireActivity(), itemSelectedObserver);
+        final Observer<Boolean> isGoToExpenseObserver = aBoolean -> {
+            if (aBoolean) NavigationUtils.navigateSafe(navController, R.id.action_profileFragment_to_addExpenseFragment, null);
+        };
+        mainActivityViewModel.getIsGoToMakeExpense().observe(getViewLifecycleOwner(), isGoToExpenseObserver);
+
+        binding.leaveAccount.setOnClickListener(v -> NavigationUtils.navigateSafe(navController, R.id.action_profileFragment_to_loginFragment, null));
 
         return binding.getRoot();
     }

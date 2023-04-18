@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.example.easysplit.utils.NavigationUtils;
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.FragmentActivityBinding;
+import com.example.easysplit.viewModel.AddExpenseViewModel;
 import com.example.easysplit.viewModel.MainActivityViewModel;
 
 public class ActivityFragment extends Fragment {
@@ -23,6 +24,8 @@ public class ActivityFragment extends Fragment {
     FragmentActivityBinding binding;
     MainActivityViewModel mainActivityViewModel;
     NavController navController;
+
+    AddExpenseViewModel addExpenseViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,7 +40,10 @@ public class ActivityFragment extends Fragment {
         mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
         navController = Navigation.findNavController(getActivity(), R.id.navHostFragment);
         mainActivityViewModel.showBottomNavigationBar();
+        addExpenseViewModel = new ViewModelProvider(requireActivity()).get(AddExpenseViewModel.class);
+        addExpenseViewModel.setLastFragmentAction(R.id.action_addExpenseFragment_to_activityFragment);
         final Observer<Integer> itemSelectedObserver = itemId -> {
+            Log.d(TAG, "Activity");
             switch (itemId)
             {
                 case R.id.groups:
@@ -51,7 +57,17 @@ public class ActivityFragment extends Fragment {
                     break;
             }
         };
-        mainActivityViewModel.getBottomNavigationItem().observe(getViewLifecycleOwner(), itemSelectedObserver);
+        mainActivityViewModel.getBottomNavigationItem().observe(requireActivity(), itemSelectedObserver);
+        final Observer<Boolean> isGoToExpenseObserver = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean)
+                {
+                    NavigationUtils.navigateSafe(navController, R.id.action_activityFragment_to_addExpenseFragment, null);
+                }
+            }
+        };
+        mainActivityViewModel.getIsGoToMakeExpense().observe(getViewLifecycleOwner(), isGoToExpenseObserver);
 
         return binding.getRoot();
     }

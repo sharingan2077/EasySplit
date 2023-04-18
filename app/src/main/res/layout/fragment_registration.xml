@@ -20,9 +20,9 @@
         android:id="@+id/textView"
         style="@style/InterSemiBoldItalic40"
         android:layout_width="match_parent"
-        android:gravity="center"
         android:layout_height="wrap_content"
         android:layout_marginTop="55dp"
+        android:gravity="center"
         android:text="Регистрация"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,14 +31,15 @@
 
 
     <EditText
-        android:inputType="text"
-        android:layout_marginTop="47dp"
-        android:id="@+id/editText2"
+        android:text="Максим"
+        android:id="@+id/name"
         style="@style/InterSemiBold16"
         android:layout_width="280dp"
         android:layout_height="47dp"
+        android:layout_marginTop="47dp"
         android:background="@drawable/style_login"
         android:hint="Имя"
+        android:inputType="text"
         android:paddingStart="14dp"
         android:textColorHint="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,54 +47,57 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:inputType="textEmailAddress"
-        android:layout_marginTop="37.5dp"
-        android:id="@+id/editText3"
+        android:text="maksvish135@yandex.ru"
+        android:id="@+id/email"
         style="@style/InterSemiBold16"
         android:layout_width="280dp"
         android:layout_height="47dp"
+        android:layout_marginTop="37.5dp"
         android:background="@drawable/style_login"
         android:hint="Почта"
+        android:inputType="textEmailAddress"
         android:paddingStart="14dp"
         android:textColorHint="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@+id/name" />
 
     <EditText
-        android:inputType="textPassword"
-        android:layout_marginTop="37.5dp"
-        android:id="@+id/editText4"
+        android:text="aaaaa"
+        android:id="@+id/password"
         style="@style/InterSemiBold16"
         android:layout_width="280dp"
         android:layout_height="47dp"
+        android:layout_marginTop="37.5dp"
         android:background="@drawable/style_login"
         android:hint="Пароль"
+        android:inputType="textPassword"
         android:paddingStart="14dp"
         android:textColorHint="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText3" />
+        app:layout_constraintTop_toBottomOf="@+id/email" />
 
     <EditText
-        android:inputType="textPassword"
-        android:layout_marginTop="37.5dp"
-        android:id="@+id/editText5"
+        android:text="aaaaa"
+        android:id="@+id/confirmPassword"
         style="@style/InterSemiBold16"
         android:layout_width="280dp"
         android:layout_height="47dp"
+        android:layout_marginTop="37.5dp"
         android:background="@drawable/style_login"
         android:hint="Повторите пароль"
+        android:inputType="textPassword"
         android:paddingStart="14dp"
         android:textColorHint="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText4" />
+        app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_enter"
+        android:id="@+id/btn_registration"
         style="@style/InterSemiBold20"
         android:layout_width="241dp"
         android:layout_height="52dp"

@@ -11,23 +11,36 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.easysplit.R;
 import com.example.easysplit.model.Group;
+import com.example.easysplit.viewModel.GroupsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GroupsRecyclerAdapter extends RecyclerView.Adapter<GroupsRecyclerAdapter.ViewHolder> {
-    private static final String TAG = "RecyclerViewAdapter";
 
+    public interface onGroupClickListener{
+        void onClick();
+    }
+    private static final String TAG = "RecyclerViewAdapter";
     private List<Group> groups =  new ArrayList<>();
+    onGroupClickListener listener;
+
     private Context mContext;
 
     public GroupsRecyclerAdapter(Context mContext, List<Group> groups) {
         this.groups = groups;
         this.mContext = mContext;
+    }
+
+    public GroupsRecyclerAdapter(Context mContext, List<Group> groups, onGroupClickListener listener) {
+        this.groups = groups;
+        this.mContext = mContext;
+        this.listener=listener;
     }
 
     @NonNull
@@ -42,15 +55,11 @@ public class GroupsRecyclerAdapter extends RecyclerView.Adapter<GroupsRecyclerAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d(TAG, "Uuu");
         holder.imageView.setImageResource(R.drawable.group_item_1);
-        holder.groupName.setText(groups.get(holder.getAdapterPosition()).getGroupName());
-        int count = groups.get(holder.getAdapterPosition()).getCountMember();
+        holder.groupName.setText(groups.get(position).getGroupName());
+        int count = groups.get(position).getCountMember();
         holder.countMember.setText(Integer.toString(count));
-        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "You click on" +groups.get(holder.getAdapterPosition()).getGroupName());
-                Toast.makeText(mContext, groups.get(holder.getAdapterPosition()).getGroupName(), Toast.LENGTH_SHORT).show();
-            }
+        holder.parentLayout.setOnClickListener(v -> {
+            listener.onClick();
         });
 
     }
@@ -73,5 +82,6 @@ public class GroupsRecyclerAdapter extends RecyclerView.Adapter<GroupsRecyclerAd
             countMember = itemView.findViewById(R.id.numberOfPeople);
             parentLayout = itemView.findViewById(R.id.parent);
         }
+
     }
 }

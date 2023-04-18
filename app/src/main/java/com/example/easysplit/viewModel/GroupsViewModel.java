@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.easysplit.model.Group;
 import com.example.easysplit.repositories.GroupRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GroupsViewModel extends ViewModel {
@@ -26,15 +27,34 @@ public class GroupsViewModel extends ViewModel {
             return;
         }
         mRepo = GroupRepository.getInstance();
-        groups = mRepo.getNicePlaces();
+        groups = mRepo.getGroups();
     }
 
     public void addNewValue(final Group group)
     {
         Log.d(TAG, "Adding new Element");
-        List<Group> currentGroups = groups.getValue();
+        List<Group> currentGroups;
+        if (groups != null)
+        {
+            currentGroups = groups.getValue();
+        }
+        else
+        {
+            groups = new MutableLiveData<>();
+            currentGroups = new ArrayList<>();
+        }
         currentGroups.add(group);
-        groups.postValue(currentGroups);
+        groups.setValue(currentGroups);
+
+    }
+
+    public void deleteValue(int id)
+    {
+        List<Group> currentGroups;
+        groups = new MutableLiveData<>();
+        currentGroups = new ArrayList<>();
+        currentGroups.remove(id);
+        groups.setValue(currentGroups);
     }
 
     public LiveData<List<Group>> getGroups()

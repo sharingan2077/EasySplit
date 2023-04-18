@@ -21,15 +21,15 @@ public class GroupRepository {
         }
         return instance;
     }
-    public MutableLiveData<List<Group>> getNicePlaces()
+    public MutableLiveData<List<Group>> getGroups()
     {
-        setNicePlaces();
+        setGroups();
         MutableLiveData<List<Group>> data = new MutableLiveData<>();
         data.setValue(dataSet);
         return data;
     }
 
-    private void setNicePlaces()
+    private void setGroups()
     {
         dataSet.add(new Group("Example", 2));
         dataSet.add(new Group("Example2", 3));

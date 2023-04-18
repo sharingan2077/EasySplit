@@ -4,24 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragments.ProfileFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".view.fragments.ProfileFragment">
 
 
     <TextView
+        style="@style/InterSemiBold20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Профиль"
-        style="@style/InterSemiBold20"
-        android:textColor="@color/black"
+        android:layout_marginStart="23dp"
         android:layout_marginTop="77dp"
-        android:layout_marginStart="23dp"/>
+        android:text="Профиль"
+        android:textColor="@color/black" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="10dp"
         android:layout_weight="1"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
+        android:orientation="horizontal">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -30,65 +32,79 @@
                 android:id="@+id/imageView2"
                 android:layout_width="110dp"
                 android:layout_height="110dp"
+                android:src="@drawable/ic_user_9_92"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/ic_user_9_92" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="83dp"
+                android:layout_marginTop="79dp"
                 android:src="@drawable/ic_photo_camera"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="79dp"
-                android:layout_marginStart="83dp"/>
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Maks#876051"
-                android:textColor="@color/black"
                 style="@style/InterLight22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22dp"
                 android:layout_marginTop="28dp"
-                android:layout_marginStart="22dp"/>
+                android:text="Maks#876051"
+                android:textColor="@color/black" />
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="maksvish135@gmail.com"
-                android:textColor="@color/black"
                 style="@style/InterExtraLight14"
-                android:layout_marginTop="9dp"
-                android:layout_marginStart="22dp"/>
-        </LinearLayout>
-            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_edit"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="40dp"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="50dp">
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="9dp"
+                android:text="maksvish135@gmail.com"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_log_out"/>
-        <TextView
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/ic_edit" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/leave_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Выйти из аккаунта"
-            android:textColor="@color/aqua"
-            style="@style/InterRegular16"
-            android:layout_marginStart="24dp"/>
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_log_out" />
+
+            <TextView
+                style="@style/InterRegular16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:text="Выйти из аккаунта"
+                android:textColor="@color/aqua" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

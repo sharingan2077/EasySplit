@@ -12,9 +12,14 @@ public class MainActivityViewModel extends ViewModel {
 
     private final MutableLiveData<Integer> bottomNavigationItem = new MutableLiveData<>();
 
+    private final MutableLiveData<Boolean> isGoToMakeExpense = new MutableLiveData<>();
     public void init()
     {
         isShowBottomBar.setValue(false);
+    }
+    public void initFab()
+    {
+        isGoToMakeExpense.setValue(false);
     }
 
     public void showBottomNavigationBar()
@@ -24,6 +29,15 @@ public class MainActivityViewModel extends ViewModel {
         {
             isShowBottomBar.setValue(true);
         }
+    }
+
+    public void setIsGoToMakeExpense()
+    {
+        isGoToMakeExpense.setValue(true);
+    }
+    public void setIsNotToMakeExpense()
+    {
+        isGoToMakeExpense.setValue(false);
     }
     public void setBottomNavigationItem(int itemId)
     {
@@ -39,9 +53,13 @@ public class MainActivityViewModel extends ViewModel {
         return isShowBottomBar;
     }
 
+    public LiveData<Boolean> getIsGoToMakeExpense()
+    {
+        return isGoToMakeExpense;
+    }
+
     public LiveData<Integer> getBottomNavigationItem()
     {
         return bottomNavigationItem;
     }
-
 }

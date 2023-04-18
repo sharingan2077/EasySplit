@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    tools:context=".view.fragments.GroupsEmptyFragment"
+    tools:context=".view.fragments.groups.GroupsEmptyFragment"
     android:orientation="vertical">
         <ImageView
             android:layout_width="wrap_content"

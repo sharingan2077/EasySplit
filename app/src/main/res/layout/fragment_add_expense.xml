@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.fragments.AddExpenseFragment"
+    android:orientation="vertical">
+    <include layout="@layout/toolbar_with_done"
+        android:id="@+id/toolbar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:orientation="horizontal"
+        android:background="@drawable/style_for_group_expense"
+        android:layout_marginTop="9dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Группа:"
+            style="@style/InterRegular18"
+            android:textColor="@color/black"
+            android:layout_marginStart="22dp"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Example"
+            style="@style/InterRegular18"
+            android:textColor="@color/blue"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="21dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:background="@drawable/style_check"
+            android:layout_marginStart="34dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_check"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Описание"
+                style="@style/InterRegular16"
+                android:backgroundTint="@color/aqua"
+                android:textColorHint="@color/grey"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/editText"
+            style="@style/InterBold24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/aqua"
+            android:hint="0.00"
+            android:inputType="text"
+            android:textColorHint="@color/grey"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.339"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_ruble"
+            app:layout_constraintStart_toEndOf="@+id/editText"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="10dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Кто платит?"
+            android:textColor="@color/black"
+            style="@style/InterRegular18"
+            android:layout_marginStart="29dp"/>
+
+        <TextView
+            android:background="@drawable/style_who_paid"
+            android:id="@+id/who_paid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "   Вы   "
+            android:textColor="@color/blue"
+            style="@style/InterRegular18"
+            android:layout_marginStart="37dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="14dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Как делится?"
+            android:textColor="@color/black"
+            style="@style/InterRegular18"
+            android:layout_marginStart="29dp"/>
+
+        <TextView
+            android:background="@drawable/style_who_paid"
+            android:id="@+id/how_split"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "   Поровну   "
+            android:textColor="@color/blue"
+            style="@style/InterRegular18"
+            android:layout_marginStart="25dp"/>
+    </LinearLayout>
+
+</LinearLayout>

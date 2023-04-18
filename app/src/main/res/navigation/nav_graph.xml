@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_loginFragment_to_registrationFragment"
             app:destination="@id/registrationFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_groupEnterNoOneFragment"
+            app:destination="@id/groupEnterNoOneFragment" />
     </fragment>
     <fragment
         android:id="@+id/resetPasswordFragment"
@@ -23,7 +26,7 @@
         tools:layout="@layout/fragment_reset_password" />
     <fragment
         android:id="@+id/groupCreateFragment"
-        android:name="com.example.easysplit.view.fragments.GroupCreateFragment"
+        android:name="com.example.easysplit.view.fragments.groups.GroupCreateFragment"
         android:label="fragment_group_create"
         tools:layout="@layout/fragment_group_create" >
         <action
@@ -37,12 +40,11 @@
         android:id="@+id/registrationFragment"
         android:name="com.example.easysplit.view.fragments.authentication.RegistrationFragment"
         android:label="fragment_registration"
-        tools:layout="@layout/fragment_registration" />
-    <fragment
-        android:id="@+id/groupEnterFragment"
-        android:name="com.example.easysplit.view.fragments.GroupEnterFragment"
-        android:label="fragment_group_enter"
-        tools:layout="@layout/fragment_group_enter" />
+        tools:layout="@layout/fragment_registration" >
+        <action
+            android:id="@+id/action_registrationFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/friendsEmptyFragment"
         android:name="com.example.easysplit.view.fragments.FriendsEmptyFragment"
@@ -57,10 +59,13 @@
         <action
             android:id="@+id/action_friendsEmptyFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_friendsEmptyFragment_to_addExpenseFragment"
+            app:destination="@id/addExpenseFragment" />
     </fragment>
     <fragment
         android:id="@+id/groupsEmptyFragment"
-        android:name="com.example.easysplit.view.fragments.GroupsEmptyFragment"
+        android:name="com.example.easysplit.view.fragments.groups.GroupsEmptyFragment"
         android:label="groups_empty_fragment"
         tools:layout="@layout/groups_empty_fragment" >
         <action
@@ -75,6 +80,9 @@
         <action
             android:id="@+id/action_groupsEmptyFragment_to_groupCreateFragment"
             app:destination="@id/groupCreateFragment" />
+        <action
+            android:id="@+id/action_groupsEmptyFragment_to_addExpenseFragment"
+            app:destination="@id/addExpenseFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -90,6 +98,12 @@
         <action
             android:id="@+id/action_profileFragment_to_activityFragment"
             app:destination="@id/activityFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_addExpenseFragment"
+            app:destination="@id/addExpenseFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/activityFragment"
@@ -105,10 +119,65 @@
         <action
             android:id="@+id/action_activityFragment_to_groupsEmptyFragment"
             app:destination="@id/groupsEmptyFragment" />
+        <action
+            android:id="@+id/action_activityFragment_to_addExpenseFragment"
+            app:destination="@id/addExpenseFragment" />
     </fragment>
     <fragment
         android:id="@+id/groupsFragment"
-        android:name="com.example.easysplit.view.fragments.GroupsFragment"
+        android:name="com.example.easysplit.view.fragments.groups.GroupsFragment"
         android:label="fragment_groups"
-        tools:layout="@layout/fragment_groups" />
+        tools:layout="@layout/fragment_groups" >
+        <action
+            android:id="@+id/action_groupsFragment_to_groupCreateFragment"
+            app:destination="@id/groupCreateFragment" />
+        <action
+            android:id="@+id/action_groupsFragment_to_groupEnterNoOneFragment"
+            app:destination="@id/groupEnterNoOneFragment" />
+        <action
+            android:id="@+id/action_groupsFragment_to_groupEnterFragment"
+            app:destination="@id/groupEnterFragment" />
+        <action
+            android:id="@+id/action_groupsFragment_to_addExpenseFragment"
+            app:destination="@id/addExpenseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/groupEnterNoOneFragment"
+        android:name="com.example.easysplit.view.fragments.groups.GroupEnterNoOneFragment"
+        android:label="fragment_group_enter_no_one"
+        tools:layout="@layout/fragment_group_enter_no_one" >
+        <action
+            android:id="@+id/action_groupEnterNoOneFragment_to_groupsFragment"
+            app:destination="@id/groupsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/groupEnterFragment"
+        android:name="com.example.easysplit.view.fragments.groups.GroupEnterFragment"
+        android:label="fragment_group_enter"
+        tools:layout="@layout/fragment_group_enter" >
+        <action
+            android:id="@+id/action_groupEnterFragment_to_groupsFragment"
+            app:destination="@id/groupsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addExpenseFragment"
+        android:name="com.example.easysplit.view.fragments.AddExpenseFragment"
+        android:label="fragment_add_expense"
+        tools:layout="@layout/fragment_add_expense" >
+        <action
+            android:id="@+id/action_addExpenseFragment_to_groupsEmptyFragment"
+            app:destination="@id/groupsEmptyFragment" />
+        <action
+            android:id="@+id/action_addExpenseFragment_to_friendsEmptyFragment"
+            app:destination="@id/friendsEmptyFragment" />
+        <action
+            android:id="@+id/action_addExpenseFragment_to_activityFragment"
+            app:destination="@id/activityFragment" />
+        <action
+            android:id="@+id/action_addExpenseFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_addExpenseFragment_to_groupsFragment"
+            app:destination="@id/groupsFragment" />
+    </fragment>
 </navigation>
