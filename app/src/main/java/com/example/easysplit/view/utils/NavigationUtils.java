@@ -1,4 +1,4 @@
-package com.example.easysplit.utils;
+package com.example.easysplit.view.utils;
 
 import android.os.Bundle;
 

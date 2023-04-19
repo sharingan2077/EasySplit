@@ -1,6 +1,5 @@
 package com.example.easysplit.viewModel;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -8,7 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.easysplit.model.Group;
-import com.example.easysplit.repositories.GroupRepository;
+import com.example.easysplit.repository.GroupRepository;
 
 import java.util.ArrayList;
 import java.util.List;

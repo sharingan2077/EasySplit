@@ -8,18 +8,16 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.FragmentGroupsBinding;
 import com.example.easysplit.model.Group;
-import com.example.easysplit.utils.NavigationUtils;
+import com.example.easysplit.view.utils.NavigationUtils;
 import com.example.easysplit.view.adapters.GroupsRecyclerAdapter;
 import com.example.easysplit.viewModel.AddExpenseViewModel;
 import com.example.easysplit.viewModel.GroupsViewModel;

@@ -15,7 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.easysplit.utils.NavigationUtils;
+import com.example.easysplit.view.utils.NavigationUtils;
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.GroupsEmptyFragmentBinding;
 import com.example.easysplit.viewModel.AddExpenseViewModel;

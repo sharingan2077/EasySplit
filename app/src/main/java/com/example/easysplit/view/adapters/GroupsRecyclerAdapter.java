@@ -7,16 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.easysplit.R;
 import com.example.easysplit.model.Group;
-import com.example.easysplit.viewModel.GroupsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;

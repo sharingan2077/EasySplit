@@ -13,11 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.easysplit.utils.NavigationUtils;
+import com.example.easysplit.view.utils.NavigationUtils;
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.FragmentProfileBinding;
 import com.example.easysplit.viewModel.AddExpenseViewModel;
 import com.example.easysplit.viewModel.MainActivityViewModel;
+import com.example.easysplit.viewModel.authentication.LoggedInViewModel;
+import com.example.easysplit.viewModel.authentication.LoginRegisterViewModel;
 
 public class ProfileFragment extends Fragment {
     private static final String TAG = "ProfileFragment";
@@ -26,6 +28,7 @@ public class ProfileFragment extends Fragment {
     FragmentProfileBinding binding;
 
     AddExpenseViewModel addExpenseViewModel;
+    LoginRegisterViewModel loginRegisterViewModel;
 
     NavController navController;
     @Override
@@ -43,6 +46,8 @@ public class ProfileFragment extends Fragment {
         mainActivityViewModel.showBottomNavigationBar();
         addExpenseViewModel = new ViewModelProvider(requireActivity()).get(AddExpenseViewModel.class);
         addExpenseViewModel.setLastFragmentAction(R.id.action_addExpenseFragment_to_profileFragment);
+        loginRegisterViewModel = new ViewModelProvider(requireActivity()).get(LoginRegisterViewModel.class);
+
         final Observer<Integer> itemSelectedObserver = itemId -> {
             switch (itemId)
             {
@@ -63,8 +68,13 @@ public class ProfileFragment extends Fragment {
             if (aBoolean) NavigationUtils.navigateSafe(navController, R.id.action_profileFragment_to_addExpenseFragment, null);
         };
         mainActivityViewModel.getIsGoToMakeExpense().observe(getViewLifecycleOwner(), isGoToExpenseObserver);
-
-        binding.leaveAccount.setOnClickListener(v -> NavigationUtils.navigateSafe(navController, R.id.action_profileFragment_to_loginFragment, null));
+        binding.leaveAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavigationUtils.navigateSafe(navController, R.id.action_profileFragment_to_loginFragment, null);
+                loginRegisterViewModel.logOut();
+            }
+        });
 
         return binding.getRoot();
     }

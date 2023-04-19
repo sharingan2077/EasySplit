@@ -1,4 +1,4 @@
-package com.example.easysplit.view.fragments.authentication;
+package com.example.easysplit;
 
 import android.os.Bundle;
 
@@ -8,11 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.easysplit.R;
-import com.example.easysplit.databinding.FragmentResetPasswordBinding;
+import com.example.easysplit.databinding.FragmentSplitEquallyBinding;
 
-public class ResetPasswordFragment extends Fragment {
-    FragmentResetPasswordBinding binding;
+public class SplitEquallyFragment extends Fragment {
+
+    FragmentSplitEquallyBinding binding;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -21,7 +22,7 @@ public class ResetPasswordFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentResetPasswordBinding.inflate(inflater, container, false);
+        binding = FragmentSplitEquallyBinding.inflate(inflater, container, false);
 
         return binding.getRoot();
     }

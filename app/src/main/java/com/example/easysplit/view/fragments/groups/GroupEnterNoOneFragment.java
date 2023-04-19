@@ -1,9 +1,7 @@
 package com.example.easysplit.view.fragments.groups;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +14,7 @@ import androidx.navigation.Navigation;
 
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.FragmentGroupEnterNoOneBinding;
-import com.example.easysplit.utils.NavigationUtils;
+import com.example.easysplit.view.utils.NavigationUtils;
 import com.example.easysplit.viewModel.MainActivityViewModel;
 
 import java.lang.reflect.Field;

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.fragments.authentication.VerificationUserFragment"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar"/>
+    <EditText
+        android:id="@+id/verificationNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberSigned"
+        android:layout_marginStart="6dp"
+        android:text="123456"
+        style="@style/InterBold24"
+        android:textSize="32sp"
+        android:layout_marginTop="27dp"/>
+
+    <TextView
+        android:layout_width="276dp"
+        android:layout_height="wrap_content"
+        android:text="Мы прислали код для верификации на"
+        style="@style/InterMedium14"
+        android:textColor="@color/black"
+        android:layout_marginTop = "53dp"
+        android:layout_marginStart="6dp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="6dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="вашу почту"
+            style="@style/InterMedium14"
+            android:textColor="@color/black"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="maksvish135@yandex.ru"
+            android:textColor="@color/blue"
+            style="@style/InterMedium14"
+            android:layout_marginStart="5dp"/>
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Проверьте ящик"
+        style="@style/InterMedium14"
+        android:textColor="@color/black"
+        android:layout_marginStart="6dp"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_verify"
+        style="@style/InterSemiBold18"
+        android:layout_width="343dp"
+        android:layout_height="56dp"
+        android:background="@drawable/style_for_verification"
+        android:text="Подтвердить"
+        android:textColor="@color/white"
+        android:layout_gravity="center"
+        android:layout_marginTop="70dp"/>
+
+</LinearLayout>

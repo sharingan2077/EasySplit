@@ -8,11 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.easysplit.R;
-import com.example.easysplit.databinding.FragmentResetPasswordBinding;
+import com.example.easysplit.databinding.FragmentResetPasswordVerificationBinding;
 
-public class ResetPasswordFragment extends Fragment {
-    FragmentResetPasswordBinding binding;
+public class ResetPasswordVerificationFragment extends Fragment {
+    FragmentResetPasswordVerificationBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -21,8 +20,8 @@ public class ResetPasswordFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentResetPasswordBinding.inflate(inflater, container, false);
+        binding = FragmentResetPasswordVerificationBinding.inflate(inflater, container, false);
 
-        return binding.getRoot();
+        return  binding.getRoot();
     }
 }

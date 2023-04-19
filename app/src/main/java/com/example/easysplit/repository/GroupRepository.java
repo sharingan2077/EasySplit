@@ -1,4 +1,4 @@
-package com.example.easysplit.repositories;
+package com.example.easysplit.repository;
 
 import androidx.lifecycle.MutableLiveData;
 

@@ -18,12 +18,19 @@
         <action
             android:id="@+id/action_loginFragment_to_groupEnterNoOneFragment"
             app:destination="@id/groupEnterNoOneFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_resetPasswordFragment"
+            app:destination="@id/resetPasswordFragment" />
     </fragment>
     <fragment
         android:id="@+id/resetPasswordFragment"
-        android:name="com.example.easysplit.view.fragments.authentication.ResetPasswordFragment"
+        android:name="com.example.easysplit.view.fragments.authentication.ResetPasswordVerificationFragment"
         android:label="fragment_reset_password"
-        tools:layout="@layout/fragment_reset_password" />
+        tools:layout="@layout/fragment_reset_password_verification" >
+        <action
+            android:id="@+id/action_resetPasswordFragment_to_resetPasswordFragment2"
+            app:destination="@id/resetPasswordFragment2" />
+    </fragment>
     <fragment
         android:id="@+id/groupCreateFragment"
         android:name="com.example.easysplit.view.fragments.groups.GroupCreateFragment"
@@ -44,6 +51,9 @@
         <action
             android:id="@+id/action_registrationFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_registrationFragment_to_verificationUserFragment"
+            app:destination="@id/verificationUserFragment" />
     </fragment>
     <fragment
         android:id="@+id/friendsEmptyFragment"
@@ -180,4 +190,37 @@
             android:id="@+id/action_addExpenseFragment_to_groupsFragment"
             app:destination="@id/groupsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/chooseGroupFragment"
+        android:name="com.example.easysplit.view.fragments.groups.ChooseGroupFragment"
+        android:label="fragment_choose_group"
+        tools:layout="@layout/fragment_choose_group" />
+    <fragment
+        android:id="@+id/resetPasswordFragment2"
+        android:name="com.example.easysplit.view.fragments.authentication.ResetPasswordFragment"
+        android:label="fragment_reset_password"
+        tools:layout="@layout/fragment_reset_password" >
+        <action
+            android:id="@+id/action_resetPasswordFragment2_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/splitEquallyFragment"
+        android:name="com.example.easysplit.SplitEquallyFragment"
+        android:label="fragment_split_unequally"
+        tools:layout="@layout/fragment_split_unequally" />
+    <fragment
+        android:id="@+id/verificationUserFragment"
+        android:name="com.example.easysplit.view.fragments.authentication.VerificationUserFragment"
+        android:label="fragment_verification_user"
+        tools:layout="@layout/fragment_verification_user" >
+        <action
+            android:id="@+id/action_verificationUserFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/whoPaidFragment"
+        android:name="com.example.easysplit.WhoPaidFragment"
+        android:label="fragment_who_paid"
+        tools:layout="@layout/fragment_who_paid" />
 </navigation>

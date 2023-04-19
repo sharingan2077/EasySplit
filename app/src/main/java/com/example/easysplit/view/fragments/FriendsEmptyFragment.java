@@ -2,7 +2,6 @@ package com.example.easysplit.view.fragments;
 
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -14,7 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.easysplit.utils.NavigationUtils;
+import com.example.easysplit.view.utils.NavigationUtils;
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.FriendsEmptyFragmentBinding;
 import com.example.easysplit.viewModel.AddExpenseViewModel;
