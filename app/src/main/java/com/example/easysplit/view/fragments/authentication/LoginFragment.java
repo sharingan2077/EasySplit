@@ -54,7 +54,7 @@ public class LoginFragment extends Fragment {
         loginRegisterViewModel.refreshLoggedOutLiveData();
 
         mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
-        mainActivityViewModel.hideBottomNavigationBar();
+        //mainActivityViewModel.hideBottomNavigationBar();
 
         binding.createAccount.setOnClickListener(new View.OnClickListener() {
             @Override

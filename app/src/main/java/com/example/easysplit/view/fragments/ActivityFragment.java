@@ -42,22 +42,22 @@ public class ActivityFragment extends Fragment {
         mainActivityViewModel.showBottomNavigationBar();
         addExpenseViewModel = new ViewModelProvider(requireActivity()).get(AddExpenseViewModel.class);
         addExpenseViewModel.setLastFragmentAction(R.id.action_addExpenseFragment_to_activityFragment);
-        final Observer<Integer> itemSelectedObserver = itemId -> {
-            Log.d(TAG, "Activity");
-            switch (itemId)
-            {
-                case R.id.groups:
-                    NavigationUtils.navigateSafe(navController, R.id.action_activityFragment_to_groupsEmptyFragment, null);
-                    break;
-                case R.id.friends:
-                    NavigationUtils.navigateSafe(navController, R.id.action_activityFragment_to_friendsEmptyFragment, null);
-                    break;
-                case R.id.profile:
-                    NavigationUtils.navigateSafe(navController, R.id.action_activityFragment_to_profileFragment, null);
-                    break;
-            }
-        };
-        mainActivityViewModel.getBottomNavigationItem().observe(requireActivity(), itemSelectedObserver);
+//        final Observer<Integer> itemSelectedObserver = itemId -> {
+//            Log.d(TAG, "Activity");
+//            switch (itemId)
+//            {
+//                case R.id.groups:
+//                    NavigationUtils.navigateSafe(navController, R.id.action_activityFragment_to_groupsEmptyFragment, null);
+//                    break;
+//                case R.id.friends:
+//                    NavigationUtils.navigateSafe(navController, R.id.action_activityFragment_to_friendsEmptyFragment, null);
+//                    break;
+//                case R.id.profile:
+//                    NavigationUtils.navigateSafe(navController, R.id.action_activityFragment_to_profileFragment, null);
+//                    break;
+//            }
+//        };
+//        mainActivityViewModel.getBottomNavigationItem().observe(requireActivity(), itemSelectedObserver);
         final Observer<Boolean> isGoToExpenseObserver = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {

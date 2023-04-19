@@ -53,21 +53,21 @@ public class FriendsEmptyFragment extends Fragment {
         };
         mainActivityViewModel.getIsGoToMakeExpense().observe(getViewLifecycleOwner(), isGoToExpenseObserver);
 
-        final Observer<Integer> itemSelectedObserver = itemId -> {
-            switch (itemId)
-            {
-                case R.id.groups:
-                    NavigationUtils.navigateSafe(navController, R.id.action_friendsEmptyFragment_to_groupsEmptyFragment, null);
-                    break;
-                case R.id.activities:
-                    NavigationUtils.navigateSafe(navController, R.id.action_friendsEmptyFragment_to_activityFragment, null);
-                    break;
-                case R.id.profile:
-                    NavigationUtils.navigateSafe(navController, R.id.action_friendsEmptyFragment_to_profileFragment, null);
-                    break;
-            }
-        };
-        mainActivityViewModel.getBottomNavigationItem().observe(getViewLifecycleOwner(), itemSelectedObserver);
+//        final Observer<Integer> itemSelectedObserver = itemId -> {
+//            switch (itemId)
+//            {
+//                case R.id.groups:
+//                    NavigationUtils.navigateSafe(navController, R.id.action_friendsEmptyFragment_to_groupsEmptyFragment, null);
+//                    break;
+//                case R.id.activities:
+//                    NavigationUtils.navigateSafe(navController, R.id.action_friendsEmptyFragment_to_activityFragment, null);
+//                    break;
+//                case R.id.profile:
+//                    NavigationUtils.navigateSafe(navController, R.id.action_friendsEmptyFragment_to_profileFragment, null);
+//                    break;
+//            }
+//        };
+//        mainActivityViewModel.getBottomNavigationItem().observe(getViewLifecycleOwner(), itemSelectedObserver);
 
 
         return binding.getRoot();

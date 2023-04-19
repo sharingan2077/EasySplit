@@ -43,6 +43,7 @@ public class GroupsFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView: groups");
         binding = FragmentGroupsBinding.inflate(inflater, container, false);
         groupsViewModel = new ViewModelProvider(requireActivity()).get(GroupsViewModel.class);
         navController = Navigation.findNavController(getActivity(), R.id.navHostFragment);
@@ -61,22 +62,22 @@ public class GroupsFragment extends Fragment{
             if (aBoolean) NavigationUtils.navigateSafe(navController, R.id.action_groupsEmptyFragment_to_addExpenseFragment, null);
         };
 
-        final Observer<Integer> itemSelectedObserver = itemId -> {
-            Log.d("MyTaggg", "Observer in GroupEmpty see changes");
-            switch (itemId)
-            {
-                case R.id.friends:
-                    NavigationUtils.navigateSafe(navController, R.id.action_groupsEmptyFragment_to_friendsEmptyFragment, null);
-                    break;
-                case R.id.activities:
-                    NavigationUtils.navigateSafe(navController, R.id.action_groupsEmptyFragment_to_activityFragment, null);
-                    break;
-                case R.id.profile:
-                    NavigationUtils.navigateSafe(navController, R.id.action_groupsEmptyFragment_to_profileFragment, null);
-                    break;
-            }
-        };
-        mainActivityViewModel.getBottomNavigationItem().observe(getViewLifecycleOwner(), itemSelectedObserver);
+//        final Observer<Integer> itemSelectedObserver = itemId -> {
+//            Log.d("MyTaggg", "Observer in GroupEmpty see changes");
+//            switch (itemId)
+//            {
+//                case R.id.friends:
+//                    NavigationUtils.navigateSafe(navController, R.id.action_groupsEmptyFragment_to_friendsEmptyFragment, null);
+//                    break;
+//                case R.id.activities:
+//                    NavigationUtils.navigateSafe(navController, R.id.action_groupsEmptyFragment_to_activityFragment, null);
+//                    break;
+//                case R.id.profile:
+//                    NavigationUtils.navigateSafe(navController, R.id.action_groupsEmptyFragment_to_profileFragment, null);
+//                    break;
+//            }
+//        };
+//        mainActivityViewModel.getBottomNavigationItem().observe(getViewLifecycleOwner(), itemSelectedObserver);
 
         mainActivityViewModel.getIsGoToMakeExpense().observe(getViewLifecycleOwner(), isGoToExpenseObserver);
         groupsViewModel.getGroups().observe(requireActivity(), observerNewGroup);

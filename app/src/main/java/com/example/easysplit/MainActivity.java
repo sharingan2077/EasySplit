@@ -11,7 +11,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -26,6 +30,7 @@ import android.view.WindowManager;
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.ActivityMainBinding;
 import com.example.easysplit.viewModel.MainActivityViewModel;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     private MainActivityViewModel mainActivityViewModel;
+
+    NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         mainActivityViewModel.init();
         mainActivityViewModel.initFab();
+
+
         final Observer<Boolean> booleanObserver = aBoolean -> {
             if (aBoolean) showBottomNavigationBar();
             else hideBottomNavigationBar();
@@ -55,6 +64,22 @@ public class MainActivity extends AppCompatActivity {
             mainActivityViewModel.setBottomNavigationItem(item.getItemId());
             return true;
         });
+
+        navController = Navigation.findNavController(this, R.id.navHostFragment);
+        //AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+        NavigationUI.setupWithNavController(binding.bottomNavigationBar, navController);
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController controller,
+                                             @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                if(destination.getId() == R.id.groupCreateFragment || destination.getId() == R.id.addExpenseFragment) {
+                    hideBottomNavigationBar();
+                } else {
+                    showBottomNavigationBar();
+                }
+            }
+        });
+
 
         binding.fab.setOnClickListener(v -> {mainActivityViewModel.setIsGoToMakeExpense();});
 

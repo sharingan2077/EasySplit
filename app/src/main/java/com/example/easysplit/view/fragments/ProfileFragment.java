@@ -48,22 +48,22 @@ public class ProfileFragment extends Fragment {
         addExpenseViewModel.setLastFragmentAction(R.id.action_addExpenseFragment_to_profileFragment);
         loginRegisterViewModel = new ViewModelProvider(requireActivity()).get(LoginRegisterViewModel.class);
 
-        final Observer<Integer> itemSelectedObserver = itemId -> {
-            switch (itemId)
-            {
-                case R.id.groups:
-                    NavigationUtils.navigateSafe(navController, R.id.action_profileFragment_to_groupsEmptyFragment, null);
-                    break;
-                case R.id.friends:
-                    NavigationUtils.navigateSafe(navController, R.id.action_profileFragment_to_friendsEmptyFragment, null);
-                    break;
-                case R.id.activities:
-                    NavigationUtils.navigateSafe(navController, R.id.action_profileFragment_to_activityFragment, null);
-                    break;
-
-            }
-        };
-        mainActivityViewModel.getBottomNavigationItem().observe(requireActivity(), itemSelectedObserver);
+//        final Observer<Integer> itemSelectedObserver = itemId -> {
+//            switch (itemId)
+//            {
+//                case R.id.groups:
+//                    NavigationUtils.navigateSafe(navController, R.id.action_profileFragment_to_groupsEmptyFragment, null);
+//                    break;
+//                case R.id.friends:
+//                    NavigationUtils.navigateSafe(navController, R.id.action_profileFragment_to_friendsEmptyFragment, null);
+//                    break;
+//                case R.id.activities:
+//                    NavigationUtils.navigateSafe(navController, R.id.action_profileFragment_to_activityFragment, null);
+//                    break;
+//
+//            }
+//        };
+//        mainActivityViewModel.getBottomNavigationItem().observe(requireActivity(), itemSelectedObserver);
         final Observer<Boolean> isGoToExpenseObserver = aBoolean -> {
             if (aBoolean) NavigationUtils.navigateSafe(navController, R.id.action_profileFragment_to_addExpenseFragment, null);
         };

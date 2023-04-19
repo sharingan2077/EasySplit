@@ -45,7 +45,7 @@ public class GroupCreateFragment extends Fragment {
         navController = Navigation.findNavController(getActivity(), R.id.navHostFragment);
         mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
         groupsViewModel = new ViewModelProvider(requireActivity()).get(GroupsViewModel.class);
-        mainActivityViewModel.hideBottomNavigationBar();
+        //mainActivityViewModel.hideBottomNavigationBar();
         binding.toolbar.back.setOnClickListener(v -> {
             NavigationUtils.navigateSafe(navController, R.id.action_groupCreateFragment_to_groupsEmptyFragment, null);
         });
