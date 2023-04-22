@@ -66,23 +66,23 @@ public class MainActivity extends AppCompatActivity {
         });
 
         navController = Navigation.findNavController(this, R.id.navHostFragment);
-        //AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupWithNavController(binding.bottomNavigationBar, navController);
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController controller,
                                              @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                if(destination.getId() == R.id.groupCreateFragment || destination.getId() == R.id.addExpenseFragment) {
-                    hideBottomNavigationBar();
-                } else {
+                int id = destination.getId();
+                if(id == R.id.groupsFragment || id == R.id.groupsEmptyFragment || id == R.id.friendsEmptyFragment
+                || id == R.id.activityFragment || id == R.id.profileFragment) {
                     showBottomNavigationBar();
+                } else {
+                    hideBottomNavigationBar();
                 }
             }
         });
 
 
         binding.fab.setOnClickListener(v -> {mainActivityViewModel.setIsGoToMakeExpense();});
-
         setTransparentStatusBar();
     }
     private void setBackgroundToBottomNavigation()

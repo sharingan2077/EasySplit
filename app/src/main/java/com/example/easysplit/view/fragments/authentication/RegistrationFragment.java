@@ -4,9 +4,12 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +19,7 @@ import android.widget.Toast;
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.FragmentRegistrationBinding;
 import com.example.easysplit.view.utils.NavigationUtils;
+import com.example.easysplit.viewModel.authentication.LoginRegisterViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -23,9 +27,9 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class RegistrationFragment extends Fragment {
     FragmentRegistrationBinding binding;
-    NavController navController;
 
-    private FirebaseAuth mAuth;
+    LoginRegisterViewModel loginRegisterViewModel;
+    NavController navController;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,7 @@ public class RegistrationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentRegistrationBinding.inflate(inflater, container, false);
         navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
+        loginRegisterViewModel = new ViewModelProvider(requireActivity()).get(LoginRegisterViewModel.class);
         binding.btnRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,26 +58,27 @@ public class RegistrationFragment extends Fragment {
                 {
 
                 }
-                else if (!binding.password.getText().toString().equals(binding.confirmPassword.getText().toString()))
+                else if (!password.equals(confirmPassword))
                 {
                     Toast.makeText(requireActivity(), "Пароли не совпадают!", Toast.LENGTH_SHORT).show();
                 }
-                else if (true) {
-                    mAuth.createUserWithEmailAndPassword(binding.email.getText().toString(), binding.password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful())
-                            {
-                                NavigationUtils.navigateSafe(navController, R.id.action_registrationFragment_to_verificationUserFragment, null);
-                            }
-                            else{
-                                Toast.makeText(requireActivity(), "Неправильно введены данные", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                else  {
+                    loginRegisterViewModel.register(email, password);
+                    loginRegisterViewModel.refreshLoggedOutLiveData();
                 }
             }
         });
+
+        final Observer<Boolean> successRegObserver = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (!aBoolean)
+                {
+                    NavigationUtils.navigateSafe(navController, R.id.action_registrationFragment_to_verificationUserFragment, null);
+                }
+            }
+        };
+        loginRegisterViewModel.getLoggedOutLiveData().observe(getViewLifecycleOwner(), successRegObserver);
 
         binding.login.setOnClickListener(v -> NavigationUtils.navigateSafe(navController, R.id.action_registrationFragment_to_loginFragment, null));
 

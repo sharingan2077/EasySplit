@@ -39,6 +39,7 @@ public class AuthAppRepository {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             userLiveData.postValue(firebaseAuth.getCurrentUser());
+                            sendVerificationEmail();
                         } else {
                             Toast.makeText(application.getApplicationContext(), "Registration Failure: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
@@ -55,7 +56,6 @@ public class AuthAppRepository {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             userLiveData.postValue(firebaseAuth.getCurrentUser());
-                            refreshLoggedOut();
                         } else {
                             Log.d("Auth", "Error");
 
@@ -84,6 +84,24 @@ public class AuthAppRepository {
             Log.d("Naruto", "Current user is not null");
             loggedOutLiveData.setValue(false);
         }
+    }
+
+    public void sendVerificationEmail()
+    {
+        firebaseAuth.getCurrentUser().sendEmailVerification()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            // email sent
+                            // after email is sent just logout the user and finish this activity
+                        }
+                        else
+                        {
+                            // email not sent, so display message and restart the activity or do whatever you wish to do
+                        }
+                    }
+                });
     }
 
 
