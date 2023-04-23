@@ -1,4 +1,4 @@
-package com.example.easysplit.viewModel;
+package com.example.easysplit.trash;
 
 import android.content.ClipData;
 

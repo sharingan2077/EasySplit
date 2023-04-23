@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/groupsEmptyFragment"
+        android:id="@+id/groupsFragment"
         android:title="Группы"
         android:icon="@drawable/ic_member"
         app:showAsAction="ifRoom"/>

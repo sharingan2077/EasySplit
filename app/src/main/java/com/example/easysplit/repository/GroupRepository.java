@@ -6,6 +6,7 @@ import com.example.easysplit.model.Group;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class GroupRepository {
 
@@ -31,8 +32,8 @@ public class GroupRepository {
 
     private void setGroups()
     {
-        dataSet.add(new Group("Example", 2));
-        dataSet.add(new Group("Example2", 3));
+        dataSet.add(new Group("Example", 2, UUID.randomUUID().toString()));
+        dataSet.add(new Group("Example2", 3, UUID.randomUUID().toString()));
     }
 
 

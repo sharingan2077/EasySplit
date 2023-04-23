@@ -24,6 +24,7 @@
             android:layout_marginStart="22dp"
             android:layout_gravity="center"/>
         <TextView
+            android:id="@+id/group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Example"
@@ -75,13 +76,13 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/sum"
             style="@style/InterBold24"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/aqua"
             android:hint="0.00"
-            android:inputType="text"
+            android:inputType="numberPassword"
             android:textColorHint="@color/grey"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -94,7 +95,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_ruble"
-            app:layout_constraintStart_toEndOf="@+id/editText"
+            app:layout_constraintStart_toEndOf="@+id/sum"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="10dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -116,7 +117,7 @@
             android:id="@+id/who_paid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text = "   Вы   "
+            android:text = "  Вы  "
             android:textColor="@color/blue"
             style="@style/InterRegular18"
             android:layout_marginStart="37dp"/>
@@ -125,7 +126,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="14dp">
+        android:layout_marginTop="25dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -139,7 +140,7 @@
             android:id="@+id/how_split"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text = "   Поровну   "
+            android:text = "  Поровну  "
             android:textColor="@color/blue"
             style="@style/InterRegular18"
             android:layout_marginStart="25dp"/>

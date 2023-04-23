@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:id="@+id/parent"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_marginStart="15dp">
+        <TextView
+            android:id="@+id/monthOfExpense"
+            style="@style/InterLight13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Апр"
+            android:textColor="@color/grey" />
+        <TextView
+            android:id="@+id/dateOfExpense"
+            style="@style/InterLight16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="22"
+            android:textColor="@color/grey"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/imageOfGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_invoice"
+        android:layout_marginStart="13dp"
+        android:layout_gravity="center"/>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_marginStart="13dp">
+        <TextView
+            android:id="@+id/nameOfExpense"
+            style="@style/InterLight16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Potato"
+            android:textColor="@color/black" />
+        <TextView
+            android:id="@+id/nameOfPayer"
+            style="@style/InterLight12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Misha paid $300.00"
+            android:textColor="@color/grey" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.6"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_marginStart="13dp">
+        <TextView
+            android:id="@+id/own"
+            style="@style/InterLight12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ты должен"
+            android:textColor="@color/red"
+            android:layout_gravity="end"
+            android:layout_marginEnd="15dp"/>
+        <TextView
+            android:id="@+id/cost"
+            style="@style/InterLight12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$300.00"
+            android:textColor="@color/red"
+            android:layout_gravity="end"
+            android:layout_marginEnd="15dp"/>
+    </LinearLayout>
+
+
+</LinearLayout>

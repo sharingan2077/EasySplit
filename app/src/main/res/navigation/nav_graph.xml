@@ -10,23 +10,20 @@
         android:label="login_fragment"
         tools:layout="@layout/login_fragment" >
         <action
-            android:id="@+id/action_loginFragment_to_groupsEmptyFragment"
-            app:destination="@id/groupsEmptyFragment" />
-        <action
             android:id="@+id/action_loginFragment_to_registrationFragment"
             app:destination="@id/registrationFragment" />
         <action
             android:id="@+id/action_loginFragment_to_resetPasswordVerificationFragment"
             app:destination="@id/resetPasswordVerificationFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_groupsFragment"
+            app:destination="@id/groupsFragment" />
     </fragment>
     <fragment
         android:id="@+id/groupCreateFragment"
         android:name="com.example.easysplit.view.fragments.groups.GroupCreateFragment"
         android:label="fragment_group_create"
         tools:layout="@layout/fragment_group_create" >
-        <action
-            android:id="@+id/action_groupCreateFragment_to_groupsEmptyFragment"
-            app:destination="@id/groupsEmptyFragment" />
         <action
             android:id="@+id/action_groupCreateFragment_to_groupsFragment"
             app:destination="@id/groupsFragment" />
@@ -53,28 +50,16 @@
             app:destination="@id/addExpenseFragment" />
     </fragment>
     <fragment
-        android:id="@+id/groupsEmptyFragment"
-        android:name="com.example.easysplit.view.fragments.groups.GroupsEmptyFragment"
-        android:label="groups_empty_fragment"
-        tools:layout="@layout/groups_empty_fragment" >
-        <action
-            android:id="@+id/action_groupsEmptyFragment_to_groupCreateFragment"
-            app:destination="@id/groupCreateFragment" />
-        <action
-            android:id="@+id/action_groupsEmptyFragment_to_addExpenseFragment"
-            app:destination="@id/addExpenseFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.easysplit.view.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
-            android:id="@+id/action_profileFragment_to_addExpenseFragment"
-            app:destination="@id/addExpenseFragment" />
-        <action
             android:id="@+id/action_profileFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_addExpenseFragment"
+            app:destination="@id/addExpenseFragment" />
     </fragment>
     <fragment
         android:id="@+id/activityFragment"
@@ -94,9 +79,6 @@
             android:id="@+id/action_groupsFragment_to_groupCreateFragment"
             app:destination="@id/groupCreateFragment" />
         <action
-            android:id="@+id/action_groupsFragment_to_groupEnterNoOneFragment"
-            app:destination="@id/groupEnterNoOneFragment" />
-        <action
             android:id="@+id/action_groupsFragment_to_groupEnterFragment"
             app:destination="@id/groupEnterFragment" />
         <action
@@ -107,15 +89,6 @@
             app:destination="@id/friendsEmptyFragment" />
     </fragment>
     <fragment
-        android:id="@+id/groupEnterNoOneFragment"
-        android:name="com.example.easysplit.view.fragments.groups.GroupEnterNoOneFragment"
-        android:label="fragment_group_enter_no_one"
-        tools:layout="@layout/fragment_group_enter_no_one" >
-        <action
-            android:id="@+id/action_groupEnterNoOneFragment_to_groupsFragment"
-            app:destination="@id/groupsFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/groupEnterFragment"
         android:name="com.example.easysplit.view.fragments.groups.GroupEnterFragment"
         android:label="fragment_group_enter"
@@ -123,15 +96,15 @@
         <action
             android:id="@+id/action_groupEnterFragment_to_groupsFragment"
             app:destination="@id/groupsFragment" />
+        <action
+            android:id="@+id/action_groupEnterFragment_to_addExpenseFragment"
+            app:destination="@id/addExpenseFragment" />
     </fragment>
     <fragment
         android:id="@+id/addExpenseFragment"
         android:name="com.example.easysplit.view.fragments.AddExpenseFragment"
         android:label="fragment_add_expense"
         tools:layout="@layout/fragment_add_expense" >
-        <action
-            android:id="@+id/action_addExpenseFragment_to_groupsEmptyFragment"
-            app:destination="@id/groupsEmptyFragment" />
         <action
             android:id="@+id/action_addExpenseFragment_to_friendsEmptyFragment"
             app:destination="@id/friendsEmptyFragment" />
@@ -144,17 +117,40 @@
         <action
             android:id="@+id/action_addExpenseFragment_to_groupsFragment"
             app:destination="@id/groupsFragment" />
+        <action
+            android:id="@+id/action_addExpenseFragment_to_groupEnterFragment"
+            app:destination="@id/groupEnterFragment" />
+        <action
+            android:id="@+id/action_addExpenseFragment_to_whoPaidFragment"
+            app:destination="@id/whoPaidFragment" />
+        <action
+            android:id="@+id/action_addExpenseFragment_to_chooseGroupFragment"
+            app:destination="@id/chooseGroupFragment" />
+        <action
+            android:id="@+id/action_addExpenseFragment_to_splitEquallyFragment"
+            app:destination="@id/splitEquallyFragment" />
     </fragment>
     <fragment
         android:id="@+id/chooseGroupFragment"
         android:name="com.example.easysplit.view.fragments.groups.ChooseGroupFragment"
         android:label="fragment_choose_group"
-        tools:layout="@layout/fragment_choose_group" />
+        tools:layout="@layout/fragment_choose_group" >
+        <action
+            android:id="@+id/action_chooseGroupFragment_to_addExpenseFragment"
+            app:destination="@id/addExpenseFragment" />
+    </fragment>
     <fragment
         android:id="@+id/splitEquallyFragment"
-        android:name="com.example.easysplit.SplitEquallyFragment"
+        android:name="com.example.easysplit.view.fragments.SplitEquallyFragment"
         android:label="fragment_split_unequally"
-        tools:layout="@layout/fragment_split_unequally" />
+        tools:layout="@layout/fragment_split_unequally" >
+        <action
+            android:id="@+id/action_splitEquallyFragment_to_addExpenseFragment"
+            app:destination="@id/addExpenseFragment" />
+        <action
+            android:id="@+id/action_splitEquallyFragment_to_splitUnequallyFragment"
+            app:destination="@id/splitUnequallyFragment" />
+    </fragment>
     <fragment
         android:id="@+id/verificationUserFragment"
         android:name="com.example.easysplit.view.fragments.authentication.VerificationUserFragment"
@@ -166,9 +162,13 @@
     </fragment>
     <fragment
         android:id="@+id/whoPaidFragment"
-        android:name="com.example.easysplit.WhoPaidFragment"
+        android:name="com.example.easysplit.view.fragments.WhoPaidFragment"
         android:label="fragment_who_paid"
-        tools:layout="@layout/fragment_who_paid" />
+        tools:layout="@layout/fragment_who_paid" >
+        <action
+            android:id="@+id/action_whoPaidFragment_to_addExpenseFragment"
+            app:destination="@id/addExpenseFragment" />
+    </fragment>
     <fragment
         android:id="@+id/resetPasswordFragment"
         android:name="com.example.easysplit.view.fragments.authentication.ResetPasswordFragment"
@@ -192,5 +192,16 @@
         <action
             android:id="@+id/action_resetPasswordVerificationFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/splitUnequallyFragment"
+        android:name="com.example.easysplit.view.fragments.SplitUnequallyFragment"
+        android:label="SplitUnequallyFragment" >
+        <action
+            android:id="@+id/action_splitUnequallyFragment_to_splitEquallyFragment"
+            app:destination="@id/splitEquallyFragment" />
+        <action
+            android:id="@+id/action_splitUnequallyFragment_to_addExpenseFragment"
+            app:destination="@id/addExpenseFragment" />
     </fragment>
 </navigation>

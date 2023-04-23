@@ -41,29 +41,11 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d("MyTag", "ProfileFragment open!");
         binding = FragmentProfileBinding.inflate(inflater, container, false);
-        navController = Navigation.findNavController(getActivity(), R.id.navHostFragment);
+        navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
         mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
-        mainActivityViewModel.showBottomNavigationBar();
         addExpenseViewModel = new ViewModelProvider(requireActivity()).get(AddExpenseViewModel.class);
         addExpenseViewModel.setLastFragmentAction(R.id.action_addExpenseFragment_to_profileFragment);
         loginRegisterViewModel = new ViewModelProvider(requireActivity()).get(LoginRegisterViewModel.class);
-
-//        final Observer<Integer> itemSelectedObserver = itemId -> {
-//            switch (itemId)
-//            {
-//                case R.id.groups:
-//                    NavigationUtils.navigateSafe(navController, R.id.action_profileFragment_to_groupsEmptyFragment, null);
-//                    break;
-//                case R.id.friends:
-//                    NavigationUtils.navigateSafe(navController, R.id.action_profileFragment_to_friendsEmptyFragment, null);
-//                    break;
-//                case R.id.activities:
-//                    NavigationUtils.navigateSafe(navController, R.id.action_profileFragment_to_activityFragment, null);
-//                    break;
-//
-//            }
-//        };
-//        mainActivityViewModel.getBottomNavigationItem().observe(requireActivity(), itemSelectedObserver);
         final Observer<Boolean> isGoToExpenseObserver = aBoolean -> {
             if (aBoolean) NavigationUtils.navigateSafe(navController, R.id.action_profileFragment_to_addExpenseFragment, null);
         };
@@ -77,5 +59,23 @@ public class ProfileFragment extends Fragment {
         });
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onStop() {
+        Log.d(TAG, "Stopping Profile Fragment");
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.d(TAG, "Stopping Profile Fragment");
+        super.onDestroy();
+    }
+
+    @Override
+    public void onDetach() {
+        Log.d(TAG, "Stopping Profile Fragment");
+        super.onDetach();
     }
 }

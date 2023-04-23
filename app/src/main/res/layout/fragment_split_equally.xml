@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplitEquallyFragment"
+    tools:context=".view.fragments.SplitEquallyFragment"
     android:orientation="vertical">
 
     <include layout="@layout/toolbar_with_done"
@@ -22,6 +22,7 @@
             android:textColor="@color/aqua"
             android:layout_marginStart="19dp" />
         <TextView
+            android:id="@+id/splitUnequally"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Непоровну"
@@ -54,7 +55,7 @@
         android:textColor="@color/grey"
         android:layout_marginTop="20.5dp"/>
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/recyclerViewSplitEqually"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="34dp"/>

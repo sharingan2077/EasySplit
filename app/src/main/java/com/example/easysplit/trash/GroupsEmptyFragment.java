@@ -1,4 +1,4 @@
-package com.example.easysplit.view.fragments.groups;
+package com.example.easysplit.trash;
 
 import android.os.Bundle;
 
@@ -37,44 +37,32 @@ public class GroupsEmptyFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d("Groups", "On created");
         Log.d("MyTag", "GroupsEmptyFragment open!");
         binding = GroupsEmptyFragmentBinding.inflate(inflater, container, false);
         navController = Navigation.findNavController(getActivity(), R.id.navHostFragment);
         mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
-        mainActivityViewModel.showBottomNavigationBar();
         addExpenseViewModel = new ViewModelProvider(requireActivity()).get(AddExpenseViewModel.class);
-        addExpenseViewModel.setLastFragmentAction(R.id.action_addExpenseFragment_to_groupsEmptyFragment);
+        //addExpenseViewModel.setLastFragmentAction(R.id.action_addExpenseFragment_to_groupsEmptyFragment);
+
+
+
+
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.createGroup.setOnClickListener(v -> {
-            NavigationUtils.navigateSafe(navController, R.id.action_groupsEmptyFragment_to_groupCreateFragment, null);
-        });
-//        final Observer<Integer> itemSelectedObserver = itemId -> {
-//            Log.d("MyTaggg", "Observer in GroupEmpty see changes");
-//            switch (itemId)
-//            {
-//                case R.id.friends:
-//                    NavigationUtils.navigateSafe(navController, R.id.action_groupsEmptyFragment_to_friendsEmptyFragment, null);
-//                    break;
-//                case R.id.activities:
-//                    NavigationUtils.navigateSafe(navController, R.id.action_groupsEmptyFragment_to_activityFragment, null);
-//                    break;
-//                case R.id.profile:
-//                    NavigationUtils.navigateSafe(navController, R.id.action_groupsEmptyFragment_to_profileFragment, null);
-//                    break;
-//            }
-//        };
-//        mainActivityViewModel.getBottomNavigationItem().observe(getViewLifecycleOwner(), itemSelectedObserver);
+//        binding.createGroup.setOnClickListener(v -> {
+//            NavigationUtils.navigateSafe(navController, R.id.action_groupsEmptyFragment_to_groupCreateFragment, null);
+//        });
         final Observer<Boolean> isGoToExpenseObserver = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
                 if (aBoolean)
                 {
-                    NavigationUtils.navigateSafe(navController, R.id.action_groupsEmptyFragment_to_addExpenseFragment, null);
+                    //NavigationUtils.navigateSafe(navController, R.id.action_groupsEmptyFragment_to_addExpenseFragment, null);
                 }
 
             }

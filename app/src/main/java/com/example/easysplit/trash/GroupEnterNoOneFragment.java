@@ -1,4 +1,4 @@
-package com.example.easysplit.view.fragments.groups;
+package com.example.easysplit.trash;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -39,7 +39,7 @@ public class GroupEnterNoOneFragment extends Fragment {
         mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
         mainActivityViewModel.hideBottomNavigationBar();
         binding.toolbar.back.setOnClickListener(v -> {
-            NavigationUtils.navigateSafe(navController, R.id.action_groupEnterNoOneFragment_to_groupsFragment, null);
+            //NavigationUtils.navigateSafe(navController, R.id.action_groupEnterNoOneFragment_to_groupsFragment, null);
         });
         binding.toolbar.menu.setOnClickListener(v -> {
             showPopup(binding.toolbar.menu);

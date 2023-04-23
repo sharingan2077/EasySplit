@@ -1,4 +1,4 @@
-package com.example.easysplit.viewModel;
+package com.example.easysplit.viewModel.groups;
 
 import android.util.Log;
 
@@ -21,6 +21,7 @@ public class GroupsViewModel extends ViewModel {
 
     public void init()
     {
+
         if (groups != null)
         {
             return;
@@ -50,8 +51,9 @@ public class GroupsViewModel extends ViewModel {
     public void deleteValue(int id)
     {
         List<Group> currentGroups;
-        groups = new MutableLiveData<>();
-        currentGroups = new ArrayList<>();
+        currentGroups = groups.getValue();
+        //groups = new MutableLiveData<>();
+        //currentGroups = new ArrayList<>();
         currentGroups.remove(id);
         groups.setValue(currentGroups);
     }

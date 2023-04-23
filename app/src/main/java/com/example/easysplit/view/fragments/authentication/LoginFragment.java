@@ -15,31 +15,15 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.LoginFragmentBinding;
-import com.example.easysplit.view.utils.NavigationUtils;
-import com.example.easysplit.viewModel.MainActivityViewModel;
-import com.example.easysplit.viewModel.authentication.LoggedInViewModel;
 import com.example.easysplit.viewModel.authentication.LoginRegisterViewModel;
-import com.example.easysplit.viewModel.authentication.LoginViewModel;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 
 public class LoginFragment extends Fragment {
     private static final String TAG = "LoginFragment";
     LoginFragmentBinding binding;
-    LoggedInViewModel loggedInViewModel;
-    MainActivityViewModel mainActivityViewModel;
-
     LoginRegisterViewModel loginRegisterViewModel;
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,10 +36,6 @@ public class LoginFragment extends Fragment {
         binding = LoginFragmentBinding.inflate(inflater, container, false);
         loginRegisterViewModel = new ViewModelProvider(requireActivity()).get(LoginRegisterViewModel.class);
         loginRegisterViewModel.refreshLoggedOutLiveData();
-
-        mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
-        //mainActivityViewModel.hideBottomNavigationBar();
-
         binding.createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,7 +72,7 @@ public class LoginFragment extends Fragment {
                 if (!aBoolean)
                 {
                     Log.d(TAG, "Transition to groupsEmpty");
-                    Navigation.findNavController(binding.getRoot()).navigate(R.id.action_loginFragment_to_groupsEmptyFragment);
+                    Navigation.findNavController(binding.getRoot()).navigate(R.id.action_loginFragment_to_groupsFragment);
                 }
             }
         };
@@ -101,7 +81,7 @@ public class LoginFragment extends Fragment {
         binding.forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_loginFragment_to_resetPasswordVerificationFragment;
+                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_loginFragment_to_resetPasswordVerificationFragment);
             }
         });
 

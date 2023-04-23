@@ -4,6 +4,17 @@ public class Group {
 
     private String groupName;
     //private String imageUrl;
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public Group(String groupName, int countMember, String id) {
+        this.groupName = groupName;
+        this.id = id;
+        this.countMember = countMember;
+    }
 
     private int countMember;
 

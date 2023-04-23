@@ -1,4 +1,4 @@
-package com.example.easysplit.viewModel;
+package com.example.easysplit.viewModel.groups;
 
 import androidx.lifecycle.ViewModel;
 

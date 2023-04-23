@@ -29,12 +29,12 @@ public class ResetPasswordFragment extends Fragment {
         navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
         binding.toolbar.back.setOnClickListener(v -> NavigationUtils.navigateSafe(navController, R.id.action_resetPasswordFragment_to_loginFragment, null));
         binding.toolbar.textToolbar.setText("Сброс пароля");
-        binding.btnSendCode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavigationUtils.navigateSafe(navController, R.id.action_resetPasswordFragment_to_resetPasswordVerificationFragment, null);
-            }
-        });
+//        binding.btnSendCode.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                NavigationUtils.navigateSafe(navController, R.id.action_resetPasswordFragment_to_resetPasswordVerificationFragment, null);
+//            }
+//        });
         return binding.getRoot();
     }
 }

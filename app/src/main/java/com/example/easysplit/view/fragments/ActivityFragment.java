@@ -7,25 +7,31 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.easysplit.view.adapters.ActivityRecyclerAdapter;
+import com.example.easysplit.view.adapters.UsersSplitEquallyAdapter;
 import com.example.easysplit.view.utils.NavigationUtils;
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.FragmentActivityBinding;
+import com.example.easysplit.viewModel.ActivityViewModel;
 import com.example.easysplit.viewModel.AddExpenseViewModel;
 import com.example.easysplit.viewModel.MainActivityViewModel;
 
 public class ActivityFragment extends Fragment {
     private static final String TAG = "ActivityFragment";
     FragmentActivityBinding binding;
-    MainActivityViewModel mainActivityViewModel;
     NavController navController;
 
     AddExpenseViewModel addExpenseViewModel;
+    MainActivityViewModel mainActivityViewModel;
+    ActivityViewModel activityViewModel;
+    ActivityRecyclerAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,27 +43,14 @@ public class ActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d("MyTag", "ActivityFragment open!");
         binding = FragmentActivityBinding.inflate(inflater, container, false);
-        mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
         navController = Navigation.findNavController(getActivity(), R.id.navHostFragment);
-        mainActivityViewModel.showBottomNavigationBar();
+        mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
         addExpenseViewModel = new ViewModelProvider(requireActivity()).get(AddExpenseViewModel.class);
         addExpenseViewModel.setLastFragmentAction(R.id.action_addExpenseFragment_to_activityFragment);
-//        final Observer<Integer> itemSelectedObserver = itemId -> {
-//            Log.d(TAG, "Activity");
-//            switch (itemId)
-//            {
-//                case R.id.groups:
-//                    NavigationUtils.navigateSafe(navController, R.id.action_activityFragment_to_groupsEmptyFragment, null);
-//                    break;
-//                case R.id.friends:
-//                    NavigationUtils.navigateSafe(navController, R.id.action_activityFragment_to_friendsEmptyFragment, null);
-//                    break;
-//                case R.id.profile:
-//                    NavigationUtils.navigateSafe(navController, R.id.action_activityFragment_to_profileFragment, null);
-//                    break;
-//            }
-//        };
-//        mainActivityViewModel.getBottomNavigationItem().observe(requireActivity(), itemSelectedObserver);
+        activityViewModel = new ViewModelProvider(requireActivity()).get(ActivityViewModel.class);
+        activityViewModel.init();
+        initRecyclerView();
+
         final Observer<Boolean> isGoToExpenseObserver = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -70,6 +63,13 @@ public class ActivityFragment extends Fragment {
         mainActivityViewModel.getIsGoToMakeExpense().observe(getViewLifecycleOwner(), isGoToExpenseObserver);
 
         return binding.getRoot();
+    }
+
+    private void initRecyclerView()
+    {
+        adapter = new ActivityRecyclerAdapter(requireActivity(), activityViewModel.getActivities().getValue());
+        binding.recyclerViewActivity.setAdapter(adapter);
+        binding.recyclerViewActivity.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
 }
