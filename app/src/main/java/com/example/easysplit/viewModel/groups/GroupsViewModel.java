@@ -1,5 +1,6 @@
 package com.example.easysplit.viewModel.groups;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -8,6 +9,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.easysplit.model.Group;
 import com.example.easysplit.repository.GroupRepository;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,15 +22,16 @@ public class GroupsViewModel extends ViewModel {
     private GroupRepository mRepo;
 
 
-    public void init()
+    public void init(Context context)
     {
 
         if (groups != null)
         {
             return;
         }
-        mRepo = GroupRepository.getInstance();
+        mRepo = GroupRepository.getInstance(context);
         groups = mRepo.getGroups();
+
     }
 
     public void addNewValue(final Group group)

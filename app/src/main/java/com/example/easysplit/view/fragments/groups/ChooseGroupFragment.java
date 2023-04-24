@@ -44,7 +44,7 @@ public class ChooseGroupFragment extends Fragment {
         binding = FragmentChooseGroupBinding.inflate(inflater, container, false);
         groupsViewModel = new ViewModelProvider(requireActivity()).get(GroupsViewModel.class);
         navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
-        groupsViewModel.init();
+        groupsViewModel.init(requireActivity());
         initRecyclerView();
         binding.toolbar.textToolbar.setText("Выберите группу");
         final Observer<List<Group>> observerNewGroup = new Observer<List<Group>>() {

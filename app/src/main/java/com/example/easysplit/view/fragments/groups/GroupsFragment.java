@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.FragmentGroupsBinding;
 import com.example.easysplit.model.Group;
+import com.example.easysplit.view.listeners.DataLoadListener;
 import com.example.easysplit.view.utils.NavigationUtils;
 import com.example.easysplit.view.adapters.GroupsRecyclerAdapter;
 import com.example.easysplit.viewModel.AddExpenseViewModel;
@@ -25,7 +26,7 @@ import com.example.easysplit.viewModel.MainActivityViewModel;
 
 import java.util.List;
 
-public class GroupsFragment extends Fragment{
+public class GroupsFragment extends Fragment implements DataLoadListener {
 
     private static final String TAG = "GroupsFragment";
 
@@ -47,7 +48,7 @@ public class GroupsFragment extends Fragment{
         binding = FragmentGroupsBinding.inflate(inflater, container, false);
         navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
         groupsViewModel = new ViewModelProvider(requireActivity()).get(GroupsViewModel.class);
-        groupsViewModel.init();
+        groupsViewModel.init(getActivity());
         initRecyclerView();
         mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
         mainActivityViewModel.showBottomNavigationBar();
@@ -56,24 +57,6 @@ public class GroupsFragment extends Fragment{
         binding.createGroup.setOnClickListener(v ->
                 NavigationUtils.navigateSafe(navController, R.id.action_groupsFragment_to_groupCreateFragment, null)
         );
-
-        final Observer<List<Group>> observerNewGroup = new Observer<List<Group>>() {
-            @Override
-            public void onChanged(List<Group> groups) {
-                adapter.notifyDataSetChanged();
-                if (adapter.getItemCount() != 0)
-                {
-                    showGroups();
-                }
-                else
-                {
-                    hideGroups();
-                }
-            }
-        };
-        groupsViewModel.getGroups().observe(requireActivity(), observerNewGroup);
-
-
         final Observer<Boolean> isGoToExpenseObserver = aBoolean -> {
             if (aBoolean) NavigationUtils.navigateSafe(navController, R.id.action_groupsFragment_to_addExpenseFragment, null);
         };
@@ -108,4 +91,22 @@ public class GroupsFragment extends Fragment{
     }
 
 
+    @Override
+    public void onGroupLoaded() {
+        final Observer<List<Group>> observerNewGroup = new Observer<List<Group>>() {
+            @Override
+            public void onChanged(List<Group> groups) {
+                adapter.notifyDataSetChanged();
+                if (adapter.getItemCount() != 0)
+                {
+                    showGroups();
+                }
+                else
+                {
+                    hideGroups();
+                }
+            }
+        };
+        groupsViewModel.getGroups().observe(requireActivity(), observerNewGroup);
+    }
 }
