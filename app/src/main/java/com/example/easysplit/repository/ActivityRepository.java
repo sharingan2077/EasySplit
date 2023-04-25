@@ -31,10 +31,10 @@ public class ActivityRepository {
     private void setActivities()
     {
         dataSet.add(new Activity("Misha", "Бананы", "Example", "Сегодня, 18:10"));
-        dataSet.add(new Activity("Misha", "Чебуреки", "Example2", "Сегодня, 18:10"));
-        dataSet.add(new Activity("Misha", "Чебупели", "Example3", "Сегодня, 18:10"));
-        dataSet.add(new Activity("Misha", "Картошка", "Example4", "Сегодня, 18:10"));
-        dataSet.add(new Activity("Misha", "Блинчики с мясом", "Example5", "Сегодня, 18:10"));
+        dataSet.add(new Activity("Ты", "Билет", "Example2", "Сегодня, 18:15"));
+        dataSet.add(new Activity("Ты", "Москва", "Example3", "Вчера, 17:10"));
+        dataSet.add(new Activity("Misha", "Картошка", "Example4", "Сегодня, 09:10"));
+        dataSet.add(new Activity("Misha", "Блинчики", "Example5", "Вчера, 15:00"));
     }
 
 }

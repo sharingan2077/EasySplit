@@ -64,7 +64,7 @@ public class GroupCreateFragment extends Fragment {
             {
                 String id = UUID.randomUUID().toString();
                 NavigationUtils.navigateSafe(navController, R.id.action_groupCreateFragment_to_groupsFragment, null);
-                groupsViewModel.addNewValue(new Group(binding.nameOfGroup.getText().toString(), 2, id));
+                groupsViewModel.addNewValue(new Group(binding.nameOfGroup.getText().toString(), 1));
             }
         });
 

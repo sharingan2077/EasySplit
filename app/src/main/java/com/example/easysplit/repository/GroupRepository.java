@@ -1,12 +1,15 @@
 package com.example.easysplit.repository;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.easysplit.model.Group;
 import com.example.easysplit.view.listeners.DataLoadListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,37 +25,41 @@ public class GroupRepository {
 
 
     private static GroupRepository instance;
+    private static final String TAG = "GroupRepository";
     private ArrayList<Group> dataSet = new ArrayList<>();
+    MutableLiveData<List<Group>> data = new MutableLiveData<>();
+
+    private MutableLiveData<Boolean> dataLoaded = new MutableLiveData<>();
 
 
     private String GROUP_KEY = "Group";
 
-    static Context mContext;
-    static DataLoadListener dataLoadListener;
 
-    public static GroupRepository getInstance(Context context)
+    public static GroupRepository getInstance()
     {
-        mContext = context;
         if (instance == null)
         {
             instance = new GroupRepository();
         }
-        dataLoadListener = (DataLoadListener) mContext;
         return instance;
     }
     public MutableLiveData<List<Group>> getGroups()
     {
-        if (dataSet.size() == -1)
+        if (dataSet.size() == 0)
         {
             setGroups();
         }
-        MutableLiveData<List<Group>> data = new MutableLiveData<>();
         data.setValue(dataSet);
         return data;
+    }
+    public MutableLiveData<Boolean> getDataLoaded()
+    {
+        return dataLoaded;
     }
 
     private void setGroups()
     {
+        dataLoaded.setValue(false);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference.child("Group");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -62,18 +69,22 @@ public class GroupRepository {
                 {
                     dataSet.add(snapshot.getValue(Group.class));
                 }
-                dataLoadListener.onGroupLoaded();
+                data.postValue(dataSet);
+                dataLoaded.setValue(true);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
+        Log.d("Prog", "Data loaded - " + dataLoaded.getValue().toString());
+    }
 
-
-//        dataSet.add(new Group("Example", 2, UUID.randomUUID().toString()));
-//        dataSet.add(new Group("Example2", 3, UUID.randomUUID().toString()));
+    public void addGroup(final Group group)
+    {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        reference.child("Group").setValue(group);
     }
 
 

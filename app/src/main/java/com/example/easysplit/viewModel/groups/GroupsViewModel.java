@@ -19,23 +19,34 @@ public class GroupsViewModel extends ViewModel {
     private static final String TAG = "GroupsViewModel";
 
     private MutableLiveData<List<Group>> groups;
+
+    private MutableLiveData<Boolean> dataLoaded;
     private GroupRepository mRepo;
 
 
-    public void init(Context context)
+    public MutableLiveData<Boolean> getDataLoaded() {
+        return dataLoaded;
+    }
+
+    public void init()
     {
 
         if (groups != null)
         {
             return;
         }
-        mRepo = GroupRepository.getInstance(context);
+        mRepo = GroupRepository.getInstance();
+        Log.d("Prog", "mRepo = GroupRepository.getInstance()");
         groups = mRepo.getGroups();
+        Log.d("Prog", "groups = mRepo.getGroups()");
+        dataLoaded = mRepo.getDataLoaded();
+        Log.d("Prog", "dataLoaded = mRepo.getDataLoaded();" + dataLoaded.getValue());
 
     }
 
     public void addNewValue(final Group group)
     {
+        //mRepo.addGroup(group);
         Log.d(TAG, "Adding new Element");
         List<Group> currentGroups;
         if (groups != null)
@@ -49,7 +60,6 @@ public class GroupsViewModel extends ViewModel {
         }
         currentGroups.add(group);
         groups.setValue(currentGroups);
-
     }
 
     public void deleteValue(int id)

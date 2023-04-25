@@ -41,7 +41,7 @@ public class AuthAppRepository {
                             userLiveData.postValue(firebaseAuth.getCurrentUser());
                             sendVerificationEmail();
                         } else {
-                            Toast.makeText(application.getApplicationContext(), "Registration Failure: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(application.getApplicationContext(), "Registration Failure: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -59,7 +59,7 @@ public class AuthAppRepository {
                         } else {
                             Log.d("Auth", "Error");
 
-                            Toast.makeText(application.getApplicationContext(), "Login Failure: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(application.getApplicationContext(), "Login Failure: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

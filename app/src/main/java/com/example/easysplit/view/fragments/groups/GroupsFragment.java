@@ -26,7 +26,7 @@ import com.example.easysplit.viewModel.MainActivityViewModel;
 
 import java.util.List;
 
-public class GroupsFragment extends Fragment implements DataLoadListener {
+public class GroupsFragment extends Fragment{
 
     private static final String TAG = "GroupsFragment";
 
@@ -36,6 +36,8 @@ public class GroupsFragment extends Fragment implements DataLoadListener {
     private GroupsRecyclerAdapter adapter;
     NavController navController;
     GroupsViewModel groupsViewModel;
+
+    private Boolean isProgressing = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,12 +50,14 @@ public class GroupsFragment extends Fragment implements DataLoadListener {
         binding = FragmentGroupsBinding.inflate(inflater, container, false);
         navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
         groupsViewModel = new ViewModelProvider(requireActivity()).get(GroupsViewModel.class);
-        groupsViewModel.init(getActivity());
+        groupsViewModel.init();
         initRecyclerView();
         mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
         mainActivityViewModel.showBottomNavigationBar();
         addExpenseViewModel = new ViewModelProvider(requireActivity()).get(AddExpenseViewModel.class);
         addExpenseViewModel.setLastFragmentAction(R.id.action_addExpenseFragment_to_groupsFragment);
+
+
         binding.createGroup.setOnClickListener(v ->
                 NavigationUtils.navigateSafe(navController, R.id.action_groupsFragment_to_groupCreateFragment, null)
         );
@@ -61,6 +65,39 @@ public class GroupsFragment extends Fragment implements DataLoadListener {
             if (aBoolean) NavigationUtils.navigateSafe(navController, R.id.action_groupsFragment_to_addExpenseFragment, null);
         };
         mainActivityViewModel.getIsGoToMakeExpense().observe(getViewLifecycleOwner(), isGoToExpenseObserver);
+
+        final Observer<Boolean> isProgressingObserver = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean)
+                {
+                    isProgressing = false;
+                    Log.d("Prog", "is not progressing");;
+                }
+            }
+        };
+        groupsViewModel.getDataLoaded().observe(requireActivity(), isProgressingObserver);
+        final Observer<List<Group>> observerNewGroups = new Observer<List<Group>>() {
+            @Override
+            public void onChanged(List<Group> groups) {
+                adapter.notifyDataSetChanged();
+                if (isProgressing)
+                {
+                    progressing();
+                }
+                else if (adapter.getItemCount() == 0)
+                {
+                    Log.d("Prog", "hide groups");
+                    hideGroups();
+                }
+                else if (adapter.getItemCount() != 0)
+                {
+                    Log.d("Prog", "Show groups");
+                    showGroups();
+                }
+            }
+        };
+        groupsViewModel.getGroups().observe(getViewLifecycleOwner(), observerNewGroups);
 
         return binding.getRoot();
     }
@@ -75,12 +112,24 @@ public class GroupsFragment extends Fragment implements DataLoadListener {
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
+    private void progressing()
+    {
+        binding.progressBar.setVisibility(View.VISIBLE);
+        binding.imgOfGroups.setVisibility(View.GONE);
+        binding.txtEmptyGroups.setVisibility(View.GONE);
+        binding.groups.setVisibility(View.GONE);
+        binding.recyclerView.setVisibility(View.GONE);
+        binding.createGroup.setVisibility(View.GONE);
+    }
+
     private void showGroups()
     {
         binding.imgOfGroups.setVisibility(View.GONE);
         binding.txtEmptyGroups.setVisibility(View.GONE);
         binding.groups.setVisibility(View.VISIBLE);
         binding.recyclerView.setVisibility(View.VISIBLE);
+        binding.progressBar.setVisibility(View.GONE);
+        binding.createGroup.setVisibility(View.VISIBLE);
     }
     private void hideGroups()
     {
@@ -88,25 +137,7 @@ public class GroupsFragment extends Fragment implements DataLoadListener {
         binding.txtEmptyGroups.setVisibility(View.VISIBLE);
         binding.groups.setVisibility(View.GONE);
         binding.recyclerView.setVisibility(View.GONE);
-    }
-
-
-    @Override
-    public void onGroupLoaded() {
-        final Observer<List<Group>> observerNewGroup = new Observer<List<Group>>() {
-            @Override
-            public void onChanged(List<Group> groups) {
-                adapter.notifyDataSetChanged();
-                if (adapter.getItemCount() != 0)
-                {
-                    showGroups();
-                }
-                else
-                {
-                    hideGroups();
-                }
-            }
-        };
-        groupsViewModel.getGroups().observe(requireActivity(), observerNewGroup);
+        binding.progressBar.setVisibility(View.GONE);
+        binding.createGroup.setVisibility(View.VISIBLE);
     }
 }
