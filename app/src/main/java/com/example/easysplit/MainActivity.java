@@ -5,17 +5,11 @@ import static androidx.navigation.ui.NavigationUI.setupActionBarWithNavControlle
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.app.Activity;
@@ -23,18 +17,12 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.example.easysplit.R;
 import com.example.easysplit.databinding.ActivityMainBinding;
-import com.example.easysplit.view.fragments.AddExpenseFragment;
-import com.example.easysplit.viewModel.AddExpenseViewModel;
 import com.example.easysplit.viewModel.MainActivityViewModel;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
@@ -76,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                                              @NonNull NavDestination destination, @Nullable Bundle arguments) {
                 Log.d(TAG, "Destination changed");
                 int id = destination.getId();
-                if(id == R.id.groupsFragment || id == R.id.friendsEmptyFragment
+                if(id == R.id.groupsFragment || id == R.id.friendsFragment
                 || id == R.id.activityFragment || id == R.id.profileFragment
                 || id == R.id.groupEnterFragment) {
                     Log.d(TAG, "Showing bottom navigation bar");

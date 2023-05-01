@@ -15,8 +15,11 @@ import java.util.Objects;
 
 public class LoginRegisterViewModel extends AndroidViewModel {
     private AuthAppRepository authAppRepository;
+
+    // хранит текущего пользователя
     private MutableLiveData<FirebaseUser> userLiveData;
 
+    // loggedOutLiveData хранит true - текущего пользователя нет, false - пользователь есть
     private MutableLiveData<Boolean> loggedOutLiveData;
 
     public LoginRegisterViewModel(@NonNull Application application) {
@@ -26,20 +29,22 @@ public class LoginRegisterViewModel extends AndroidViewModel {
         loggedOutLiveData = authAppRepository.getLoggedOutLiveData();
     }
 
+
     public void login(String email, String password) {
 
         authAppRepository.login(email, password);
     }
 
+
+
     public void refreshLoggedOutLiveData()
     {
-        Log.d("Naruto", "Refreshing");
         authAppRepository.refreshLoggedOut();
         loggedOutLiveData = authAppRepository.getLoggedOutLiveData();
     }
 
-    public void register(String email, String password) {
-        authAppRepository.register(email, password);
+    public void register(String email, String password, String userName) {
+        authAppRepository.register(email, password, userName);
     }
 
     public void sendVerificationEmail()
@@ -50,6 +55,7 @@ public class LoginRegisterViewModel extends AndroidViewModel {
     public void logOut() {
         authAppRepository.logOut();
     }
+
 
     public MutableLiveData<Boolean> getLoggedOutLiveData() {
         return loggedOutLiveData;

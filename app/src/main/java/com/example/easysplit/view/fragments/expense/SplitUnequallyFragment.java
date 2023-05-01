@@ -1,4 +1,4 @@
-package com.example.easysplit.view.fragments;
+package com.example.easysplit.view.fragments.expense;
 
 import android.os.Bundle;
 

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.fragments.friends.AddFriendFragment"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar"
+        android:id="@+id/toolbar"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="60dp">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="16"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Имя"
+                android:textColor="@color/black"
+                style="@style/InterRegular16"
+                android:layout_marginStart="2dp"/>
+            <EditText
+                android:id="@+id/addFriendName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                style="@style/InterRegular16"
+                android:backgroundTint="@color/aqua"
+                android:inputType="text"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_marginTop="45dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Id"
+                    android:textColor="@color/black"
+                    style="@style/InterRegular16"
+                    android:layout_marginStart="2dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="45dp"
+                    android:text="   (Цифры после имени. Например, #12345)"
+                    style="@style/InterLight13"
+                    android:textColor="@color/grey"/>
+            </LinearLayout>
+            <EditText
+                android:id="@+id/addFriendId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                style="@style/InterRegular16"
+                android:backgroundTint="@color/aqua"
+                android:hint="12345"
+                android:inputType="numberPassword"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/addFriendComplete"
+        android:layout_width="202dp"
+        android:layout_height="40dp"
+        android:background="@drawable/style_create_group"
+        android:layout_gravity="center"
+        android:layout_marginTop="55dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Добавить друга"
+            android:layout_gravity="center"
+            android:textColor="@color/aqua"
+            style="@style/InterMedium18"
+            android:gravity="center_vertical"
+            android:layout_marginTop="6dp"/>
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

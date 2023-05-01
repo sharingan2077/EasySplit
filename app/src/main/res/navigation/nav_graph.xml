@@ -41,15 +41,6 @@
             app:destination="@id/verificationUserFragment" />
     </fragment>
     <fragment
-        android:id="@+id/friendsEmptyFragment"
-        android:name="com.example.easysplit.view.fragments.FriendsEmptyFragment"
-        android:label="friends_empty_fragment"
-        tools:layout="@layout/friends_empty_fragment" >
-        <action
-            android:id="@+id/action_friendsEmptyFragment_to_addExpenseFragment"
-            app:destination="@id/addExpenseFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.easysplit.view.fragments.ProfileFragment"
         android:label="fragment_profile"
@@ -84,9 +75,6 @@
         <action
             android:id="@+id/action_groupsFragment_to_addExpenseFragment"
             app:destination="@id/addExpenseFragment" />
-        <action
-            android:id="@+id/action_groupsFragment_to_friendsEmptyFragment"
-            app:destination="@id/friendsEmptyFragment" />
     </fragment>
     <fragment
         android:id="@+id/groupEnterFragment"
@@ -99,15 +87,18 @@
         <action
             android:id="@+id/action_groupEnterFragment_to_addExpenseFragment"
             app:destination="@id/addExpenseFragment" />
+        <argument
+            android:name="groupId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_groupEnterFragment_to_addFriendToGroupFragment"
+            app:destination="@id/addFriendToGroupFragment" />
     </fragment>
     <fragment
         android:id="@+id/addExpenseFragment"
-        android:name="com.example.easysplit.view.fragments.AddExpenseFragment"
+        android:name="com.example.easysplit.view.fragments.expense.AddExpenseFragment"
         android:label="fragment_add_expense"
         tools:layout="@layout/fragment_add_expense" >
-        <action
-            android:id="@+id/action_addExpenseFragment_to_friendsEmptyFragment"
-            app:destination="@id/friendsEmptyFragment" />
         <action
             android:id="@+id/action_addExpenseFragment_to_activityFragment"
             app:destination="@id/activityFragment" />
@@ -129,6 +120,9 @@
         <action
             android:id="@+id/action_addExpenseFragment_to_splitEquallyFragment"
             app:destination="@id/splitEquallyFragment" />
+        <action
+            android:id="@+id/action_addExpenseFragment_to_friendsFragment"
+            app:destination="@id/friendsFragment" />
     </fragment>
     <fragment
         android:id="@+id/chooseGroupFragment"
@@ -141,7 +135,7 @@
     </fragment>
     <fragment
         android:id="@+id/splitEquallyFragment"
-        android:name="com.example.easysplit.view.fragments.SplitEquallyFragment"
+        android:name="com.example.easysplit.view.fragments.expense.SplitEquallyFragment"
         android:label="fragment_split_unequally"
         tools:layout="@layout/fragment_split_unequally" >
         <action
@@ -159,10 +153,13 @@
         <action
             android:id="@+id/action_verificationUserFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_verificationUserFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
     </fragment>
     <fragment
         android:id="@+id/whoPaidFragment"
-        android:name="com.example.easysplit.view.fragments.WhoPaidFragment"
+        android:name="com.example.easysplit.view.fragments.expense.WhoPaidFragment"
         android:label="fragment_who_paid"
         tools:layout="@layout/fragment_who_paid" >
         <action
@@ -195,7 +192,7 @@
     </fragment>
     <fragment
         android:id="@+id/splitUnequallyFragment"
-        android:name="com.example.easysplit.view.fragments.SplitUnequallyFragment"
+        android:name="com.example.easysplit.view.fragments.expense.SplitUnequallyFragment"
         android:label="SplitUnequallyFragment" >
         <action
             android:id="@+id/action_splitUnequallyFragment_to_splitEquallyFragment"
@@ -203,5 +200,35 @@
         <action
             android:id="@+id/action_splitUnequallyFragment_to_addExpenseFragment"
             app:destination="@id/addExpenseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addFriendFragment"
+        android:name="com.example.easysplit.view.fragments.friends.AddFriendFragment"
+        android:label="fragment_add_friend"
+        tools:layout="@layout/fragment_add_friend" >
+        <action
+            android:id="@+id/action_addFriendFragment_to_friendsFragment"
+            app:destination="@id/friendsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/friendsFragment"
+        android:name="com.example.easysplit.view.fragments.friends.FriendsFragment"
+        android:label="fragment_friends"
+        tools:layout="@layout/fragment_friends" >
+        <action
+            android:id="@+id/action_friendsFragment_to_addExpenseFragment"
+            app:destination="@id/addExpenseFragment" />
+        <action
+            android:id="@+id/action_friendsFragment_to_addFriendFragment"
+            app:destination="@id/addFriendFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addFriendToGroupFragment"
+        android:name="com.example.easysplit.view.fragments.groups.AddFriendToGroupFragment"
+        android:label="fragment_add_friend_to_group"
+        tools:layout="@layout/fragment_add_friend_to_group" >
+        <action
+            android:id="@+id/action_addFriendToGroupFragment_to_groupEnterFragment"
+            app:destination="@id/groupEnterFragment" />
     </fragment>
 </navigation>

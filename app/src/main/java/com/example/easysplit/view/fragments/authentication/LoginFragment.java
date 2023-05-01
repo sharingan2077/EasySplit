@@ -32,7 +32,6 @@ public class LoginFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d("Naruto", "Created LoginFragment");
         binding = LoginFragmentBinding.inflate(inflater, container, false);
         loginRegisterViewModel = new ViewModelProvider(requireActivity()).get(LoginRegisterViewModel.class);
         loginRegisterViewModel.refreshLoggedOutLiveData();
@@ -44,12 +43,12 @@ public class LoginFragment extends Fragment {
         });
 
         binding.btnEnter.setOnClickListener(v -> {
-            Log.d(TAG, "Click");
             String email = binding.loginText.getText().toString().replace(" ", "");
             String password = binding.passwordText.getText().toString();
             loginRegisterViewModel.login(email, password);
             loginRegisterViewModel.refreshLoggedOutLiveData();
-            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_loginFragment_to_groupsFragment);
+            //Navigation.findNavController(binding.getRoot()).navigate(R.id.action_loginFragment_to_groupsFragment);
+
 //            {
 //                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_loginFragment_to_groupsEmptyFragment);
 //            }
@@ -64,26 +63,20 @@ public class LoginFragment extends Fragment {
 //
 //            }
         });
-        Log.d("Naruto", "Observer");
 
-//        final Observer<Boolean> loggedOutObserver = new Observer<Boolean>() {
-//            @Override
-//            public void onChanged(Boolean aBoolean) {
-//                Log.d(TAG, aBoolean.toString());
-//                if (!aBoolean)
-//                {
-//                    Navigation.findNavController(binding.getRoot()).navigate(R.id.action_loginFragment_to_groupsFragment);
-//                }
-//            }
-//        };
-//        loginRegisterViewModel.getLoggedOutLiveData().observe(getViewLifecycleOwner(), loggedOutObserver);
-
-        binding.forgotPassword.setOnClickListener(new View.OnClickListener() {
+        final Observer<Boolean> loggedOutObserver = new Observer<Boolean>() {
             @Override
-            public void onClick(View v) {
-                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_loginFragment_to_resetPasswordVerificationFragment);
+            public void onChanged(Boolean aBoolean) {
+                Log.d(TAG, aBoolean.toString());
+                if (!aBoolean)
+                {
+                    Navigation.findNavController(binding.getRoot()).navigate(R.id.action_loginFragment_to_groupsFragment);
+                }
             }
-        });
+        };
+        loginRegisterViewModel.getLoggedOutLiveData().observe(getViewLifecycleOwner(), loggedOutObserver);
+
+        binding.forgotPassword.setOnClickListener(v -> Navigation.findNavController(binding.getRoot()).navigate(R.id.action_loginFragment_to_resetPasswordVerificationFragment));
 
 
         return binding.getRoot();

@@ -1,6 +1,7 @@
 package com.example.easysplit.viewModel.groups;
 
-import android.content.Context;
+
+
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -9,10 +10,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.easysplit.model.Group;
 import com.example.easysplit.repository.GroupRepository;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.example.easysplit.view.listeners.DataLoadListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GroupsViewModel extends ViewModel {
@@ -23,53 +22,45 @@ public class GroupsViewModel extends ViewModel {
     private MutableLiveData<Boolean> dataLoaded;
     private GroupRepository mRepo;
 
-
-    public MutableLiveData<Boolean> getDataLoaded() {
-        return dataLoaded;
-    }
-
     public void init()
     {
+        Log.d(TAG, "init groupsViewModel");
 
         if (groups != null)
         {
             return;
         }
         mRepo = GroupRepository.getInstance();
-        Log.d("Prog", "mRepo = GroupRepository.getInstance()");
-        groups = mRepo.getGroups();
-        Log.d("Prog", "groups = mRepo.getGroups()");
-        dataLoaded = mRepo.getDataLoaded();
-        Log.d("Prog", "dataLoaded = mRepo.getDataLoaded();" + dataLoaded.getValue());
+
+        dataLoaded = new MutableLiveData<>();
+        dataLoaded.setValue(false);
+        groups = mRepo.getGroups(new DataLoadListener() {
+            @Override
+            public void dataLoaded() {
+                Log.d(TAG, String.valueOf(groups.getValue().size()));
+                dataLoaded.setValue(true);
+            }
+        });
 
     }
 
     public void addNewValue(final Group group)
     {
-        //mRepo.addGroup(group);
-        Log.d(TAG, "Adding new Element");
-        List<Group> currentGroups;
-        if (groups != null)
-        {
-            currentGroups = groups.getValue();
-        }
-        else
-        {
-            groups = new MutableLiveData<>();
-            currentGroups = new ArrayList<>();
-        }
-        currentGroups.add(group);
-        groups.setValue(currentGroups);
+        mRepo.addGroup(group);
+        groups = mRepo.getGroups(new DataLoadListener() {
+            @Override
+            public void dataLoaded() {
+            }
+        });
     }
 
-    public void deleteValue(int id)
+    public void deleteGroup(String id)
     {
-        List<Group> currentGroups;
-        currentGroups = groups.getValue();
-        //groups = new MutableLiveData<>();
-        //currentGroups = new ArrayList<>();
-        currentGroups.remove(id);
-        groups.setValue(currentGroups);
+        mRepo.deleteGroup(id);
+    }
+
+    public LiveData<Boolean> getDataLoaded() {
+        return dataLoaded;
     }
 
     public LiveData<List<Group>> getGroups()

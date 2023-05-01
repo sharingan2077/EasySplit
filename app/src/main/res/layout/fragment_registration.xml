@@ -47,7 +47,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:text="maksvish135@gmail.com"
+        android:text="maksvish135@yandex.ru"
         android:id="@+id/email"
         style="@style/InterSemiBold16"
         android:layout_width="280dp"
@@ -63,7 +63,7 @@
         app:layout_constraintTop_toBottomOf="@+id/name" />
 
     <EditText
-        android:text="qwerty"
+        android:text="naruto"
         android:id="@+id/password"
         style="@style/InterSemiBold16"
         android:layout_width="280dp"
@@ -80,7 +80,7 @@
         app:layout_constraintTop_toBottomOf="@+id/email" />
 
     <EditText
-        android:text="qwerty"
+        android:text="naruto"
         android:id="@+id/confirmPassword"
         style="@style/InterSemiBold16"
         android:layout_width="280dp"

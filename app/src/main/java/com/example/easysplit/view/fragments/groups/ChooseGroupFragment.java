@@ -68,7 +68,7 @@ public class ChooseGroupFragment extends Fragment {
 
     private void initRecyclerView()
     {
-        adapter = new GroupsRecyclerAdapter(getActivity(), groupsViewModel.getGroups().getValue(), () -> {
+        adapter = new GroupsRecyclerAdapter(getActivity(), groupsViewModel.getGroups().getValue(), groupId -> {
             Log.d(TAG, "You click on ");
             NavigationUtils.navigateSafe(navController, R.id.action_chooseGroupFragment_to_addExpenseFragment, null);
         });

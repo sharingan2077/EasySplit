@@ -7,7 +7,7 @@
         android:icon="@drawable/ic_member"
         app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/friendsEmptyFragment"
+        android:id="@+id/friendsFragment"
         android:title="Друзья"
         android:icon="@drawable/ic_user"
         app:showAsAction="ifRoom"/>

@@ -1,4 +1,4 @@
-package com.example.easysplit.view.fragments;
+package com.example.easysplit.view.fragments.expense;
 
 import android.os.Bundle;
 
@@ -65,7 +65,7 @@ public class WhoPaidFragment extends Fragment {
 
     private void initRecyclerView()
     {
-        adapter = new UsersRecyclerAdapter(requireActivity(), whoPaidViewModel.getUsers().getValue(), () -> {
+        adapter = new UsersRecyclerAdapter(requireActivity(), whoPaidViewModel.getUsers().getValue(), userId -> {
             NavigationUtils.navigateSafe(navController, R.id.action_whoPaidFragment_to_addExpenseFragment, null);
         });
         binding.recyclerViewUsers.setAdapter(adapter);

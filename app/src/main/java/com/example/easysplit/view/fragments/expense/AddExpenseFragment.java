@@ -1,4 +1,4 @@
-package com.example.easysplit.view.fragments;
+package com.example.easysplit.view.fragments.expense;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -32,7 +32,7 @@ public class AddExpenseFragment extends Fragment {
     AddExpenseViewModel addExpenseViewModel;
     NavController navController;
 
-    private int lastFragmentActionId;
+    private int actionToLastFragment;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -51,14 +51,17 @@ public class AddExpenseFragment extends Fragment {
         navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
         mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
         addExpenseViewModel = new ViewModelProvider(requireActivity()).get(AddExpenseViewModel.class);
+
+        actionToLastFragment = getArguments().getInt("ActionToLastFragment");
+        Log.d(TAG, String.valueOf(actionToLastFragment));
+
         binding.toolbar.back.setOnClickListener(v -> {
-            Log.d(TAG, "Click on back " + lastFragmentActionId);
             mainActivityViewModel.setIsNotToMakeExpense();
-            NavigationUtils.navigateSafe(navController, lastFragmentActionId, null);
+            NavigationUtils.navigateSafe(navController, actionToLastFragment, null);
         });
 
-        final Observer<Integer> lastFragmentAction = integer -> lastFragmentActionId = integer;
-        addExpenseViewModel.getLastFragment().observe(requireActivity(), lastFragmentAction);
+        //final Observer<Integer> lastFragmentAction = integer -> lastFragmentActionId = integer;
+        //addExpenseViewModel.getLastFragment().observe(requireActivity(), lastFragmentAction);
 
         binding.whoPaid.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -10,6 +10,7 @@ import com.example.easysplit.model.Group;
 import com.example.easysplit.view.listeners.DataLoadListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -18,6 +19,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,9 +34,9 @@ public class GroupRepository {
 
     private MutableLiveData<Boolean> dataLoaded = new MutableLiveData<>();
 
+    private List<String> userGroups;
 
-    private String GROUP_KEY = "Group";
-
+    private static Boolean complete = false;
 
     public static GroupRepository getInstance()
     {
@@ -43,13 +46,21 @@ public class GroupRepository {
         }
         return instance;
     }
-    public MutableLiveData<List<Group>> getGroups()
+    public MutableLiveData<List<Group>> getGroups(DataLoadListener listener)
     {
         if (dataSet.size() == 0)
         {
-            setGroups();
+            setGroups(new DataLoadListener() {
+                @Override
+                public void dataLoaded() {
+                    Log.d(TAG, "Repository data loaded");
+                    data.setValue(dataSet);
+                    Log.d(TAG, "Return data - " + data.getValue().size());
+                    listener.dataLoaded();
+                }
+            });
         }
-        data.setValue(dataSet);
+        Log.d(TAG, "Return data");
         return data;
     }
     public MutableLiveData<Boolean> getDataLoaded()
@@ -57,34 +68,88 @@ public class GroupRepository {
         return dataLoaded;
     }
 
-    private void setGroups()
+    //Заполнение массива userGroups группами текущего пользователя
+    private void setUserGroups(final DataLoadListener listener)
     {
+        userGroups = new ArrayList<>();
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query query = reference.child("User").child(FirebaseAuth.getInstance().getUid()).child("userGroups");
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Log.d(TAG, "onDataChange in setUserGroups");
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                    {
+                        userGroups.add(snapshot.getValue().toString());
+                    }
+                    listener.dataLoaded();
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+    }
+
+    private void setGroups(final DataLoadListener listener) {
         dataLoaded.setValue(false);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference.child("Group");
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        ValueEventListener postListener = new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren())
-                {
-                    dataSet.add(snapshot.getValue(Group.class));
-                }
-                data.postValue(dataSet);
-                dataLoaded.setValue(true);
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                setUserGroups(new DataLoadListener() {
+                    @Override
+                    public void dataLoaded() {
+                        Log.d(TAG, "onDataChange in setGroups");
+                        dataSet.clear();
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            if (userGroups.contains(snapshot.getKey())) {
+                                Long i = (Long) snapshot.child("countMember").getValue();
+                                Group group = new Group(snapshot.child("groupName").getValue().toString(), i.intValue(), snapshot.getKey());
+                                dataSet.add(group);
+                            }
+                        }Log.d(TAG, "size of dataset - " + dataSet.size());
+                        data.postValue(dataSet);
+                        dataLoaded.setValue(true);
+                        listener.dataLoaded();
+                    }
+                });
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w(TAG, "Failed to read value.", error.toException());
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
             }
-        });
-        Log.d("Prog", "Data loaded - " + dataLoaded.getValue().toString());
+        };
+        query.addValueEventListener(postListener);
     }
 
     public void addGroup(final Group group)
     {
+        String id = UUID.randomUUID().toString();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        reference.child("Group").setValue(group);
+        reference.child("Group").child(id).setValue(group);
+        reference.child("User").child(FirebaseAuth.getInstance().getUid()).child("userGroups").updateChildren(Collections.singletonMap(id, id)).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Log.d("GroupToUser", "Complete");
+            }
+        });
+    }
+
+    public void deleteGroup(String id)
+    {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        reference.child("Group").child(id).removeValue();
+
+        reference.child("User").child(FirebaseAuth.getInstance().getUid()).child("userGroups").child(id).removeValue();
+    }
+
+    public interface GetCountOfGroupMembersListener
+    {
+        void onSuccessful(MutableLiveData<Integer> groupId);
     }
 
 

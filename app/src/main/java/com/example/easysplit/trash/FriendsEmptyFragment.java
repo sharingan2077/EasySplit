@@ -1,4 +1,4 @@
-package com.example.easysplit.view.fragments;
+package com.example.easysplit.trash;
 
 import android.os.Bundle;
 
@@ -39,16 +39,15 @@ public class FriendsEmptyFragment extends Fragment {
     {
         binding = FriendsEmptyFragmentBinding.inflate(inflater, container, false);
         addExpenseViewModel = new ViewModelProvider(requireActivity()).get(AddExpenseViewModel.class);
-        addExpenseViewModel.setLastFragmentAction(R.id.action_addExpenseFragment_to_friendsEmptyFragment);
+        //addExpenseViewModel.setLastFragmentAction(R.id.action_addExpenseFragment_to_friendsEmptyFragment);
         navController = Navigation.findNavController(getActivity(), R.id.navHostFragment);
         mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
-        mainActivityViewModel.showBottomNavigationBar();
 
         final Observer<Boolean> isGoToExpenseObserver = aBoolean -> {
             if (aBoolean)
             {
                 Log.d(TAG, "Go to expenseFragment");
-                NavigationUtils.navigateSafe(navController, R.id.action_friendsEmptyFragment_to_addExpenseFragment, null);
+                //NavigationUtils.navigateSafe(navController, R.id.action_friendsEmptyFragment_to_addExpenseFragment, null);
             }
         };
         mainActivityViewModel.getIsGoToMakeExpense().observe(getViewLifecycleOwner(), isGoToExpenseObserver);

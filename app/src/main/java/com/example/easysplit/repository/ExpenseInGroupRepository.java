@@ -31,8 +31,8 @@ public class ExpenseInGroupRepository {
 
     private void setExpensesInGroup()
     {
-        dataSet.add(new ExpenseInGroup("Potato", "20.09", "Misha", 1000));
-        dataSet.add(new ExpenseInGroup("Banana", "21.09", "You", 2000));
+        //dataSet.add(new ExpenseInGroup("Potato", "20.09", "Misha", 1000));
+        //dataSet.add(new ExpenseInGroup("Banana", "21.09", "You", 2000));
     }
 
 }

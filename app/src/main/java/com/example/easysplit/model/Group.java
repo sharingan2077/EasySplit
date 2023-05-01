@@ -1,15 +1,12 @@
 package com.example.easysplit.model;
 
-import com.google.firebase.database.DatabaseReference;
-
 public class Group {
 
     private String groupName;
     //private String imageUrl;
     private String id;
-    public String getId() {
-        return id;
-    }
+
+    private int countMember;
 
     public Group(String groupName, int countMember, String id) {
         this.groupName = groupName;
@@ -17,7 +14,6 @@ public class Group {
         this.countMember = countMember;
     }
 
-    private int countMember;
 
     public Group(String groupName, int countMember) {
         this.groupName = groupName;
@@ -40,5 +36,9 @@ public class Group {
 
     public int getCountMember() {
         return countMember;
+    }
+
+    public String getId() {
+        return id;
     }
 }

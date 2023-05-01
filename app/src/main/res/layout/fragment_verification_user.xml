@@ -6,7 +6,8 @@
     tools:context=".view.fragments.authentication.VerificationUserFragment"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar"
+        android:id="@+id/toolbar"/>
     <EditText
         android:id="@+id/verificationNumber"
         android:layout_width="wrap_content"

@@ -54,16 +54,16 @@ public class RegistrationFragment extends Fragment {
                     Toast.makeText(requireActivity(), "Заполните все поля!", Toast.LENGTH_SHORT).show();
                 }
 
-                else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches())
-                {
-
-                }
+//                else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches())
+//                {
+//
+//                }
                 else if (!password.equals(confirmPassword))
                 {
                     Toast.makeText(requireActivity(), "Пароли не совпадают!", Toast.LENGTH_SHORT).show();
                 }
                 else  {
-                    loginRegisterViewModel.register(email, password);
+                    loginRegisterViewModel.register(email, password, name);
                     loginRegisterViewModel.refreshLoggedOutLiveData();
                 }
             }
@@ -74,7 +74,7 @@ public class RegistrationFragment extends Fragment {
             public void onChanged(Boolean aBoolean) {
                 if (!aBoolean)
                 {
-                    NavigationUtils.navigateSafe(navController, R.id.action_registrationFragment_to_verificationUserFragment, null);
+                    NavigationUtils.navigateSafe(navController, R.id.action_registrationFragment_to_loginFragment, null);
                 }
             }
         };

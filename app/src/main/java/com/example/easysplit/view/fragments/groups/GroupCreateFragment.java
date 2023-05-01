@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,8 @@ import com.example.easysplit.R;
 import com.example.easysplit.databinding.FragmentGroupCreateBinding;
 import com.example.easysplit.viewModel.groups.GroupsViewModel;
 import com.example.easysplit.viewModel.MainActivityViewModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.UUID;
 
@@ -47,7 +50,6 @@ public class GroupCreateFragment extends Fragment {
         navController = Navigation.findNavController(getActivity(), R.id.navHostFragment);
         mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
         groupsViewModel = new ViewModelProvider(requireActivity()).get(GroupsViewModel.class);
-        //mainActivityViewModel.hideBottomNavigationBar();
         binding.toolbar.back.setOnClickListener(v -> {
             NavigationUtils.navigateSafe(navController, R.id.action_groupCreateFragment_to_groupsFragment, null);
         });
@@ -62,7 +64,6 @@ public class GroupCreateFragment extends Fragment {
             }
             else
             {
-                String id = UUID.randomUUID().toString();
                 NavigationUtils.navigateSafe(navController, R.id.action_groupCreateFragment_to_groupsFragment, null);
                 groupsViewModel.addNewValue(new Group(binding.nameOfGroup.getText().toString(), 1));
             }

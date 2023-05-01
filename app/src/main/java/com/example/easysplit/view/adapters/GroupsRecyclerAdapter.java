@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.easysplit.R;
 import com.example.easysplit.model.Group;
-import com.example.easysplit.view.listeners.DataLoadListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +24,7 @@ public class GroupsRecyclerAdapter extends RecyclerView.Adapter<GroupsRecyclerAd
 
 
     public interface onGroupClickListener{
-        void onClick();
+        void onClick(String groupId);
     }
     private static final String TAG = "RecyclerViewAdapter";
     private List<Group> groups =  new ArrayList<>();
@@ -61,13 +59,14 @@ public class GroupsRecyclerAdapter extends RecyclerView.Adapter<GroupsRecyclerAd
         int count = groups.get(position).getCountMember();
         holder.countMember.setText(Integer.toString(count));
         holder.parentLayout.setOnClickListener(v -> {
-            listener.onClick();
+            listener.onClick(groups.get(position).getId());
         });
 
     }
 
     @Override
     public int getItemCount() {
+        if (groups == null) return 0;
         return groups.size();
     }
 

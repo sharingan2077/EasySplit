@@ -27,8 +27,6 @@ public class ActivityFragment extends Fragment {
     private static final String TAG = "ActivityFragment";
     FragmentActivityBinding binding;
     NavController navController;
-
-    AddExpenseViewModel addExpenseViewModel;
     MainActivityViewModel mainActivityViewModel;
     ActivityViewModel activityViewModel;
     ActivityRecyclerAdapter adapter;
@@ -45,8 +43,6 @@ public class ActivityFragment extends Fragment {
         binding = FragmentActivityBinding.inflate(inflater, container, false);
         navController = Navigation.findNavController(getActivity(), R.id.navHostFragment);
         mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
-        addExpenseViewModel = new ViewModelProvider(requireActivity()).get(AddExpenseViewModel.class);
-        addExpenseViewModel.setLastFragmentAction(R.id.action_addExpenseFragment_to_activityFragment);
         activityViewModel = new ViewModelProvider(requireActivity()).get(ActivityViewModel.class);
         activityViewModel.init();
         initRecyclerView();
@@ -56,7 +52,9 @@ public class ActivityFragment extends Fragment {
             public void onChanged(Boolean aBoolean) {
                 if (aBoolean)
                 {
-                    NavigationUtils.navigateSafe(navController, R.id.action_activityFragment_to_addExpenseFragment, null);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("ActionToLastFragment", R.id.action_addExpenseFragment_to_activityFragment);
+                    NavigationUtils.navigateSafe(navController, R.id.action_activityFragment_to_addExpenseFragment, bundle);
                 }
             }
         };
