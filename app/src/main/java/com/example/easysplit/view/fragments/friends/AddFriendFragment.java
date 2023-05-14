@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.FragmentAddFriendBinding;
+import com.example.easysplit.view.listeners.CompleteListener;
 import com.example.easysplit.view.utils.NavigationUtils;
 import com.example.easysplit.viewModel.friends.FriendsViewModel;
 
@@ -65,7 +66,17 @@ public class AddFriendFragment extends Fragment {
                 }
                 else
                 {
-                    friendsViewModel.addNewValue(userName, id);
+                    friendsViewModel.addNewValue(userName, id, new CompleteListener() {
+                        @Override
+                        public void successful() {
+                            NavigationUtils.navigateSafe(navController, R.id.action_addFriendFragment_to_friendsFragment, null);
+                            Toast.makeText(requireContext(), "Друг успешно добавлен!", Toast.LENGTH_SHORT).show();;
+                        }
+                        @Override
+                        public void unSuccessful() {
+
+                        }
+                    });
                 }
 
             }

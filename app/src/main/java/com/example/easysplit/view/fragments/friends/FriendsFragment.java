@@ -20,6 +20,7 @@ import com.example.easysplit.model.User;
 import com.example.easysplit.view.adapters.FriendsRecyclerAdapter;
 import com.example.easysplit.view.adapters.UsersRecyclerAdapter;
 import com.example.easysplit.view.adapters.UsersSplitEquallyAdapter;
+import com.example.easysplit.view.listeners.CompleteListener;
 import com.example.easysplit.view.utils.NavigationUtils;
 import com.example.easysplit.viewModel.AddExpenseViewModel;
 import com.example.easysplit.viewModel.MainActivityViewModel;
@@ -48,15 +49,11 @@ public class FriendsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentFriendsBinding.inflate(inflater, container, false);
         navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
+        showProgress();
         friendsViewModel = new ViewModelProvider(requireActivity()).get(FriendsViewModel.class);
-        friendsViewModel.init();
-        initRecyclerView();
-
-        mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
-
-        final Observer<List<User>> observerNewFriends = new Observer<List<User>>() {
+        friendsViewModel.init(new CompleteListener() {
             @Override
-            public void onChanged(List<User> users) {
+            public void successful() {
                 adapter.notifyDataSetChanged();
                 if (adapter.getItemCount() == 0)
                 {
@@ -66,11 +63,35 @@ public class FriendsFragment extends Fragment {
                 {
                     showFriends();
                 }
+            }
+            @Override
+            public void unSuccessful() {
 
             }
-        };
-        friendsViewModel.getUsers().observe(requireActivity(), observerNewFriends);
+        });
 
+
+        initRecyclerView();
+
+//        final Observer<List<User>> observerNewFriends = new Observer<List<User>>() {
+//            @Override
+//            public void onChanged(List<User> users) {
+//                adapter.notifyDataSetChanged();
+//                if (adapter.getItemCount() == 0)
+//                {
+//                    hideFriends();
+//                }
+//                else
+//                {
+//                    showFriends();
+//                }
+//
+//            }
+//        };
+//        friendsViewModel.getUsers().observe(requireActivity(), observerNewFriends);
+
+
+        mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
         final Observer<Boolean> isGoToExpenseObserver = aBoolean -> {
             if (aBoolean)
             {
@@ -93,28 +114,45 @@ public class FriendsFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void showFriends()
-    {
-        binding.imgOfFriends.setVisibility(View.GONE);
-        binding.txtEmptyFriends.setVisibility(View.GONE);
-        binding.totalSum.setVisibility(View.VISIBLE);
-        binding.totalSumValue.setVisibility(View.VISIBLE);
-        binding.recyclerView.setVisibility(View.VISIBLE);
-    }
-    private void hideFriends()
-    {
-        binding.imgOfFriends.setVisibility(View.VISIBLE);
-        binding.txtEmptyFriends.setVisibility(View.VISIBLE);
-        binding.totalSum.setVisibility(View.GONE);
-        binding.totalSumValue.setVisibility(View.GONE);
-        binding.recyclerView.setVisibility(View.GONE);
-
-    }
-
     private void initRecyclerView()
     {
         adapter = new FriendsRecyclerAdapter(requireActivity(), friendsViewModel.getUsers().getValue());
         binding.recyclerView.setAdapter(adapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
+
+    private void showProgress()
+    {
+        binding.progressBar.setVisibility(View.VISIBLE);
+        binding.imgOfFriends.setVisibility(View.GONE);
+        binding.txtEmptyFriends.setVisibility(View.GONE);
+        binding.totalSum.setVisibility(View.GONE);
+        binding.totalSumValue.setVisibility(View.GONE);
+        binding.recyclerView.setVisibility(View.GONE);
+        binding.addFriend.setVisibility(View.GONE);
+
+    }
+
+    private void showFriends()
+    {
+        binding.progressBar.setVisibility(View.GONE);
+        binding.imgOfFriends.setVisibility(View.GONE);
+        binding.txtEmptyFriends.setVisibility(View.GONE);
+        binding.totalSum.setVisibility(View.VISIBLE);
+        binding.totalSumValue.setVisibility(View.VISIBLE);
+        binding.recyclerView.setVisibility(View.VISIBLE);
+        binding.addFriend.setVisibility(View.VISIBLE);
+    }
+    private void hideFriends()
+    {
+        binding.progressBar.setVisibility(View.GONE);
+        binding.imgOfFriends.setVisibility(View.VISIBLE);
+        binding.txtEmptyFriends.setVisibility(View.VISIBLE);
+        binding.totalSum.setVisibility(View.GONE);
+        binding.totalSumValue.setVisibility(View.GONE);
+        binding.recyclerView.setVisibility(View.GONE);
+        binding.addFriend.setVisibility(View.VISIBLE);
+
+    }
+
 }

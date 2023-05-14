@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.easysplit.model.User;
 import com.example.easysplit.repository.UserRepository;
+import com.example.easysplit.view.listeners.CompleteListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,20 +15,22 @@ public class FriendsViewModel extends ViewModel {
     private MutableLiveData<List<User>> users;
     private UserRepository mRepo;
 
-    public void init()
+    public void init(CompleteListener listener)
     {
 
         if (users != null)
         {
+            users = mRepo.getUsers(listener);
             return;
         }
         mRepo = UserRepository.getInstance();
-        users = mRepo.getUsers();
+        users = mRepo.getUsers(listener);
     }
 
-    public void addNewValue(String userName, String id)
+    public void addNewValue(String userName, String id, CompleteListener listener)
     {
-        mRepo.addFriend(userName, id);
+        mRepo.addFriend(userName, id, listener);
+        //users = mRepo.getUsers();
     }
 
     public LiveData<List<User>> getUsers()

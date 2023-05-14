@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.easysplit.model.Group;
+import com.example.easysplit.view.listeners.DataLoadFirstListener;
 import com.example.easysplit.view.listeners.DataLoadListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -34,31 +35,28 @@ public class GroupRepository {
 
     private MutableLiveData<Boolean> dataLoaded = new MutableLiveData<>();
 
+    private static DataLoadFirstListener dataLoadFirstListener;
+
     private List<String> userGroups;
 
     private static Boolean complete = false;
 
-    public static GroupRepository getInstance()
+    public static GroupRepository getInstance(DataLoadFirstListener listener)
     {
         if (instance == null)
         {
             instance = new GroupRepository();
         }
+        dataLoadFirstListener = listener;
         return instance;
     }
-    public MutableLiveData<List<Group>> getGroups(DataLoadListener listener)
+    public MutableLiveData<List<Group>> getGroups()
     {
         if (dataSet.size() == 0)
         {
-            setGroups(new DataLoadListener() {
-                @Override
-                public void dataLoaded() {
-                    Log.d(TAG, "Repository data loaded");
-                    data.setValue(dataSet);
-                    Log.d(TAG, "Return data - " + data.getValue().size());
-                    listener.dataLoaded();
-                }
-            });
+            Log.d(TAG, "Size of dataset - " + dataSet.size());
+            setGroups();
+            data.setValue(dataSet);
         }
         Log.d(TAG, "Return data");
         return data;
@@ -92,7 +90,7 @@ public class GroupRepository {
             });
     }
 
-    private void setGroups(final DataLoadListener listener) {
+    private void setGroups() {
         dataLoaded.setValue(false);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference.child("Group");
@@ -113,7 +111,7 @@ public class GroupRepository {
                         }Log.d(TAG, "size of dataset - " + dataSet.size());
                         data.postValue(dataSet);
                         dataLoaded.setValue(true);
-                        listener.dataLoaded();
+                        dataLoadFirstListener.dataLoaded(true);
                     }
                 });
             }

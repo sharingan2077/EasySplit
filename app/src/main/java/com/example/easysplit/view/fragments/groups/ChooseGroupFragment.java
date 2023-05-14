@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.FragmentChooseGroupBinding;
 import com.example.easysplit.model.Group;
+import com.example.easysplit.view.listeners.DataLoadFirstListener;
+import com.example.easysplit.view.listeners.DataLoadListener;
 import com.example.easysplit.view.utils.NavigationUtils;
 import com.example.easysplit.view.adapters.GroupsRecyclerAdapter;
 import com.example.easysplit.viewModel.groups.GroupsViewModel;
@@ -44,7 +46,12 @@ public class ChooseGroupFragment extends Fragment {
         binding = FragmentChooseGroupBinding.inflate(inflater, container, false);
         groupsViewModel = new ViewModelProvider(requireActivity()).get(GroupsViewModel.class);
         navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
-        groupsViewModel.init();
+        groupsViewModel.init(new DataLoadFirstListener() {
+            @Override
+            public void dataLoaded(Boolean firstLoad) {
+
+            }
+        });
         initRecyclerView();
         binding.toolbar.textToolbar.setText("Выберите группу");
         final Observer<List<Group>> observerNewGroup = new Observer<List<Group>>() {
