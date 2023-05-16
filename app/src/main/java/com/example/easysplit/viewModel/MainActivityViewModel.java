@@ -1,7 +1,10 @@
 package com.example.easysplit.viewModel;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -13,13 +16,24 @@ public class MainActivityViewModel extends ViewModel {
     private final MutableLiveData<Integer> bottomNavigationItem = new MutableLiveData<>();
 
     private final MutableLiveData<Boolean> isGoToMakeExpense = new MutableLiveData<>();
-    public void init()
+
+    private  Context mContext;
+
+    private int countOfGroups = 0;
+    public void init(Context context)
     {
         isShowBottomBar.setValue(false);
+        mContext = context;
+
     }
     public void initFab()
     {
         isGoToMakeExpense.setValue(false);
+    }
+
+    public void setCountOfGroups(int value)
+    {
+        countOfGroups = value;
     }
 
     public void showBottomNavigationBar()
@@ -33,7 +47,15 @@ public class MainActivityViewModel extends ViewModel {
 
     public void setIsGoToMakeExpense()
     {
-        isGoToMakeExpense.setValue(true);
+        Log.d(TAG, Integer.toString(countOfGroups));
+        if (countOfGroups != 0)
+        {
+            isGoToMakeExpense.setValue(true);
+        }
+        else
+        {
+            Toast.makeText(mContext, "У вас пока нет групп!", Toast.LENGTH_SHORT).show();
+        }
     }
     public void setIsNotToMakeExpense()
     {

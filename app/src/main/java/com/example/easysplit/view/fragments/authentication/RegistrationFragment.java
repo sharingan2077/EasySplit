@@ -2,15 +2,12 @@ package com.example.easysplit.view.fragments.authentication;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +17,6 @@ import com.example.easysplit.R;
 import com.example.easysplit.databinding.FragmentRegistrationBinding;
 import com.example.easysplit.view.utils.NavigationUtils;
 import com.example.easysplit.viewModel.authentication.LoginRegisterViewModel;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class RegistrationFragment extends Fragment {
     FragmentRegistrationBinding binding;

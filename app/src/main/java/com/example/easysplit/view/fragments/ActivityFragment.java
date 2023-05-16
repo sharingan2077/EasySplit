@@ -14,17 +14,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.easysplit.databinding.FragmentActivityBinding;
 import com.example.easysplit.view.adapters.ActivityRecyclerAdapter;
-import com.example.easysplit.view.adapters.UsersSplitEquallyAdapter;
+import com.example.easysplit.view.listeners.CompleteListener;
 import com.example.easysplit.view.utils.NavigationUtils;
 import com.example.easysplit.R;
-import com.example.easysplit.databinding.FragmentActivityBinding;
 import com.example.easysplit.viewModel.ActivityViewModel;
-import com.example.easysplit.viewModel.AddExpenseViewModel;
 import com.example.easysplit.viewModel.MainActivityViewModel;
 
 public class ActivityFragment extends Fragment {
     private static final String TAG = "ActivityFragment";
+
     FragmentActivityBinding binding;
     NavController navController;
     MainActivityViewModel mainActivityViewModel;
@@ -44,7 +44,25 @@ public class ActivityFragment extends Fragment {
         navController = Navigation.findNavController(getActivity(), R.id.navHostFragment);
         mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
         activityViewModel = new ViewModelProvider(requireActivity()).get(ActivityViewModel.class);
-        activityViewModel.init();
+        activityViewModel.init(new CompleteListener() {
+            @Override
+            public void successful() {
+                adapter.notifyDataSetChanged();
+                if (adapter.getItemCount() == 0)
+                {
+                    hideActivities();
+                }
+                else
+                {
+                    showActivities();
+                }
+            }
+
+            @Override
+            public void unSuccessful() {
+
+            }
+        });
         initRecyclerView();
 
         final Observer<Boolean> isGoToExpenseObserver = new Observer<Boolean>() {
@@ -68,6 +86,23 @@ public class ActivityFragment extends Fragment {
         adapter = new ActivityRecyclerAdapter(requireActivity(), activityViewModel.getActivities().getValue());
         binding.recyclerViewActivity.setAdapter(adapter);
         binding.recyclerViewActivity.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
+    private void showActivities()
+    {
+        binding.progressBar.setVisibility(View.GONE);
+        binding.textActivity.setVisibility(View.VISIBLE);
+        binding.recyclerViewActivity.setVisibility(View.VISIBLE);
+        binding.imgNoActivity.setVisibility(View.GONE);
+        binding.noActivityText.setVisibility(View.GONE);
+    }
+    private void hideActivities()
+    {
+        binding.progressBar.setVisibility(View.GONE);
+        binding.textActivity.setVisibility(View.GONE);
+        binding.recyclerViewActivity.setVisibility(View.GONE);
+        binding.imgNoActivity.setVisibility(View.VISIBLE);
+        binding.noActivityText.setVisibility(View.VISIBLE);
     }
 
 }

@@ -24,7 +24,7 @@ public class GroupsRecyclerAdapter extends RecyclerView.Adapter<GroupsRecyclerAd
 
 
     public interface onGroupClickListener{
-        void onClick(String groupId);
+        void onClick(String groupId, String nameOfGroup, int countGroupMembers);
     }
     private static final String TAG = "RecyclerViewAdapter";
     private List<Group> groups =  new ArrayList<>();
@@ -59,7 +59,7 @@ public class GroupsRecyclerAdapter extends RecyclerView.Adapter<GroupsRecyclerAd
         int count = groups.get(position).getCountMember();
         holder.countMember.setText(Integer.toString(count));
         holder.parentLayout.setOnClickListener(v -> {
-            listener.onClick(groups.get(position).getId());
+            listener.onClick(groups.get(position).getId(), groups.get(position).getGroupName(), count);
         });
 
     }

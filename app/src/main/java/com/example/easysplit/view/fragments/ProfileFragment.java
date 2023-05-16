@@ -13,13 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.easysplit.databinding.FragmentProfileBinding;
 import com.example.easysplit.view.utils.NavigationUtils;
 import com.example.easysplit.R;
-import com.example.easysplit.databinding.FragmentProfileBinding;
-import com.example.easysplit.viewModel.AddExpenseViewModel;
 import com.example.easysplit.viewModel.MainActivityViewModel;
 import com.example.easysplit.viewModel.ProfileViewModel;
-import com.example.easysplit.viewModel.authentication.LoggedInViewModel;
 import com.example.easysplit.viewModel.authentication.LoginRegisterViewModel;
 
 public class ProfileFragment extends Fragment {

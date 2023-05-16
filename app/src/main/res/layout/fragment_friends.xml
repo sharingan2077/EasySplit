@@ -19,6 +19,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/friends"
+        style="@style/InterMedium20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Друзья"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="58dp"/>
 
     <TextView
         android:visibility="gone"
@@ -76,7 +89,7 @@
         android:layout_height="450dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/totalSum" />
+        app:layout_constraintTop_toBottomOf="@+id/friends" />
 
     <LinearLayout
         android:visibility="gone"

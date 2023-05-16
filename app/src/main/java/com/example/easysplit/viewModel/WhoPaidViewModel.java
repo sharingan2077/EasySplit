@@ -4,39 +4,26 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import com.example.easysplit.model.User;
 import com.example.easysplit.repository.UserRepository;
+import com.example.easysplit.repository.WhoPaidRepository;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class WhoPaidViewModel extends ViewModel {
 
     private MutableLiveData<List<User>> users;
-    private UserRepository mRepo;
+    private WhoPaidRepository mRepo;
 
-    public void init()
+    public void init(String id)
     {
 
         if (users != null)
         {
+            users = mRepo.getUsers(id);
             return;
         }
-        mRepo = UserRepository.getInstance();
-        users = mRepo.getUsers();
-    }
-
-    public void addNewValue(final User user)
-    {
-        List<User> currentUsers;
-        if (users != null)
-        {
-            currentUsers = users.getValue();
-        }
-        else
-        {
-            users = new MutableLiveData<>();
-            currentUsers = new ArrayList<>();
-        }
-        currentUsers.add(user);
-        users.setValue(currentUsers);
+        mRepo = WhoPaidRepository.getInstance();
+        users = mRepo.getUsers(id);
     }
 
     public LiveData<List<User>> getUsers()

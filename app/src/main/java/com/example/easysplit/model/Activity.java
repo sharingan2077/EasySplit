@@ -7,6 +7,22 @@ public class Activity {
     private String nameOfGroup;
     private String date;
 
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setNameOfExpense(String nameOfExpense) {
+        this.nameOfExpense = nameOfExpense;
+    }
+
+    public void setNameOfGroup(String nameOfGroup) {
+        this.nameOfGroup = nameOfGroup;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     public String getUserName() {
         return userName;
     }
@@ -28,5 +44,7 @@ public class Activity {
         this.nameOfExpense = nameOfExpense;
         this.nameOfGroup = nameOfGroup;
         this.date = date;
+    }
+    public Activity() {
     }
 }

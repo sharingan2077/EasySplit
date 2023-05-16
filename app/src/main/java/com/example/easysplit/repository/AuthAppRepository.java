@@ -47,7 +47,6 @@ public class AuthAppRepository {
         this.loggedOutLiveData = new MutableLiveData<>();
         this.isVerified = new MutableLiveData<>();
         if (firebaseAuth.getCurrentUser() != null) {
-            Log.d("LoginFragment", "userNotNull");
             userLiveData.postValue(firebaseAuth.getCurrentUser());
             loggedOutLiveData.postValue(false);
         }
@@ -156,12 +155,10 @@ public class AuthAppRepository {
     {
         if (firebaseAuth.getCurrentUser() == null)
         {
-            Log.d("Naruto", "Current user is null");
             loggedOutLiveData.setValue(true);
         }
         else
         {
-            Log.d("Naruto", "Current user is not null");
             loggedOutLiveData.setValue(false);
         }
     }

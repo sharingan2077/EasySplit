@@ -9,24 +9,17 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.FragmentFriendsBinding;
-import com.example.easysplit.model.User;
 import com.example.easysplit.view.adapters.FriendsRecyclerAdapter;
-import com.example.easysplit.view.adapters.UsersRecyclerAdapter;
-import com.example.easysplit.view.adapters.UsersSplitEquallyAdapter;
 import com.example.easysplit.view.listeners.CompleteListener;
 import com.example.easysplit.view.utils.NavigationUtils;
-import com.example.easysplit.viewModel.AddExpenseViewModel;
 import com.example.easysplit.viewModel.MainActivityViewModel;
 import com.example.easysplit.viewModel.friends.FriendsViewModel;
-
-import java.util.List;
 
 public class FriendsFragment extends Fragment {
 
@@ -126,8 +119,9 @@ public class FriendsFragment extends Fragment {
         binding.progressBar.setVisibility(View.VISIBLE);
         binding.imgOfFriends.setVisibility(View.GONE);
         binding.txtEmptyFriends.setVisibility(View.GONE);
-        binding.totalSum.setVisibility(View.GONE);
-        binding.totalSumValue.setVisibility(View.GONE);
+        binding.friends.setVisibility(View.GONE);
+        //binding.totalSum.setVisibility(View.GONE);
+        //binding.totalSumValue.setVisibility(View.GONE);
         binding.recyclerView.setVisibility(View.GONE);
         binding.addFriend.setVisibility(View.GONE);
 
@@ -138,8 +132,9 @@ public class FriendsFragment extends Fragment {
         binding.progressBar.setVisibility(View.GONE);
         binding.imgOfFriends.setVisibility(View.GONE);
         binding.txtEmptyFriends.setVisibility(View.GONE);
-        binding.totalSum.setVisibility(View.VISIBLE);
-        binding.totalSumValue.setVisibility(View.VISIBLE);
+        binding.friends.setVisibility(View.VISIBLE);
+        //binding.totalSum.setVisibility(View.VISIBLE);
+        //binding.totalSumValue.setVisibility(View.VISIBLE);
         binding.recyclerView.setVisibility(View.VISIBLE);
         binding.addFriend.setVisibility(View.VISIBLE);
     }
@@ -148,8 +143,9 @@ public class FriendsFragment extends Fragment {
         binding.progressBar.setVisibility(View.GONE);
         binding.imgOfFriends.setVisibility(View.VISIBLE);
         binding.txtEmptyFriends.setVisibility(View.VISIBLE);
-        binding.totalSum.setVisibility(View.GONE);
-        binding.totalSumValue.setVisibility(View.GONE);
+        binding.friends.setVisibility(View.GONE);
+        //binding.totalSum.setVisibility(View.GONE);
+        //binding.totalSumValue.setVisibility(View.GONE);
         binding.recyclerView.setVisibility(View.GONE);
         binding.addFriend.setVisibility(View.VISIBLE);
 

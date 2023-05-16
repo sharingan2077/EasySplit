@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         setBackgroundToBottomNavigation();
 
         mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
-        mainActivityViewModel.init();
+        mainActivityViewModel.init(this);
         mainActivityViewModel.initFab();
 
 
@@ -62,12 +62,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDestinationChanged(@NonNull NavController controller,
                                              @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                Log.d(TAG, "Destination changed");
                 int id = destination.getId();
                 if(id == R.id.groupsFragment || id == R.id.friendsFragment
                 || id == R.id.activityFragment || id == R.id.profileFragment
                 || id == R.id.groupEnterFragment) {
-                    Log.d(TAG, "Showing bottom navigation bar");
                     showBottomNavigationBar();
                 } else {
                     hideBottomNavigationBar();

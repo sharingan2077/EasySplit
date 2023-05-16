@@ -4,14 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.easysplit.R;
@@ -24,6 +22,7 @@ public class UsersSplitUnequallyAdapter extends RecyclerView.Adapter<UsersSplitU
 
     private List<User> users =  new ArrayList<>();
     private Context mContext;
+
     public UsersSplitUnequallyAdapter(Context mContext, List<User> users) {
         this.users = users;
         this.mContext = mContext;

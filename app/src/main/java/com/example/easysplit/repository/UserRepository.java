@@ -1,12 +1,10 @@
 package com.example.easysplit.repository;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.easysplit.model.Group;
 import com.example.easysplit.model.User;
 import com.example.easysplit.view.listeners.CompleteListener;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,10 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 public class UserRepository {
 
@@ -48,7 +43,6 @@ public class UserRepository {
     {
         setUsers(listener);
         data.setValue(dataSet);
-        Log.d("NewUser", "size == 0");
         return data;
     }
 
@@ -64,7 +58,6 @@ public class UserRepository {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren())
                 {
-                    Log.d("UserNew", "settingUserFriendUID - " + snapshot.getValue().toString());
                     userFriends.add(snapshot.getValue().toString());
                 }
                 listener.successful();
@@ -83,7 +76,6 @@ public class UserRepository {
         setUserFriends(new CompleteListener() {
             @Override
             public void successful() {
-                Log.d("UserNew", "Starting to filling");
 
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
                 Query query = reference.child("User");
@@ -96,7 +88,6 @@ public class UserRepository {
                             if (userFriends.contains(snapshot.getKey()))
                             {
                                 User user = new User(snapshot.child("userName").getValue().toString(), snapshot.child("id").getValue().toString(), snapshot.getKey());
-                                Log.d("User", "snapshot.getKey() " + snapshot.getKey());
                                 dataSet.add(user);
                             }
                         }
@@ -106,7 +97,6 @@ public class UserRepository {
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
                     }
                 };
                 query.addValueEventListener(postListener);
@@ -233,7 +223,6 @@ public class UserRepository {
     {
         setUsers();
         data.setValue(dataSet);
-        Log.d("NewUser", "size == 0");
         return data;
     }
 
@@ -243,8 +232,6 @@ public class UserRepository {
         setUserFriends(new CompleteListener() {
             @Override
             public void successful() {
-                Log.d("UserNew", "Starting to filling");
-
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
                 Query query = reference.child("User");
                 ValueEventListener postListener = new ValueEventListener() {
@@ -256,7 +243,6 @@ public class UserRepository {
                             if (userFriends.contains(snapshot.getKey()))
                             {
                                 User user = new User(snapshot.child("userName").getValue().toString(), snapshot.child("id").getValue().toString(), snapshot.getKey());
-                                Log.d("User", "snapshot.getKey() " + snapshot.getKey());
                                 dataSet.add(user);
                             }
                         }

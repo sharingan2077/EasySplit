@@ -11,6 +11,7 @@ import com.example.easysplit.repository.DebtInGroupRepository;
 import com.example.easysplit.repository.ExpenseInGroupRepository;
 import com.example.easysplit.repository.GroupEnterRepository;
 import com.example.easysplit.repository.GroupRepository;
+import com.example.easysplit.view.listeners.CompleteListenerInt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,52 +25,56 @@ public class GroupEnterViewModel extends ViewModel {
 
     private GroupEnterRepository mRepo;
 
+    public void setCountOfGroupMembers(Integer integer) {
+        countOfGroupMembers.setValue(integer);
+    }
+
     public MutableLiveData<Integer> countOfGroupMembers = new MutableLiveData<>();
 
 
-    public LiveData<Integer> getCountOfGroupMembers() {
-        return countOfGroupMembers;
-    }
-
-    public void init()
+    public void init(String groupId)
     {
 
         if (expensesInGroups != null)
         {
+            //mRepo.getCountOfGroupMembers(groupId);
+            expensesInGroups = mRepo1.getExpensesInGroup();
+            debtsInGroup = mRepo2.getDebtsInGroup();
             return;
         }
         mRepo = GroupEnterRepository.getInstance();
-        countOfGroupMembers = mRepo.getCountOfGroupMembers();
+        ///mRepo.getCountOfGroupMembers(groupId);
         mRepo1 = ExpenseInGroupRepository.getInstance();
         expensesInGroups = mRepo1.getExpensesInGroup();
         mRepo2 = DebtInGroupRepository.getInstance();
         debtsInGroup = mRepo2.getDebtsInGroup();
     }
 
-    public void addNewValue(final ExpenseInGroup expenseInGroup)
+    public void leaveGroup(String id)
     {
-        List<ExpenseInGroup> currentExpensesInGroup;
-        if (expensesInGroups != null)
-        {
-            currentExpensesInGroup = expensesInGroups.getValue();
-        }
-        else
-        {
-            expensesInGroups = new MutableLiveData<>();
-            currentExpensesInGroup = new ArrayList<>();
-        }
-        currentExpensesInGroup.add(expenseInGroup);
-        expensesInGroups.setValue(currentExpensesInGroup);
+        mRepo.leaveGroup(id);
     }
 
-    public void setCountOfGroupMembers(String groupId)
+    public void deleteGroup(String id)
     {
-        mRepo.getCountOfGroupMembers(groupId, new GroupRepository.GetCountOfGroupMembersListener() {
-            @Override
-            public void onSuccessful(MutableLiveData<Integer> groupId) {
-                countOfGroupMembers = groupId;
-            }
-        });
+        mRepo.deleteGroup(id);
+    }
+//    public void setCountOfGroupMembers(String groupId)
+//    {
+//        mRepo.getCountOfGroupMembers(groupId, new GroupRepository.GetCountOfGroupMembersListener() {
+//            @Override
+//            public void onSuccessful(MutableLiveData<Integer> groupId) {
+//                countOfGroupMembers = groupId;
+//            }
+//        });
+//    }
+    public void gettingCountOfGroupMembers(String groupId, CompleteListenerInt listenerInt)
+    {
+        mRepo.getCountOfGroupMembers(groupId, listenerInt);
+    }
+
+    public LiveData<Integer> getCountOfGroupMembers() {
+        return countOfGroupMembers;
     }
 
     public LiveData<List<ExpenseInGroup>> getExpensesInGroups()

@@ -16,17 +16,11 @@ import android.view.ViewGroup;
 
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.FragmentGroupsBinding;
-import com.example.easysplit.model.Group;
-import com.example.easysplit.view.fragments.groups.GroupsFragmentDirections;
-import com.example.easysplit.view.listeners.DataLoadFirstListener;
-import com.example.easysplit.view.listeners.DataLoadListener;
-import com.example.easysplit.view.utils.NavigationUtils;
 import com.example.easysplit.view.adapters.GroupsRecyclerAdapter;
-import com.example.easysplit.viewModel.AddExpenseViewModel;
+import com.example.easysplit.view.listeners.CompleteListener;
+import com.example.easysplit.view.utils.NavigationUtils;
 import com.example.easysplit.viewModel.groups.GroupsViewModel;
 import com.example.easysplit.viewModel.MainActivityViewModel;
-
-import java.util.List;
 
 public class GroupsFragment extends Fragment{
 
@@ -37,9 +31,6 @@ public class GroupsFragment extends Fragment{
     private GroupsRecyclerAdapter adapter;
     NavController navController;
     GroupsViewModel groupsViewModel;
-
-    private Boolean isProgressing;
-    private Boolean firstLoading;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,35 +43,43 @@ public class GroupsFragment extends Fragment{
 
         binding = FragmentGroupsBinding.inflate(inflater, container, false);
         navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
+//        progressing();
         groupsViewModel = new ViewModelProvider(requireActivity()).get(GroupsViewModel.class);
-        mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
-        isProgressing = true;
-        firstLoading = true;
-        progressing();
-        groupsViewModel.init(new DataLoadFirstListener() {
+        groupsViewModel.init(new CompleteListener() {
             @Override
-            public void dataLoaded(Boolean firstLoad) {
-                Log.d(TAG, "isProgressing is false");
-                isProgressing = false;
-                if (!firstLoad)
-                {
-                    initRecyclerView();
-                    firstLoading = false;
-                }
+            public void successful() {
                 adapter.notifyDataSetChanged();
-                if (adapter.getItemCount() == 0) hideGroups();
-                else showGroups();
+                mainActivityViewModel.setCountOfGroups(adapter.getItemCount());
+
+                Log.d(TAG, String.valueOf(adapter.getItemCount()));
+                if (adapter.getItemCount() == 0)
+                {
+                    hideGroups();
+                }
+                else
+                {
+                    showGroups();
+                }
+            }
+            @Override
+            public void unSuccessful() {
+
             }
         });
-        if (firstLoading) initRecyclerView();
+        initRecyclerView();
+
         binding.createGroup.setOnClickListener(v ->
                 NavigationUtils.navigateSafe(navController, R.id.action_groupsFragment_to_groupCreateFragment, null)
         );
 
+        mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
         final Observer<Boolean> isGoToExpenseObserver = aBoolean -> {
             Bundle bundle = new Bundle();
             bundle.putInt("ActionToLastFragment", R.id.action_addExpenseFragment_to_groupsFragment);
-            if (aBoolean) NavigationUtils.navigateSafe(navController, R.id.action_groupsFragment_to_addExpenseFragment, bundle);
+            if (aBoolean)
+            {
+                NavigationUtils.navigateSafe(navController, R.id.action_groupsFragment_to_addExpenseFragment, bundle);
+            }
         };
         mainActivityViewModel.getIsGoToMakeExpense().observe(getViewLifecycleOwner(), isGoToExpenseObserver);
         mainActivityViewModel.showBottomNavigationBar();
@@ -129,12 +128,17 @@ public class GroupsFragment extends Fragment{
 
     private void initRecyclerView()
     {
-        Log.d(TAG, "init recycler view");
-        adapter = new GroupsRecyclerAdapter(getActivity(), groupsViewModel.getGroups().getValue(), groupId -> {
-            Bundle bundle = new Bundle();
-            bundle.putString("groupId", groupId);
-            NavigationUtils.navigateSafe(navController, R.id.action_groupsFragment_to_groupEnterFragment, bundle);
+        adapter = new GroupsRecyclerAdapter(getActivity(), groupsViewModel.getGroups().getValue(), new GroupsRecyclerAdapter.onGroupClickListener() {
+            @Override
+            public void onClick(String groupId, String nameOfGroup, int countGroupMembers) {
+                Bundle bundle = new Bundle();
+                bundle.putString("groupId", groupId);
+                bundle.putString("nameOfGroup", nameOfGroup);
+                bundle.putInt("countGroupMembers", countGroupMembers);
+                NavigationUtils.navigateSafe(navController, R.id.action_groupsFragment_to_groupEnterFragment, bundle);
+            }
         });
+
         binding.recyclerView.setAdapter(adapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }

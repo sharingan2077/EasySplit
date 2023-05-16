@@ -17,6 +17,7 @@ import com.example.easysplit.R;
 import com.example.easysplit.databinding.FragmentAddFriendToGroupBinding;
 import com.example.easysplit.repository.UserRepository;
 import com.example.easysplit.view.adapters.UsersRecyclerAdapter;
+import com.example.easysplit.view.listeners.CompleteListener;
 import com.example.easysplit.view.utils.NavigationUtils;
 import com.example.easysplit.viewModel.groups.AddFriendToGroupViewModel;
 
@@ -27,7 +28,9 @@ public class AddFriendToGroupFragment extends Fragment {
 
     AddFriendToGroupViewModel addFriendToGroupViewModel;
 
-    String groupId;
+    private String groupId;
+    private String nameOfGroup;
+    private int countGroupMembers;
 
     UsersRecyclerAdapter adapter;
 
@@ -44,15 +47,30 @@ public class AddFriendToGroupFragment extends Fragment {
         binding = FragmentAddFriendToGroupBinding.inflate(inflater, container, false);
         navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
         addFriendToGroupViewModel = new ViewModelProvider(requireActivity()).get(AddFriendToGroupViewModel.class);
-        addFriendToGroupViewModel.init();
+        addFriendToGroupViewModel.init(new CompleteListener() {
+            @Override
+            public void successful() {
+                adapter.notifyDataSetChanged();
+
+            }
+            @Override
+            public void unSuccessful() {
+
+            }
+        });
         groupId = getArguments().getString("groupId");
-        bundle = new Bundle();
-        bundle.putString("groupId", groupId);
+        nameOfGroup = getArguments().getString("nameOfGroup", "0");
+        countGroupMembers = getArguments().getInt("countGroupMembers", 0);
+
         initRecyclerView();
         binding.toolbar.textToolbar.setText("Добавить в группу");
         binding.toolbar.back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                bundle = new Bundle();
+                bundle.putString("groupId", groupId);
+                bundle.putString("nameOfGroup", nameOfGroup);
+                bundle.putInt("countGroupMembers", countGroupMembers);
                 NavigationUtils.navigateSafe(navController, R.id.action_addFriendToGroupFragment_to_groupEnterFragment, bundle);
             }
         });
@@ -72,6 +90,10 @@ public class AddFriendToGroupFragment extends Fragment {
             addFriendToGroupViewModel.addFriendToGroup(groupId, userId, new UserRepository.AddFriendToGroupListener() {
                 @Override
                 public void successful() {
+                    bundle = new Bundle();
+                    bundle.putString("groupId", groupId);
+                    bundle.putString("nameOfGroup", nameOfGroup);
+                    bundle.putInt("countGroupMembers", countGroupMembers);
                     NavigationUtils.navigateSafe(navController, R.id.action_addFriendToGroupFragment_to_groupEnterFragment, bundle);
                 }
                 @Override

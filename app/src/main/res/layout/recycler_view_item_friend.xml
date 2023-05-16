@@ -37,6 +37,7 @@
         android:layout_gravity="center"
         android:layout_marginStart="100dp">
         <TextView
+            android:visibility="gone"
             android:id="@+id/owe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,6 +45,7 @@
             style="@style/InterLight16"
             android:textColor="@color/red"/>
         <TextView
+            android:visibility="gone"
             android:id="@+id/sum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

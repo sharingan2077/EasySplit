@@ -30,6 +30,7 @@ public class DebtInGroupRepository {
 
     private void setDebtsInGroup()
     {
+        dataSet.clear();
         dataSet.add(new DebtInGroup("Misha", 2000));
         dataSet.add(new DebtInGroup("You", 3000));
         dataSet.add(new DebtInGroup("Misha", 4000));

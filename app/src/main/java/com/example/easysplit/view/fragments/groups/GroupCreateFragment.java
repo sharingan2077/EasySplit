@@ -10,22 +10,17 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.easysplit.databinding.FragmentGroupCreateBinding;
 import com.example.easysplit.model.Group;
 import com.example.easysplit.view.utils.NavigationUtils;
 import com.example.easysplit.R;
-import com.example.easysplit.databinding.FragmentGroupCreateBinding;
 import com.example.easysplit.viewModel.groups.GroupsViewModel;
 import com.example.easysplit.viewModel.MainActivityViewModel;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-import java.util.UUID;
 
 public class GroupCreateFragment extends Fragment {
 

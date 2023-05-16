@@ -35,6 +35,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </RelativeLayout>
         <TextView
+            android:id="@+id/nameOfGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Example"
@@ -43,6 +44,7 @@
             android:layout_marginStart="35dp"
             android:layout_marginTop="10dp"/>
         <TextView
+            android:id="@+id/countGroupMembers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1 участник"
@@ -163,32 +165,32 @@
                     android:textColor="@color/blue" />
             </LinearLayout>
 
-            <LinearLayout
-                android:visibility="visible"
-                android:id="@+id/copyLink"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:orientation="horizontal"
-                android:layout_marginTop="14dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addFriends">
+<!--            <LinearLayout-->
+<!--                android:visibility="visible"-->
+<!--                android:id="@+id/copyLink"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:layout_marginTop="14dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/addFriends">-->
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_copy_link" />
+<!--                <ImageView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:src="@drawable/ic_copy_link" />-->
 
-                <TextView
-                    style="@style/InterSemiBold17"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="17dp"
-                    android:text="Поделиться ссылкой"
-                    android:textColor="@color/blue" />
-            </LinearLayout>
+<!--                <TextView-->
+<!--                    style="@style/InterSemiBold17"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_marginStart="17dp"-->
+<!--                    android:text="Поделиться ссылкой"-->
+<!--                    android:textColor="@color/blue" />-->
+<!--            </LinearLayout>-->
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </ScrollView>

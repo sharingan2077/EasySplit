@@ -35,6 +35,8 @@ public class LoginFragment extends Fragment {
         binding = LoginFragmentBinding.inflate(inflater, container, false);
         loginRegisterViewModel = new ViewModelProvider(requireActivity()).get(LoginRegisterViewModel.class);
         loginRegisterViewModel.refreshLoggedOutLiveData();
+
+        Navigation.findNavController(binding.getRoot()).navigate(R.id.action_loginFragment_to_groupsFragment);
         binding.createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

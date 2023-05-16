@@ -54,7 +54,6 @@ public class AccountRepository {
     {
         sharedPreferences = mContext.getSharedPreferences("ACCOUNT_FILE_KEY", Context.MODE_PRIVATE);
         userNameAndId.setValue(sharedPreferences.getString("ACCOUNT_FILE_KEY", "maks#00000"));
-        Log.d("UserNameAndId", userNameAndId.getValue());
 //        FirebaseDatabase.getInstance().getReference().child("User")
 //                .child(FirebaseAuth.getInstance().getUid())
 //                .child("userName").get()

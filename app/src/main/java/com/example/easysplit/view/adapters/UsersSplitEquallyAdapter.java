@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,7 +21,8 @@ import java.util.List;
 public class UsersSplitEquallyAdapter extends RecyclerView.Adapter<UsersSplitEquallyAdapter.ViewHolder>{
 
     public interface onUserClickListener{
-        void onClick();
+        void onClickAdd(String userId);
+        void onClickRemove(String userId);
     }
     private List<User> users =  new ArrayList<>();
     UsersSplitEquallyAdapter.onUserClickListener listener;
@@ -55,11 +55,26 @@ public class UsersSplitEquallyAdapter extends RecyclerView.Adapter<UsersSplitEqu
             //listener.onClick();
             if (holder.checkBox.isChecked())
             {
+                listener.onClickRemove(users.get(position).getUID());
                 holder.checkBox.setChecked(false);
             }
             else
             {
+                listener.onClickAdd(users.get(position).getUID());
                 holder.checkBox.setChecked(true);
+            }
+        });
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!holder.checkBox.isChecked())
+                {
+                    listener.onClickRemove(users.get(position).getUID());
+                }
+                else
+                {
+                    listener.onClickAdd(users.get(position).getUID());
+                }
             }
         });
 
