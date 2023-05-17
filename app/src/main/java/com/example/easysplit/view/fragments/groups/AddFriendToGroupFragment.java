@@ -98,7 +98,7 @@ public class AddFriendToGroupFragment extends Fragment {
                 }
                 @Override
                 public void unSuccessful() {
-                    Toast.makeText(requireActivity(), "Не удалось добавить друга!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireActivity(), "Этот друг уже добавлен!", Toast.LENGTH_SHORT).show();
                 }
             });
         });

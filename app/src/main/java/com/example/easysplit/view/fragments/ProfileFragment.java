@@ -64,7 +64,7 @@ public class ProfileFragment extends Fragment {
         final Observer<String> observerUserEmail = new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                Log.d(TAG, "email is Changed!");
+                Log.d(TAG, "email is Changed! " + s);
                 binding.userEmail.setText(s);
             }
         };
@@ -73,7 +73,7 @@ public class ProfileFragment extends Fragment {
         final Observer<String> observerUserNameAndId = new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                Log.d(TAG, "userNameAndId is Changed!");
+                Log.d(TAG, "userNameAndId is Changed! " + s);
                 binding.userNameAndId.setText(s);
             }
         };
@@ -82,21 +82,4 @@ public class ProfileFragment extends Fragment {
         return binding.getRoot();
     }
 
-    @Override
-    public void onStop() {
-        Log.d(TAG, "Stopping Profile Fragment");
-        super.onStop();
-    }
-
-    @Override
-    public void onDestroy() {
-        Log.d(TAG, "Stopping Profile Fragment");
-        super.onDestroy();
-    }
-
-    @Override
-    public void onDetach() {
-        Log.d(TAG, "Stopping Profile Fragment");
-        super.onDetach();
-    }
 }

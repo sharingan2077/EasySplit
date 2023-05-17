@@ -54,10 +54,36 @@
         style="@style/InterRegular18"
         android:textColor="@color/grey"
         android:layout_marginTop="20.5dp"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewSplitUnequally"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="34dp"/>
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewSplitUnequally"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="34dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/sumRemained"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₽0 из ₽100"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                style="@style/InterSemiBold15"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

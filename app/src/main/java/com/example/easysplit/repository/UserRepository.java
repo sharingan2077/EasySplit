@@ -1,12 +1,16 @@
 package com.example.easysplit.repository;
 
+import android.graphics.Paint;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.easysplit.model.User;
+import com.example.easysplit.view.listeners.AddFriendToUserListener;
 import com.example.easysplit.view.listeners.CompleteListener;
+import com.example.easysplit.view.listeners.CompleteListenerBoolean;
+import com.example.easysplit.view.listeners.CompleteListenerListString;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +34,8 @@ public class UserRepository {
     MutableLiveData<List<User>> data = new MutableLiveData<>();
 
     private List<String> userFriends;
+
+    private Boolean friendExist = false;
 
     public static UserRepository getInstance()
     {
@@ -76,6 +82,7 @@ public class UserRepository {
         setUserFriends(new CompleteListener() {
             @Override
             public void successful() {
+                Log.d(TAG, "successful");
 
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
                 Query query = reference.child("User");
@@ -109,25 +116,21 @@ public class UserRepository {
         });
     }
 
-    public void addFriend(String userName, String id, CompleteListener listener)
+    private void userAlreadyHasFriend(String UID, CompleteListenerBoolean listener)
     {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        Query query = reference.child("User");
+        Query query = reference.child("User").child(FirebaseAuth.getInstance().getUid()).child("userFriends");
+
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren())
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChild(UID))
                 {
-                    if (snapshot.child("id").getValue().equals(id) && snapshot.child("userName").getValue().equals(userName))
-                    {
-                        addFriendToUser(snapshot.getKey(), listener);
-                        break;
-                    }
-                    else
-                    {
-                        Log.d("User", "Пользователя с id - " + id +
-                                " именем - " + userName + " не найдено");
-                    }
+                    listener.successful(false);
+                }
+                else
+                {
+                    listener.successful(true);
                 }
             }
 
@@ -137,37 +140,87 @@ public class UserRepository {
             }
         });
     }
-    private void addFriendToUser(String UID, CompleteListener listener)
+
+
+    public void addFriend(String userName, String id, AddFriendToUserListener listener)
     {
-        Log.d("User", "Adding new Friends to " + FirebaseAuth.getInstance().getUid());
-        FirebaseDatabase.getInstance().getReference()
-                .child("User")
-                .child(FirebaseAuth.getInstance().getUid())
-                .child("userFriends")
-                .updateChildren(Collections.singletonMap(UID,UID)).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (!task.isSuccessful())
+
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query query = reference.child("User");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                {
+                    if (snapshot.child("id").getValue().equals(id) && snapshot.child("userName").getValue().equals(userName))
+                    {
+                        friendExist = true;
+                        if (snapshot.getKey().equals(FirebaseAuth.getInstance().getUid().toString()))
                         {
-                            Log.d("User", "Не удалось добавить пользователя");
+                            listener.userIsYou();
                         }
-                    }
-                });
-        FirebaseDatabase.getInstance().getReference()
-                .child("User")
-                .child(UID)
-                .child("userFriends")
-                .updateChildren(Collections.singletonMap(FirebaseAuth.getInstance().getUid(), FirebaseAuth.getInstance().getUid()))
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (!task.isSuccessful())
+                        else
                         {
-                            Log.d("User", "Не удалось добавить текущего пользователя к новому");
+                            addFriendToUser(snapshot.getKey(), listener);
                         }
+                        break;
                     }
-                });
-        listener.successful();
+                }
+                if (!friendExist)
+                {
+                    listener.userNotFound();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    private void addFriendToUser(String UID, AddFriendToUserListener listener)
+    {
+        userAlreadyHasFriend(UID, new CompleteListenerBoolean() {
+            @Override
+            public void successful(Boolean data) {
+                if (data)
+                {
+                    FirebaseDatabase.getInstance().getReference()
+                            .child("User")
+                            .child(FirebaseAuth.getInstance().getUid())
+                            .child("userFriends")
+                            .updateChildren(Collections.singletonMap(UID,UID)).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (!task.isSuccessful())
+                                    {
+                                        Log.d("User", "Не удалось добавить пользователя");
+                                    }
+                                }
+                            });
+                    FirebaseDatabase.getInstance().getReference()
+                            .child("User")
+                            .child(UID)
+                            .child("userFriends")
+                            .updateChildren(Collections.singletonMap(FirebaseAuth.getInstance().getUid(), FirebaseAuth.getInstance().getUid()))
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (!task.isSuccessful())
+                                    {
+                                        Log.d("User", "Не удалось добавить текущего пользователя к новому");
+                                    }
+                                }
+                            });
+                    listener.successful();
+                }
+                else
+                {
+                    listener.userAlreadyExist();
+                }
+            }
+        });
     }
 
     public interface AddFriendToGroupListener
@@ -176,29 +229,72 @@ public class UserRepository {
         void unSuccessful();
     }
 
+    private void userAlreadyExistInGroup(String groupId, String userId, CompleteListenerBoolean listenerBoolean)
+    {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query query = reference.child("Group").child(groupId).child("groupUsers");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChild(userId))
+                {
+                    listenerBoolean.successful(true);
+                }
+                else
+                {
+                    listenerBoolean.successful(false);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d(TAG, "onCancelled");
+
+            }
+        });
+    }
+
     public void addFriendToGroup(String groupId, String userId, AddFriendToGroupListener listener)
     {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
-                .child("User")
-                .child(userId)
-                .child("userGroups");
-//        int countUserGroupsOld = databaseReference.
-        databaseReference.updateChildren(Collections.singletonMap(groupId, groupId)).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful())
-                        {
-                            Log.d(TAG, "Successful");
-                            listener.successful();
-                            increaseGroupMemberCount(groupId);
+        userAlreadyExistInGroup(groupId, userId, new CompleteListenerBoolean() {
+            @Override
+            public void successful(Boolean data) {
+                if (!data)
+                {
+                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
+                            .child("User")
+                            .child(userId)
+                            .child("userGroups");
+                    databaseReference.updateChildren(Collections.singletonMap(groupId, groupId)).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful())
+                            {
+                                Log.d(TAG, "Successful");
+                                increaseGroupMemberCount(groupId);
+                                FirebaseDatabase.getInstance().getReference().child("Group").child(groupId)
+                                        .child("groupUsers").updateChildren(Collections.singletonMap(userId, userId))
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                listener.successful();
+                                            }
+                                        });
+                            }
+                            else
+                            {
+                                Log.d(TAG, "unSuccessful");
+                                listener.unSuccessful();
+                            }
                         }
-                        else
-                        {
-                            Log.d(TAG, "unSuccessful");
-                            listener.unSuccessful();
-                        }
-                    }
-                });
+                    });
+                }
+                else
+                {
+                    listener.unSuccessful();
+                }
+            }
+        });
+
     }
     public void increaseGroupMemberCount(String groupId)
     {

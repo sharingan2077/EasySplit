@@ -30,6 +30,7 @@ public class GroupEnterRepository {
     private MutableLiveData<Integer> countOfGroupMembers = new MutableLiveData<>();
 
     private List<String> groupUsers;
+    private List<String> groupExpenses;
 
     public static GroupEnterRepository getInstance()
     {
@@ -83,23 +84,56 @@ public class GroupEnterRepository {
         reference.child("User").child(FirebaseAuth.getInstance().getUid()).child("userGroups").child(id).removeValue();
     }
 
-    public void deleteGroup(String id)
+    private void deleteExpensesInGroup(String id, CompleteListener listener)
     {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        reference.child("Group").child(id).removeValue();
-        Query query = reference.child("User");
+        Query query = reference.child("Expense");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String UID = snapshot.getKey();
-                    if (snapshot.child("userGroups").hasChild(id)) {
-                        reference.child("User").child(UID).child("userGroups").child(id).removeValue();
+                    String groupId = snapshot.child("expenseGroup").getValue().toString();
+                    if (groupId.equals(id)) {
+                        reference.child("Expense").child(snapshot.getKey()).removeValue();
                     }
                 }
+                listener.successful();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void deleteGroup(String id)
+    {
+        deleteExpensesInGroup(id, new CompleteListener() {
+            @Override
+            public void successful() {
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                reference.child("Group").child(id).removeValue();
+                Query query = reference.child("User");
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            String UID = snapshot.getKey();
+                            if (snapshot.child("userGroups").hasChild(id)) {
+                                reference.child("User").child(UID).child("userGroups").child(id).removeValue();
+                            }
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void unSuccessful() {
 
             }
         });

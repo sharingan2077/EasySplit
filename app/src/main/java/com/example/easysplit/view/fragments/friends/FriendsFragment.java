@@ -9,6 +9,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ import com.example.easysplit.viewModel.MainActivityViewModel;
 import com.example.easysplit.viewModel.friends.FriendsViewModel;
 
 public class FriendsFragment extends Fragment {
+
+    private static final String TAG = "FriendsFragment";
 
     FragmentFriendsBinding binding;
     NavController navController;
@@ -48,6 +51,7 @@ public class FriendsFragment extends Fragment {
             @Override
             public void successful() {
                 adapter.notifyDataSetChanged();
+                Log.d(TAG, "successful - " + Integer.toString(adapter.getItemCount()));
                 if (adapter.getItemCount() == 0)
                 {
                     hideFriends();

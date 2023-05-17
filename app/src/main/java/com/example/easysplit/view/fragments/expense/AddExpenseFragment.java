@@ -1,7 +1,9 @@
 package com.example.easysplit.view.fragments.expense;
 
+import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.FragmentAddExpenseBinding;
 import com.example.easysplit.model.Expense;
+import com.example.easysplit.view.listeners.CheckUsersIdListener;
 import com.example.easysplit.view.listeners.CompleteListener2;
 import com.example.easysplit.view.listeners.CompleteListenerListString;
 import com.example.easysplit.view.utils.NavigationUtils;
@@ -57,6 +60,8 @@ public class AddExpenseFragment extends Fragment {
     private String expenseSumString;
     private Long expenseSum;
 
+    private String totalSum;
+
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -83,6 +88,11 @@ public class AddExpenseFragment extends Fragment {
         userId = getArguments().getString("userId", "0");
         expenseSumString = getArguments().getString("expenseSum", "0");
         expenseName = getArguments().getString("expenseName", "0");
+
+
+        //totalSum = getArguments().getString("totalSum", "-");
+
+
         if (!expenseSumString.equals("0"))
         {
             binding.sum.setText(expenseSumString);
@@ -95,8 +105,20 @@ public class AddExpenseFragment extends Fragment {
         usersId = getArguments().getStringArrayList("usersId");
         usersSum = getArguments().getLongArray("usersSum");
 
-        if (usersId == null) Log.d(TAG, "null1");
-        if (usersSum == null) Log.d(TAG, "null2");
+        if (usersId == null)
+        {
+            Log.d(TAG, "null1");
+        }
+
+        if (usersSum == null)
+        {
+            Log.d(TAG, "null2");
+        }
+        else
+        {
+            binding.howSplit.setText("  По частям  ");
+        }
+
 
         expenseId = getArguments().getString("expenseId", "0");
 
@@ -175,6 +197,8 @@ public class AddExpenseFragment extends Fragment {
                 bundle.putString("userId", userId);
                 bundle.putString("expenseName", binding.description.getText().toString());
                 bundle.putString("expenseSum", binding.sum.getText().toString());
+                bundle.putStringArrayList("usersId", usersId);
+                bundle.putLongArray("usersSum", usersSum);
                 NavigationUtils.navigateSafe(navController, R.id.action_addExpenseFragment_to_whoPaidFragment, bundle);
 
             }
@@ -189,6 +213,8 @@ public class AddExpenseFragment extends Fragment {
                 bundle.putString("expenseName", binding.description.getText().toString());
                 bundle.putString("expenseSum", binding.sum.getText().toString());
                 bundle.putString("userId", userId);
+                bundle.putStringArrayList("usersId", usersId);
+                bundle.putLongArray("usersSum", usersSum);
                 NavigationUtils.navigateSafe(navController, R.id.action_addExpenseFragment_to_chooseGroupFragment, bundle);
             }
         });
@@ -201,7 +227,9 @@ public class AddExpenseFragment extends Fragment {
                 bundle.putString("groupId", groupId);
                 bundle.putString("expenseId", expenseId);
                 bundle.putString("expenseName", binding.description.getText().toString());
-                bundle.putString("expenseSum", binding.sum.getText().toString());
+                String expenseSum = binding.sum.getText().toString();
+                if (expenseSum.equals("")) expenseSum = "0";
+                bundle.putString("expenseSum", expenseSum);
                 bundle.putString("userId", userId);
 
                 if (usersId == null)
@@ -210,14 +238,30 @@ public class AddExpenseFragment extends Fragment {
                         @Override
                         public void successful(ArrayList<String> usersId) {
                             bundle.putStringArrayList("usersId", usersId);
-                            NavigationUtils.navigateSafe(navController, R.id.action_addExpenseFragment_to_splitEquallyFragment, bundle);
+                            bundle.putLongArray("usersSum", usersSum);
+                            if (binding.sum.getText().toString().length() > 0 && binding.sum.getText().toString().charAt(0) == '0')
+                            {
+                                Toast.makeText(requireContext(), "Сумма расхода не может начинаться с 0!", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                NavigationUtils.navigateSafe(navController, R.id.action_addExpenseFragment_to_splitEquallyFragment, bundle);
+                            }
                         }
                     });
                 }
                 else
                 {
-                    bundle.putStringArrayList("usersId", usersId);
-                    NavigationUtils.navigateSafe(navController, R.id.action_addExpenseFragment_to_splitEquallyFragment, bundle);
+                    if (binding.sum.getText().toString().length() > 0 && binding.sum.getText().toString().charAt(0) == '0')
+                    {
+                        Toast.makeText(requireContext(), "Сумма расхода не может начинаться с 0!", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        bundle.putLongArray("usersSum", usersSum);
+                        bundle.putStringArrayList("usersId", usersId);
+                        NavigationUtils.navigateSafe(navController, R.id.action_addExpenseFragment_to_splitEquallyFragment, bundle);
+                    }
                 }
             }
         });
@@ -225,13 +269,36 @@ public class AddExpenseFragment extends Fragment {
         binding.toolbar.done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                long totalSum = 0;
+                if (usersSum != null)
+                {
+                    for (long i : usersSum) totalSum+=i;
+                }
                 if (binding.description.getText().toString().equals(""))
                 {
                     Toast.makeText(requireContext(), "Заполните описание!", Toast.LENGTH_SHORT).show();
                 }
-                else if (binding.sum.getText().toString().equals(""))
+                else if (binding.sum.getText().toString().equals("") || binding.sum.getText().toString().equals("0"))
                 {
                     Toast.makeText(requireContext(), "Введите сумму расхода!", Toast.LENGTH_SHORT).show();
+                }
+                else if (binding.sum.getText().toString().charAt(0) == '0')
+                {
+                    Toast.makeText(requireContext(), "Сумма расхода не может начинаться с 0!", Toast.LENGTH_SHORT).show();
+                }
+                else if (!Long.toString(totalSum).equals(binding.sum.getText().toString()) && usersSum != null)
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+                    builder.setTitle("Невозможно сохранить расход");
+                    builder.setMessage("Сумма, поделенная между участниками, не равна всей сумме");
+                    builder.setPositiveButton("Ок", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            return;
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
                 else
                 {
@@ -254,9 +321,19 @@ public class AddExpenseFragment extends Fragment {
                     }
                     else
                     {
-                        Long waste = expenseSum / usersId.size();
                         HashMap<String,Long>  usersWaste = new HashMap<String, Long>();
-                        for (String i : usersId) usersWaste.put(i, waste);
+                        if (usersSum == null)
+                        {
+                            Long waste = expenseSum / usersId.size();
+                            for (String i : usersId) usersWaste.put(i, waste);
+                        }
+                        else
+                        {
+                            for (int i = 0; i < usersId.size(); i++)
+                            {
+                                usersWaste.put(usersId.get(i), usersSum[i]);
+                            }
+                        }
                         Expense expense = new Expense(expenseName, expenseDate, expenseSum, groupId, userId, usersWaste);
                         addExpenseViewModel.addExpense(expense, expenseId);
                     }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStructure;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,6 +26,8 @@ public class UsersSplitEquallyAdapter extends RecyclerView.Adapter<UsersSplitEqu
         void onClickRemove(String userId);
     }
     private List<User> users =  new ArrayList<>();
+
+    private List<String> usersId;
     UsersSplitEquallyAdapter.onUserClickListener listener;
 
     private Context mContext;
@@ -36,6 +39,13 @@ public class UsersSplitEquallyAdapter extends RecyclerView.Adapter<UsersSplitEqu
         this.users = users;
         this.mContext = mContext;
         this.listener=listener;
+    }
+
+    public UsersSplitEquallyAdapter(Context mContext, List<User> users, List<String> usersId, onUserClickListener listener) {
+        this.users = users;
+        this.usersId = usersId;
+        this.listener = listener;
+        this.mContext = mContext;
     }
 
     @NonNull
@@ -51,6 +61,13 @@ public class UsersSplitEquallyAdapter extends RecyclerView.Adapter<UsersSplitEqu
 
         holder.imageView.setImageResource(R.drawable.ic_user_54);
         holder.userName.setText(users.get(position).getUserName());
+
+        if (!usersId.contains(users.get(position).getUID()))
+        {
+            holder.checkBox.setChecked(false);
+        }
+
+
         holder.parentLayout.setOnClickListener(v -> {
             //listener.onClick();
             if (holder.checkBox.isChecked())

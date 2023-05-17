@@ -26,14 +26,11 @@ public class ProfileViewModel extends ViewModel {
 
     public void init(Context mContext)
     {
-        loadAccount.setValue(false);
-        Log.d("LoadingAcc", loadAccount.getValue().toString());
+        //loadAccount.setValue(false);
         mRepo = AccountRepository.getInstance(mContext);
         userEmail = mRepo.getUserEmail();
         userNameAndId = mRepo.getUserNameAndId();
-        Log.d("UserNameAndId", userNameAndId.getValue());
-        loadAccount.setValue(true);
-        Log.d("LoadingAcc", loadAccount.getValue().toString());
+        //loadAccount.setValue(true);
     }
 
     public LiveData<String> getUserNameAndId() {

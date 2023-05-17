@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.easysplit.model.User;
+import com.example.easysplit.view.listeners.CheckUsersIdListener;
+import com.example.easysplit.view.listeners.CompleteListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,14 +32,14 @@ public class WhoPaidRepository {
         return instance;
     }
 
-    public MutableLiveData<List<User>> getUsers(String id)
+    public MutableLiveData<List<User>> getUsers(String id, CompleteListener listener)
     {
-        setUsers(id);
+        setUsers(id, listener);
         data.setValue(dataSet);
         return data;
     }
 
-    private void setUsers(String id)
+    private void setUsers(String id, CompleteListener listener)
     {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference.child("User");
@@ -52,6 +55,7 @@ public class WhoPaidRepository {
                         dataSet.add(user);
                     }
                 }
+                listener.successful();
                 data.postValue(dataSet);
             }
 
@@ -61,6 +65,22 @@ public class WhoPaidRepository {
             }
         };
         query.addValueEventListener(postListener);
+    }
+
+    public void checkUsersId(ArrayList<String> usersId, CheckUsersIdListener listener)
+    {
+        if (usersId.size() == 1 && usersId.contains(FirebaseAuth.getInstance().getUid().toString()))
+        {
+            listener.onlyOwnUserId();
+        }
+        else if (usersId.size() == 0)
+        {
+            listener.noUsersId();
+        }
+        else
+        {
+            listener.successful();
+        }
     }
 
 }

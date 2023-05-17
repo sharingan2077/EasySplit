@@ -5,6 +5,8 @@ public class DebtInGroup {
     private String user;
     private int sum;
 
+    private Boolean youOwn;
+
     public String getUser() {
         return user;
     }
@@ -13,8 +15,11 @@ public class DebtInGroup {
         return sum;
     }
 
-    public DebtInGroup(String user, int sum) {
+    public void setUser(String user) {
         this.user = user;
+    }
+
+    public void setSum(int sum) {
         this.sum = sum;
     }
 

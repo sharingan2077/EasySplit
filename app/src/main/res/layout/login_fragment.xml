@@ -56,7 +56,7 @@
         android:inputType="text"/>
 
     <EditText
-        android:text="naruto"
+        android:text="qwerty"
         android:inputType="textPassword"
         android:id="@+id/passwordText"
         style="@style/InterSemiBold16"

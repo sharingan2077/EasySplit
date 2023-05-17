@@ -63,7 +63,7 @@
         app:layout_constraintTop_toBottomOf="@+id/name" />
 
     <EditText
-        android:text="naruto"
+        android:text="qwerty"
         android:id="@+id/password"
         style="@style/InterSemiBold16"
         android:layout_width="280dp"
@@ -80,7 +80,7 @@
         app:layout_constraintTop_toBottomOf="@+id/email" />
 
     <EditText
-        android:text="naruto"
+        android:text="qwerty"
         android:id="@+id/confirmPassword"
         style="@style/InterSemiBold16"
         android:layout_width="280dp"

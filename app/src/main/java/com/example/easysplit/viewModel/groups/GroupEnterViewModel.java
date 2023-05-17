@@ -11,6 +11,7 @@ import com.example.easysplit.repository.DebtInGroupRepository;
 import com.example.easysplit.repository.ExpenseInGroupRepository;
 import com.example.easysplit.repository.GroupEnterRepository;
 import com.example.easysplit.repository.GroupRepository;
+import com.example.easysplit.view.listeners.CompleteListener;
 import com.example.easysplit.view.listeners.CompleteListenerInt;
 
 import java.util.ArrayList;
@@ -32,22 +33,22 @@ public class GroupEnterViewModel extends ViewModel {
     public MutableLiveData<Integer> countOfGroupMembers = new MutableLiveData<>();
 
 
-    public void init(String groupId)
+    public void init(String groupId, CompleteListener listener)
     {
 
         if (expensesInGroups != null)
         {
             //mRepo.getCountOfGroupMembers(groupId);
-            expensesInGroups = mRepo1.getExpensesInGroup();
-            debtsInGroup = mRepo2.getDebtsInGroup();
+            expensesInGroups = mRepo1.getExpensesInGroup(groupId, listener);
+            debtsInGroup = mRepo2.getDebtsInGroup(groupId, listener);
             return;
         }
         mRepo = GroupEnterRepository.getInstance();
         ///mRepo.getCountOfGroupMembers(groupId);
         mRepo1 = ExpenseInGroupRepository.getInstance();
-        expensesInGroups = mRepo1.getExpensesInGroup();
+        expensesInGroups = mRepo1.getExpensesInGroup(groupId, listener);
         mRepo2 = DebtInGroupRepository.getInstance();
-        debtsInGroup = mRepo2.getDebtsInGroup();
+        debtsInGroup = mRepo2.getDebtsInGroup(groupId, listener);
     }
 
     public void leaveGroup(String id)

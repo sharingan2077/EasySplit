@@ -2,6 +2,7 @@ package com.example.easysplit.view.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.easysplit.R;
@@ -23,7 +25,8 @@ public class ExpenseInGroupRecyclerAdapter extends RecyclerView.Adapter<ExpenseI
     public interface onGroupClickListener{
         void onClick();
     }
-    private static final String TAG = "RecyclerViewAdapter";
+
+    private static final String TAG = "ExpenseInGroupRecyclerA";
     private List<ExpenseInGroup> expensesInGroup =  new ArrayList<>();
     ExpenseInGroupRecyclerAdapter.onGroupClickListener listener;
 
@@ -51,22 +54,33 @@ public class ExpenseInGroupRecyclerAdapter extends RecyclerView.Adapter<ExpenseI
     @Override
     public void onBindViewHolder(@NonNull ExpenseInGroupRecyclerAdapter.ViewHolder holder, int position) {
         String date = expensesInGroup.get(position).getDate();
-        int sum = expensesInGroup.get(position).getExpenseSum();
-        String month = getMonth(date.substring(0, 2));
+        long sum = expensesInGroup.get(position).getExpenseSum();
+        String month = getMonth(date.substring(3));
         String user = expensesInGroup.get(position).getUserName();
+        Boolean yourExpense = expensesInGroup.get(position).getYourExpense();
+        Long ownSum = expensesInGroup.get(position).getOwnSum();
         holder.monthOfExpense.setText(month);
-        holder.dateOfExpense.setText(date.substring(3));
+        holder.dateOfExpense.setText(date.substring(0, 2));
         holder.nameOfExpense.setText(expensesInGroup.get(position).getExpenseName());
-        holder.nameOfPayer.setText(user + " заплатил " + Integer.toString(sum));
-        if (user != "Ты")
+        holder.nameOfPayer.setText(user + " заплатил ₽" + Long.toString(sum));
+        if (ownSum != 0)
         {
-            holder.own.setText("ты должен");
+            if (yourExpense)
+            {
+                holder.own.setTextColor(ContextCompat.getColor(mContext, R.color.aqua));
+                holder.cost.setTextColor(ContextCompat.getColor(mContext, R.color.aqua));
+                holder.own.setText("тебе должны");
+            }
+            else
+            {
+                holder.own.setTextColor(ContextCompat.getColor(mContext, R.color.red));
+                holder.cost.setTextColor(ContextCompat.getColor(mContext, R.color.red));
+                holder.own.setText("ты должен");
+            }
         }
-        else
-        {
-            holder.own.setText("тебе должны");
-        }
-        holder.cost.setText(Integer.toString(sum));
+        holder.cost.setText(Long.toString(ownSum));
+
+
         //holder.imageView.setImageResource(R.drawable.group_item_1);
 //        holder.parentLayout.setOnClickListener(v -> {
 //            listener.onClick();
@@ -79,12 +93,30 @@ public class ExpenseInGroupRecyclerAdapter extends RecyclerView.Adapter<ExpenseI
         {
             case "01":
                 return "Янв";
-            case "09":
-                return "Сен";
+            case "02":
+                return "Фев";
+            case "03":
+                return "Март";
             case "04":
                 return "Апр";
+            case "05":
+                return "Май";
+            case "06":
+                return "Июн";
+            case "07":
+                return "Июл";
+            case "08":
+                return "Авг";
+            case "09":
+                return "Сен";
+            case "10":
+                return "Окт";
+            case "11":
+                return "Ноя";
+            case "12":
+                return "Дек";
         }
-        return "Авг";
+        return "?";
     }
 
     @Override

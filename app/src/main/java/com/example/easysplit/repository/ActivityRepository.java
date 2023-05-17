@@ -35,6 +35,8 @@ public class ActivityRepository {
     private List<String> userGroups;
     private List<String> groupsExpenses;
 
+    private Boolean expenseExist = false;
+
     public static ActivityRepository getInstance()
     {
         if (instance == null)
@@ -150,7 +152,6 @@ public class ActivityRepository {
         setGroupsExpenses(new CompleteListener() {
             @Override
             public void successful() {
-                ArrayList<Expense> expenses = new ArrayList<>();
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
                 Query query = reference.child("Expense");
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -161,6 +162,7 @@ public class ActivityRepository {
                         {
                             if (groupsExpenses.contains(snapshot.getKey()))
                             {
+                                expenseExist = true;
                                Activity activity = new Activity();
                                activity.setNameOfExpense(snapshot.child("expenseName").getValue().toString());
                                String date = snapshot.child("expenseDate").getValue().toString();
@@ -168,7 +170,6 @@ public class ActivityRepository {
                                String day = date.substring(0, 2) + "." + date.substring(2, 4);
                                String nowDay = new SimpleDateFormat("ddMM").format(Calendar.getInstance().getTime());
                                String nowDay2 = nowDay.substring(0, 2) + "." + nowDay.substring(2, 4);
-                               Log.d(TAG, nowDay);
                                if (nowDay2.equals(day))
                                {
                                    day = "Сегодня";
@@ -178,12 +179,10 @@ public class ActivityRepository {
                                findNameOfUserById(FirebaseAuth.getInstance().getUid(), new CompleteListener2() {
                                     @Override
                                     public void successful(String data) {
-                                        Log.d(TAG, "success in userName " + data);
                                         activity.setUserName(data);
                                         findNameOfGroupById(snapshot.child("expenseGroup").getValue().toString(), new CompleteListener2() {
                                             @Override
                                             public void successful(String data2) {
-                                                Log.d(TAG, "success in groupName " + data2);
                                                 activity.setNameOfGroup(data2);
                                                 dataSet.add(activity);
                                                 listener.successful();
@@ -194,8 +193,11 @@ public class ActivityRepository {
                                 });
                             }
                         }
-                        Log.d(TAG, "listener successful");
-//                        data.postValue(dataSet);
+                        Log.d(TAG, "listener successful after");
+                        if (!expenseExist)
+                        {
+                            listener.successful();
+                        }
 
                     }
                     @Override
@@ -210,12 +212,6 @@ public class ActivityRepository {
 
             }
         });
-
-//        dataSet.add(new Activity("Misha", "Бананы", "Example", "Сегодня, 18:10"));
-//        dataSet.add(new Activity("Ты", "Билет", "Example2", "Сегодня, 18:15"));
-//        dataSet.add(new Activity("Ты", "Москва", "Example3", "Вчера, 17:10"));
-//        dataSet.add(new Activity("Misha", "Картошка", "Example4", "Сегодня, 09:10"));
-//        dataSet.add(new Activity("Misha", "Блинчики", "Example5", "Вчера, 15:00"));
     }
 
 }

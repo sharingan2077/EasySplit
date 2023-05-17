@@ -12,10 +12,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.FragmentSplitEquallyBinding;
 import com.example.easysplit.view.adapters.UsersSplitEquallyAdapter;
+import com.example.easysplit.view.listeners.CheckUsersIdListener;
+import com.example.easysplit.view.listeners.CompleteListener;
 import com.example.easysplit.view.utils.NavigationUtils;
 import com.example.easysplit.viewModel.SplitEquallyViewModel;
 import com.example.easysplit.viewModel.WhoPaidViewModel;
@@ -49,6 +52,8 @@ public class SplitEquallyFragment extends Fragment {
 
 
     private ArrayList<String> usersId;
+    private ArrayList<String> usersIdCash;
+    private long[] usersSum;
 
 
     @Override
@@ -63,41 +68,69 @@ public class SplitEquallyFragment extends Fragment {
         actionToLastFragment = getArguments().getInt("ActionToLastFragment", 1);
         groupId = getArguments().getString("groupId", "0");
         expenseId = getArguments().getString("expenseId", "0");
-        usersId = getArguments().getStringArrayList("usersId");
         expenseSumString = getArguments().getString("expenseSum", "0");
         expenseName = getArguments().getString("expenseName", "0");
         userId = getArguments().getString("userId", "0");
-        //Log.d(TAG, "usersId " + Integer.toString(usersId.size()));
-//        splitEquallyViewModel = new ViewModelProvider(requireActivity()).get(SplitEquallyViewModel.class);
-//        splitEquallyViewModel.init();
+
+        usersId = getArguments().getStringArrayList("usersId");
+        usersSum = getArguments().getLongArray("usersSum");
+
         whoPaidViewModel = new ViewModelProvider(requireActivity()).get(WhoPaidViewModel.class);
-        whoPaidViewModel.init(groupId);
+        whoPaidViewModel.init(groupId, new CompleteListener() {
+            @Override
+            public void successful() {
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void unSuccessful() {
+
+            }
+        });
         initRecyclerView();
         binding.toolbar.back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
+                usersIdCash = getArguments().getStringArrayList("usersId");
+                Log.d(TAG, "onClicl - " + Integer.toString(usersIdCash.size()));
                 bundle.putInt("ActionToLastFragment", actionToLastFragment);
                 bundle.putString("expenseId", expenseId);
                 bundle.putString("groupId", groupId);
                 bundle.putString("expenseName", expenseName);
                 bundle.putString("expenseSum", expenseSumString);
                 bundle.putString("userId", userId);
+                bundle.putStringArrayList("usersId", usersIdCash);
+                bundle.putLongArray("usersSum", usersSum);
+                //Log.d(TAG, "put" + Integer.toString(usersIdCash.size()));
                 NavigationUtils.navigateSafe(navController, R.id.action_splitEquallyFragment_to_addExpenseFragment, bundle);
             }
         });
         binding.toolbar.done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("ActionToLastFragment", actionToLastFragment);
-                bundle.putString("expenseId", expenseId);
-                bundle.putString("groupId", groupId);
-                bundle.putStringArrayList("usersId", usersId);
-                bundle.putString("expenseName", expenseName);
-                bundle.putString("expenseSum", expenseSumString);
-                bundle.putString("userId", userId);
-                NavigationUtils.navigateSafe(navController, R.id.action_splitEquallyFragment_to_addExpenseFragment, bundle);
+                whoPaidViewModel.checkUsersId(usersId, new CheckUsersIdListener() {
+                    @Override
+                    public void successful() {
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("ActionToLastFragment", actionToLastFragment);
+                        bundle.putString("expenseId", expenseId);
+                        bundle.putString("groupId", groupId);
+                        bundle.putString("expenseName", expenseName);
+                        bundle.putString("expenseSum", expenseSumString);
+                        bundle.putString("userId", userId);
+                        bundle.putStringArrayList("usersId", usersId);
+                        NavigationUtils.navigateSafe(navController, R.id.action_splitEquallyFragment_to_addExpenseFragment, bundle);
+                    }
+                    @Override
+                    public void noUsersId() {
+                        Toast.makeText(requireContext(), "Вы должны выбрать хотя бы 1 человека, участвующего в расходе", Toast.LENGTH_SHORT).show();
+                    }
+                    @Override
+                    public void onlyOwnUserId() {
+                        Toast.makeText(requireContext(), "Вы не можете быть единственным участником расхода", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
         binding.splitUnequally.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +143,10 @@ public class SplitEquallyFragment extends Fragment {
                 bundle.putString("expenseName", expenseName);
                 bundle.putString("expenseSum", expenseSumString);
                 bundle.putString("userId", userId);
+
+                bundle.putStringArrayList("usersId", usersId);
+                bundle.putLongArray("usersSum", usersSum);
+
                 NavigationUtils.navigateSafe(navController, R.id.action_splitEquallyFragment_to_splitUnequallyFragment, bundle);
             }
         });
@@ -120,7 +157,7 @@ public class SplitEquallyFragment extends Fragment {
 
     private void initRecyclerView()
     {
-        adapter = new UsersSplitEquallyAdapter(requireActivity(), whoPaidViewModel.getUsers().getValue(), new UsersSplitEquallyAdapter.onUserClickListener() {
+        adapter = new UsersSplitEquallyAdapter(requireActivity(), whoPaidViewModel.getUsers().getValue(), usersId, new UsersSplitEquallyAdapter.onUserClickListener() {
             @Override
             public void onClickAdd(String userId) {
                 usersId.add(userId);

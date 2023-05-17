@@ -64,10 +64,16 @@ public class MainActivity extends AppCompatActivity {
                                              @NonNull NavDestination destination, @Nullable Bundle arguments) {
                 int id = destination.getId();
                 if(id == R.id.groupsFragment || id == R.id.friendsFragment
-                || id == R.id.activityFragment || id == R.id.profileFragment
-                || id == R.id.groupEnterFragment) {
+                || id == R.id.activityFragment || id == R.id.profileFragment) {
                     showBottomNavigationBar();
-                } else {
+
+                }
+//                else if (id == R.id.groupEnterFragment)
+//                {
+//                    showBottomNavigationBar();
+//                }
+                else
+                {
                     hideBottomNavigationBar();
                 }
             }

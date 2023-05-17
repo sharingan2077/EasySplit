@@ -48,6 +48,7 @@ public class ActivityFragment extends Fragment {
             @Override
             public void successful() {
                 adapter.notifyDataSetChanged();
+                Log.d(TAG, "successful - " + Integer.toString(adapter.getItemCount()));
                 if (adapter.getItemCount() == 0)
                 {
                     hideActivities();

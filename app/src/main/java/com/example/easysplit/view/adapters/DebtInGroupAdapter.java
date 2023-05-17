@@ -2,6 +2,7 @@ package com.example.easysplit.view.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ public class DebtInGroupAdapter extends RecyclerView.Adapter<DebtInGroupAdapter.
     private List<DebtInGroup> debtsInGroup =  new ArrayList<>();
     private Context mContext;
 
+    private static final String TAG = "DebtInGroupAdapter";
+
     public DebtInGroupAdapter(Context mContext, List<DebtInGroup> debtsInGroup) {
         this.debtsInGroup = debtsInGroup;
         this.mContext = mContext;
@@ -37,6 +40,7 @@ public class DebtInGroupAdapter extends RecyclerView.Adapter<DebtInGroupAdapter.
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull DebtInGroupAdapter.ViewHolder holder, int position) {
+        Log.d(TAG, "onBindViewHolder");
         holder.user.setText(debtsInGroup.get(position).getUser() + " должен тебе");
         holder.sum.setText(Integer.toString(debtsInGroup.get(position).getSum()) + "руб");
     }

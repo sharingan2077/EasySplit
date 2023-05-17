@@ -26,6 +26,7 @@ import com.example.easysplit.model.DebtInGroup;
 import com.example.easysplit.model.ExpenseInGroup;
 import com.example.easysplit.view.adapters.DebtInGroupAdapter;
 import com.example.easysplit.view.adapters.ExpenseInGroupRecyclerAdapter;
+import com.example.easysplit.view.listeners.CompleteListener;
 import com.example.easysplit.view.listeners.CompleteListenerInt;
 import com.example.easysplit.view.utils.NavigationUtils;
 import com.example.easysplit.viewModel.MainActivityViewModel;
@@ -75,7 +76,18 @@ public class GroupEnterFragment extends Fragment {
         settingTextCountOfMembers(countGroupMembers);
 
         groupEnterViewModel = new ViewModelProvider(requireActivity()).get(GroupEnterViewModel.class);
-        groupEnterViewModel.init(groupId);
+        groupEnterViewModel.init(groupId, new CompleteListener() {
+            @Override
+            public void successful() {
+                Log.d(TAG, "AdapterGetItemCount - " + String.valueOf(adapter.getItemCount()));
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void unSuccessful() {
+
+            }
+        });
 
 
 //        final Observer<Integer> countOfGroupMembersObserver = new Observer<Integer>() {
@@ -148,7 +160,6 @@ public class GroupEnterFragment extends Fragment {
         final Observer<List<DebtInGroup>> observerNewDebtsInGroup = new Observer<List<DebtInGroup>>() {
             @Override
             public void onChanged(List<DebtInGroup> debtInGroup) {
-                Log.d(TAG, "observer new debts in group");
                 adapter.notifyDataSetChanged();
             }
         };
@@ -196,12 +207,12 @@ public class GroupEnterFragment extends Fragment {
     private void initRecyclerView()
     {
         adapter = new ExpenseInGroupRecyclerAdapter(getActivity(), groupEnterViewModel.getExpensesInGroups().getValue());
+        binding.recyclerViewExpense.setAdapter(adapter);
+        binding.recyclerViewExpense.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter2 = new DebtInGroupAdapter(requireActivity(), groupEnterViewModel.getDebtsInGroup().getValue());
 //        adapter = new GroupsRecyclerAdapter(getActivity(), groupsViewModel.getGroups().getValue(), () -> {
 //            NavigationUtils.navigateSafe(navController, R.id.action_groupsFragment_to_groupEnterFragment, null);
 //        });
-        binding.recyclerViewExpense.setAdapter(adapter);
-        binding.recyclerViewExpense.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.recyclerViewDebts.setAdapter(adapter2);
         binding.recyclerViewDebts.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
@@ -214,7 +225,7 @@ public class GroupEnterFragment extends Fragment {
         }
         else
         {
-            binding.countGroupMembers.setText(Integer.toString(countGroupMembers) + " участников");
+            binding.countGroupMembers.setText(Integer.toString(countGroupMembers) + " участника");
         }
     }
 

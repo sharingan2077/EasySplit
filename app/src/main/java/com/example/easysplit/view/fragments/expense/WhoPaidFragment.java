@@ -18,9 +18,11 @@ import com.example.easysplit.R;
 import com.example.easysplit.databinding.FragmentWhoPaidBinding;
 import com.example.easysplit.model.User;
 import com.example.easysplit.view.adapters.UsersRecyclerAdapter;
+import com.example.easysplit.view.listeners.CompleteListener;
 import com.example.easysplit.view.utils.NavigationUtils;
 import com.example.easysplit.viewModel.WhoPaidViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WhoPaidFragment extends Fragment {
@@ -41,6 +43,9 @@ public class WhoPaidFragment extends Fragment {
     private String expenseName;
     private String expenseSumString;
 
+    private ArrayList<String> usersId;
+    private long[] usersSum;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,20 +64,32 @@ public class WhoPaidFragment extends Fragment {
         userId = getArguments().getString("userId", "0");
         expenseSumString = getArguments().getString("expenseSum", "0");
         expenseName = getArguments().getString("expenseName", "0");
-        Log.d(TAG, expenseId);
 
-        whoPaidViewModel.init(groupId);
+        usersId = getArguments().getStringArrayList("usersId");
+        usersSum = getArguments().getLongArray("usersSum");
+
+        whoPaidViewModel.init(groupId, new CompleteListener() {
+            @Override
+            public void successful() {
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void unSuccessful() {
+
+            }
+        });
         initRecyclerView();
         binding.toolbar.textToolbar.setText("Кто платит?");
 
-        final Observer<List<User>> observerNewUsers = new Observer<List<User>>() {
-            @Override
-            public void onChanged(List<User> user) {
-                Log.d(TAG, Integer.toString(adapter.getItemCount()));
-                adapter.notifyDataSetChanged();
-            }
-        };
-        whoPaidViewModel.getUsers().observe(getViewLifecycleOwner(), observerNewUsers);
+//        final Observer<List<User>> observerNewUsers = new Observer<List<User>>() {
+//            @Override
+//            public void onChanged(List<User> user) {
+//                Log.d(TAG, Integer.toString(adapter.getItemCount()));
+//                adapter.notifyDataSetChanged();
+//            }
+//        };
+//        whoPaidViewModel.getUsers().observe(getViewLifecycleOwner(), observerNewUsers);
         binding.toolbar.back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,6 +100,10 @@ public class WhoPaidFragment extends Fragment {
                 bundle.putString("userId", userId);
                 bundle.putString("expenseName", expenseName);
                 bundle.putString("expenseSum", expenseSumString);
+
+                bundle.putStringArrayList("usersId", usersId);
+                bundle.putLongArray("usersSum", usersSum);
+
                 NavigationUtils.navigateSafe(navController, R.id.action_whoPaidFragment_to_addExpenseFragment, bundle);
             }
         });
@@ -99,6 +120,10 @@ public class WhoPaidFragment extends Fragment {
             bundle.putString("expenseId", expenseId);
             bundle.putString("expenseName", expenseName);
             bundle.putString("expenseSum", expenseSumString);
+
+            bundle.putStringArrayList("usersId", usersId);
+            bundle.putLongArray("usersSum", usersSum);
+
             NavigationUtils.navigateSafe(navController, R.id.action_whoPaidFragment_to_addExpenseFragment, bundle);
         });
         binding.recyclerViewUsers.setAdapter(adapter);

@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.FragmentChooseGroupBinding;
@@ -22,6 +23,7 @@ import com.example.easysplit.view.listeners.CompleteListener;
 import com.example.easysplit.view.utils.NavigationUtils;
 import com.example.easysplit.viewModel.groups.GroupsViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChooseGroupFragment extends Fragment {
@@ -39,6 +41,9 @@ public class ChooseGroupFragment extends Fragment {
     private String expenseName;
     private String expenseSumString;
     private String userId;
+
+    private ArrayList<String> usersId;
+    private long[] usersSum;
 
 
     @Override
@@ -58,6 +63,9 @@ public class ChooseGroupFragment extends Fragment {
         expenseSumString = getArguments().getString("expenseSum", "0");
         expenseName = getArguments().getString("expenseName", "0");
         userId = getArguments().getString("userId", "0");
+
+        usersId = getArguments().getStringArrayList("usersId");
+        usersSum = getArguments().getLongArray("usersSum");
         groupsViewModel.init(new CompleteListener() {
             @Override
             public void successful() {
@@ -89,6 +97,10 @@ public class ChooseGroupFragment extends Fragment {
                 bundle.putString("expenseName", expenseName);
                 bundle.putString("expenseSum", expenseSumString);
                 bundle.putString("userId", userId);
+
+                bundle.putStringArrayList("usersId", usersId);
+                bundle.putLongArray("usersSum", usersSum);
+
                 NavigationUtils.navigateSafe(navController, R.id.action_chooseGroupFragment_to_addExpenseFragment, bundle);
             }
         });
@@ -109,7 +121,15 @@ public class ChooseGroupFragment extends Fragment {
                 bundle.putString("expenseName", expenseName);
                 bundle.putString("expenseSum", expenseSumString);
                 bundle.putString("userId", userId);
-                NavigationUtils.navigateSafe(navController, R.id.action_chooseGroupFragment_to_addExpenseFragment, bundle);
+
+                if (countGroupMembers == 1)
+                {
+                    Toast.makeText(requireContext(), "В группе должно быть как минимум 2 участника", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    NavigationUtils.navigateSafe(navController, R.id.action_chooseGroupFragment_to_addExpenseFragment, bundle);
+                }
             }
         });
         binding.recyclerViewGroup.setAdapter(adapter);

@@ -69,6 +69,11 @@ public class Expense {
         this.usersWaste = usersWaste;
     }
 
+    public Expense()
+    {
+
+    }
+
     public HashMap<String, Long> getUsersWaste() {
         return usersWaste;
     }
