@@ -46,7 +46,7 @@ public class ExpenseInGroupRepository {
         }
         return instance;
     }
-    public MutableLiveData<List<ExpenseInGroup>> getExpensesInGroup(String groupId, CompleteListener listener)
+    public MutableLiveData<List<ExpenseInGroup>> getExpensesInGroup(String groupId, CompleteListener2 listener)
     {
         setExpensesInGroup(groupId, listener);
         dataExpense.setValue(dataSet);
@@ -102,7 +102,7 @@ public class ExpenseInGroupRepository {
         });
     }
 
-    private void setExpensesInGroup(String groupId, CompleteListener listener)
+    private void setExpensesInGroup(String groupId, CompleteListener2 listener)
     {
         setExpensesInArray(groupId, new CompleteListener() {
             @Override
@@ -143,7 +143,7 @@ public class ExpenseInGroupRepository {
                             ExpenseInGroup expenseInGroup = new ExpenseInGroup(expenseName, expenseDate, data, expenseSum, yourExpense, ownSum);
                             dataSet.add(expenseInGroup);
                             dataExpense.setValue(dataSet);
-                            listener.successful();
+                            listener.successful("expense");
                             Log.d(TAG, "Size - " + Integer.toString(dataSet.size()));
                         }
                     });

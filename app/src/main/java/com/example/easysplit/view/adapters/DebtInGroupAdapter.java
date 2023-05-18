@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.easysplit.R;
@@ -25,6 +26,8 @@ public class DebtInGroupAdapter extends RecyclerView.Adapter<DebtInGroupAdapter.
 
     private static final String TAG = "DebtInGroupAdapter";
 
+    private long totalSum = 0;
+
     public DebtInGroupAdapter(Context mContext, List<DebtInGroup> debtsInGroup) {
         this.debtsInGroup = debtsInGroup;
         this.mContext = mContext;
@@ -33,16 +36,43 @@ public class DebtInGroupAdapter extends RecyclerView.Adapter<DebtInGroupAdapter.
     @NonNull
     @Override
     public DebtInGroupAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Log.d(TAG, "onCreateViewHolder");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item_debts, parent, false);
         DebtInGroupAdapter.ViewHolder holder = new DebtInGroupAdapter.ViewHolder(view);
         return holder;
     }
+
+    public long getTotalSum() {
+        Log.d(TAG, "getting total Sum - " + Long.toString(totalSum));
+        return totalSum;
+    }
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull DebtInGroupAdapter.ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder");
-        holder.user.setText(debtsInGroup.get(position).getUser() + " должен тебе");
-        holder.sum.setText(Integer.toString(debtsInGroup.get(position).getSum()) + "руб");
+        String name = debtsInGroup.get(position).getUser();
+        long sum = debtsInGroup.get(position).getSum();
+        Boolean youOwn = debtsInGroup.get(position).getYouOwn();
+        if (youOwn)
+        {
+            totalSum += sum;
+            Log.d(TAG, "total sum - " + Long.toString(totalSum));
+            holder.user.setText(name + " должен тебе");
+            holder.sum.setTextColor(ContextCompat.getColor(mContext, R.color.blue));
+        }
+        else
+        {
+            totalSum -= sum;
+            Log.d(TAG, "total sum - " + Long.toString(totalSum));
+            holder.user.setText("Ты должен " + name);
+            holder.sum.setTextColor(ContextCompat.getColor(mContext, R.color.red));
+        }
+        holder.sum.setText(Long.toString(sum) + "руб");
+
+
+
+
     }
     @Override
     public int getItemCount() {

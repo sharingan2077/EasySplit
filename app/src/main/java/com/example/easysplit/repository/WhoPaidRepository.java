@@ -67,9 +67,9 @@ public class WhoPaidRepository {
         query.addValueEventListener(postListener);
     }
 
-    public void checkUsersId(ArrayList<String> usersId, CheckUsersIdListener listener)
+    public void checkUsersId(ArrayList<String> usersId, String userId, CheckUsersIdListener listener)
     {
-        if (usersId.size() == 1 && usersId.contains(FirebaseAuth.getInstance().getUid().toString()))
+        if (usersId.size() == 1 && usersId.contains(userId))
         {
             listener.onlyOwnUserId();
         }

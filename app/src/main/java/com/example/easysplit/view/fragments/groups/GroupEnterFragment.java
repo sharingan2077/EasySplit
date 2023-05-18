@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -27,6 +28,7 @@ import com.example.easysplit.model.ExpenseInGroup;
 import com.example.easysplit.view.adapters.DebtInGroupAdapter;
 import com.example.easysplit.view.adapters.ExpenseInGroupRecyclerAdapter;
 import com.example.easysplit.view.listeners.CompleteListener;
+import com.example.easysplit.view.listeners.CompleteListener2;
 import com.example.easysplit.view.listeners.CompleteListenerInt;
 import com.example.easysplit.view.utils.NavigationUtils;
 import com.example.easysplit.viewModel.MainActivityViewModel;
@@ -76,16 +78,17 @@ public class GroupEnterFragment extends Fragment {
         settingTextCountOfMembers(countGroupMembers);
 
         groupEnterViewModel = new ViewModelProvider(requireActivity()).get(GroupEnterViewModel.class);
-        groupEnterViewModel.init(groupId, new CompleteListener() {
+        groupEnterViewModel.init(groupId, new CompleteListener2() {
             @Override
-            public void successful() {
-                Log.d(TAG, "AdapterGetItemCount - " + String.valueOf(adapter.getItemCount()));
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void unSuccessful() {
-
+            public void successful(String data) {
+                if (data.equals("expense"))
+                {
+                    adapter.notifyDataSetChanged();
+                }
+                else if (data.equals("debt"))
+                {
+                    adapter2.notifyDataSetChanged();
+                }
             }
         });
 
@@ -160,7 +163,30 @@ public class GroupEnterFragment extends Fragment {
         final Observer<List<DebtInGroup>> observerNewDebtsInGroup = new Observer<List<DebtInGroup>>() {
             @Override
             public void onChanged(List<DebtInGroup> debtInGroup) {
+                Log.d(TAG, "size - " + Integer.toString(debtInGroup.size()));
                 adapter.notifyDataSetChanged();
+                if (debtInGroup.size() >= 1)
+                {
+                    long totalSum = 0;
+                    for (DebtInGroup debt : debtInGroup)
+                    {
+                        if (debt.getYouOwn())
+                        {
+                            totalSum += debt.getSum();
+                        }
+                        else totalSum -= debt.getSum();
+                    }
+                    if (totalSum >= 0)
+                    {
+                        binding.owedOverall.setTextColor(ContextCompat.getColor(requireContext(), R.color.aqua));
+                        binding.owedOverall.setText("Всего тебе должны ₽" + Long.toString(totalSum));
+                    }
+                    else
+                    {
+                        binding.owedOverall.setTextColor(ContextCompat.getColor(requireContext(), R.color.red));
+                        binding.owedOverall.setText("Всего ты должен ₽" + Long.toString(totalSum * (-1)));
+                    }
+                }
             }
         };
         groupEnterViewModel.getDebtsInGroup().observe(requireActivity(), observerNewDebtsInGroup);
@@ -210,11 +236,24 @@ public class GroupEnterFragment extends Fragment {
         binding.recyclerViewExpense.setAdapter(adapter);
         binding.recyclerViewExpense.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter2 = new DebtInGroupAdapter(requireActivity(), groupEnterViewModel.getDebtsInGroup().getValue());
+        binding.recyclerViewDebts.setAdapter(adapter2);
+        binding.recyclerViewDebts.setLayoutManager(new LinearLayoutManager(getActivity()));
 //        adapter = new GroupsRecyclerAdapter(getActivity(), groupsViewModel.getGroups().getValue(), () -> {
 //            NavigationUtils.navigateSafe(navController, R.id.action_groupsFragment_to_groupEnterFragment, null);
 //        });
-        binding.recyclerViewDebts.setAdapter(adapter2);
-        binding.recyclerViewDebts.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        binding.recyclerViewDebts.setAdapter(adapter2);
+//        binding.recyclerViewDebts.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        long totalSum = adapter2.getTotalSum();
+//        if (totalSum >= 0 && totalSum != 2)
+//        {
+//            binding.owedOverall.setTextColor(ContextCompat.getColor(requireContext(), R.color.aqua));
+//            binding.owedOverall.setText("Всего тебе должны ₽" + Long.toString(totalSum));
+//        }
+//        else if (totalSum != 2)
+//        {
+//            binding.owedOverall.setTextColor(ContextCompat.getColor(requireContext(), R.color.red));
+//            binding.owedOverall.setText("Всего ты должен ₽" + Long.toString(totalSum));
+//        }
     }
 
     private void settingTextCountOfMembers(int countGroupMembers)

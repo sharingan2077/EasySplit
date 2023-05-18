@@ -28,9 +28,9 @@ public class WhoPaidViewModel extends ViewModel {
         users = mRepo.getUsers(id, listener);
     }
 
-    public void checkUsersId(ArrayList<String> usersId, CheckUsersIdListener listener)
+    public void checkUsersId(ArrayList<String> usersId, String userId, CheckUsersIdListener listener)
     {
-        mRepo.checkUsersId(usersId, listener);
+        mRepo.checkUsersId(usersId, userId, listener);
     }
 
     public LiveData<List<User>> getUsers()

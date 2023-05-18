@@ -12,7 +12,10 @@ import com.example.easysplit.repository.ExpenseInGroupRepository;
 import com.example.easysplit.repository.GroupEnterRepository;
 import com.example.easysplit.repository.GroupRepository;
 import com.example.easysplit.view.listeners.CompleteListener;
+import com.example.easysplit.view.listeners.CompleteListener2;
+import com.example.easysplit.view.listeners.CompleteListenerCopy;
 import com.example.easysplit.view.listeners.CompleteListenerInt;
+import com.example.easysplit.view.listeners.CompleteListenerListString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +36,7 @@ public class GroupEnterViewModel extends ViewModel {
     public MutableLiveData<Integer> countOfGroupMembers = new MutableLiveData<>();
 
 
-    public void init(String groupId, CompleteListener listener)
+    public void init(String groupId, CompleteListener2 listener)
     {
 
         if (expensesInGroups != null)

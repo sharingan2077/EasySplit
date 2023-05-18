@@ -3,7 +3,7 @@ package com.example.easysplit.model;
 public class DebtInGroup {
 
     private String user;
-    private int sum;
+    private long sum;
 
     private Boolean youOwn;
 
@@ -11,7 +11,21 @@ public class DebtInGroup {
         return user;
     }
 
-    public int getSum() {
+    public void setYouOwn(Boolean youOwn) {
+        this.youOwn = youOwn;
+    }
+
+    public Boolean getYouOwn() {
+        return youOwn;
+    }
+
+    public DebtInGroup(String user, long sum, Boolean youOwn) {
+        this.user = user;
+        this.sum = sum;
+        this.youOwn = youOwn;
+    }
+
+    public long getSum() {
         return sum;
     }
 
@@ -19,7 +33,7 @@ public class DebtInGroup {
         this.user = user;
     }
 
-    public void setSum(int sum) {
+    public void setSum(long sum) {
         this.sum = sum;
     }
 

@@ -109,7 +109,7 @@ public class SplitEquallyFragment extends Fragment {
         binding.toolbar.done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                whoPaidViewModel.checkUsersId(usersId, new CheckUsersIdListener() {
+                whoPaidViewModel.checkUsersId(usersId, userId, new CheckUsersIdListener() {
                     @Override
                     public void successful() {
                         Bundle bundle = new Bundle();
@@ -128,7 +128,7 @@ public class SplitEquallyFragment extends Fragment {
                     }
                     @Override
                     public void onlyOwnUserId() {
-                        Toast.makeText(requireContext(), "Вы не можете быть единственным участником расхода", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "Расход не может быть поделен между одним и тем же участником!", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
