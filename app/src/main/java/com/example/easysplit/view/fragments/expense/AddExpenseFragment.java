@@ -25,6 +25,7 @@ import com.example.easysplit.databinding.FragmentAddExpenseBinding;
 import com.example.easysplit.model.Expense;
 import com.example.easysplit.view.listeners.CheckUsersIdListener;
 import com.example.easysplit.view.listeners.CompleteListener2;
+import com.example.easysplit.view.listeners.CompleteListenerInt;
 import com.example.easysplit.view.listeners.CompleteListenerListString;
 import com.example.easysplit.view.utils.NavigationUtils;
 import com.example.easysplit.viewModel.AddExpenseViewModel;
@@ -62,6 +63,11 @@ public class AddExpenseFragment extends Fragment {
 
     private String totalSum;
 
+    private int countMemberOfFirstGroup;
+    private String nameOfGroup;
+    private String nameOfUser;
+
+
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -88,7 +94,12 @@ public class AddExpenseFragment extends Fragment {
         userId = getArguments().getString("userId", "0");
         expenseSumString = getArguments().getString("expenseSum", "0");
         expenseName = getArguments().getString("expenseName", "0");
-
+        Log.d(TAG, "groupId - " + groupId);
+        nameOfGroup = getArguments().getString("nameOfGroup", "*2_39/");
+        Log.d(TAG, "nameOfGroup - " + nameOfGroup);
+        nameOfUser = getArguments().getString("nameOfUser", "*2_39/");
+        Log.d(TAG, "nameOfUser - " + nameOfUser);
+        countMemberOfFirstGroup = getArguments().getInt("countMemberOfFirstGroup", -1);
 
         //totalSum = getArguments().getString("totalSum", "-");
 
@@ -100,6 +111,14 @@ public class AddExpenseFragment extends Fragment {
         if (!expenseName.equals("0"))
         {
             binding.description.setText(expenseName);
+        }
+        if (!nameOfGroup.equals("*2_39/"))
+        {
+            binding.group.setText(nameOfGroup);
+        }
+        if (!nameOfUser.equals("*2_39/"))
+        {
+            binding.whoPaid.setText("  " + nameOfUser + "  ");
         }
 
         usersId = getArguments().getStringArrayList("usersId");
@@ -128,36 +147,47 @@ public class AddExpenseFragment extends Fragment {
             addExpenseViewModel.addExpense(expenseId);
         }
 
-        if (groupId == "0")
+        if (groupId.equals("0"))
         {
             addExpenseViewModel.getFirstGroupId();
         }
-        else
-        {
-            addExpenseViewModel.setGroupId(groupId);
-        }
-        if (userId == "0")
+//        else
+//        {
+//            addExpenseViewModel.setGroupId(groupId);
+//        }
+        if (userId.equals("0"))
         {
             addExpenseViewModel.getFirstUserId();
         }
-        else
-        {
-            addExpenseViewModel.setUserId(userId);
-        }
+//        else
+//        {
+//            addExpenseViewModel.setUserId(userId);
+//        }
 
         final Observer<String> idOfGroupObserver = new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                Log.d(TAG, "idOfGroupObserver - " + s);
-                groupId = s;
                 if (s != null)
                 {
-                    addExpenseViewModel.findNameOfGroupById(s, new CompleteListener2() {
-                        @Override
-                        public void successful(String data) {
-                            binding.group.setText(data);
-                        }
-                    });
+                    Log.d(TAG, "idOfGroupObserver - " + groupId);
+                    if (groupId.equals("0"))
+                    {
+                        groupId = s;
+                        addExpenseViewModel.findNameOfGroupById(s, new CompleteListener2() {
+                            @Override
+                            public void successful(String data) {
+                                Log.d(TAG, "nameOfGroup in Observer - " + data);
+                                nameOfGroup = data;
+                                binding.group.setText(data);
+                            }
+                        });
+                        addExpenseViewModel.findCountOfGroupMemberById(s, new CompleteListenerInt() {
+                            @Override
+                            public void successful(int data) {
+                                countMemberOfFirstGroup = data;
+                            }
+                        });
+                    }
                 }
             }
         };
@@ -165,16 +195,21 @@ public class AddExpenseFragment extends Fragment {
         final Observer<String> idOfUserObserver = new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                userId = s;
-                Log.d(TAG, "on Changed id of User - " + s);
                 if (s != null)
                 {
-                    addExpenseViewModel.findNameOfUserById(s, new CompleteListener2() {
-                        @Override
-                        public void successful(String data) {
-                            binding.whoPaid.setText("  " + data + "  ");
-                        }
-                    });
+                    if (userId.equals("0"))
+                    {
+                        userId = s;
+                        Log.d(TAG, "on Changed id of User - " + s);
+                        addExpenseViewModel.findNameOfUserById(s, new CompleteListener2() {
+                            @Override
+                            public void successful(String data) {
+                                Log.d(TAG, "nameOfUser in Observer - " + data);
+                                nameOfUser = data;
+                                binding.whoPaid.setText("  " + data + "  ");
+                            }
+                        });
+                    }
                 }
             }
         };
@@ -199,6 +234,11 @@ public class AddExpenseFragment extends Fragment {
                 bundle.putString("expenseSum", binding.sum.getText().toString());
                 bundle.putStringArrayList("usersId", usersId);
                 bundle.putLongArray("usersSum", usersSum);
+
+                bundle.putString("nameOfUser", nameOfUser);
+                bundle.putString("nameOfGroup", nameOfGroup);
+                bundle.putInt("countMemberOfFirstGroup", countMemberOfFirstGroup);
+
                 NavigationUtils.navigateSafe(navController, R.id.action_addExpenseFragment_to_whoPaidFragment, bundle);
 
             }
@@ -215,6 +255,11 @@ public class AddExpenseFragment extends Fragment {
                 bundle.putString("userId", userId);
                 bundle.putStringArrayList("usersId", usersId);
                 bundle.putLongArray("usersSum", usersSum);
+
+                bundle.putString("nameOfUser", nameOfUser);
+                bundle.putString("nameOfGroup", nameOfGroup);
+                bundle.putInt("countMemberOfFirstGroup", countMemberOfFirstGroup);
+
                 NavigationUtils.navigateSafe(navController, R.id.action_addExpenseFragment_to_chooseGroupFragment, bundle);
             }
         });
@@ -231,6 +276,11 @@ public class AddExpenseFragment extends Fragment {
                 if (expenseSum.equals("")) expenseSum = "0";
                 bundle.putString("expenseSum", expenseSum);
                 bundle.putString("userId", userId);
+
+                bundle.putString("nameOfUser", nameOfUser);
+                bundle.putString("nameOfGroup", nameOfGroup);
+                bundle.putInt("countMemberOfFirstGroup", countMemberOfFirstGroup);
+
 
                 if (usersId == null)
                 {
@@ -277,6 +327,10 @@ public class AddExpenseFragment extends Fragment {
                 if (binding.description.getText().toString().equals(""))
                 {
                     Toast.makeText(requireContext(), "Заполните описание!", Toast.LENGTH_SHORT).show();
+                }
+                else if (countMemberOfFirstGroup < 2 && countMemberOfFirstGroup != -1)
+                {
+                    Toast.makeText(requireContext(), "В группе должно быть как минимум 2 участника!", Toast.LENGTH_SHORT).show();
                 }
                 else if (binding.sum.getText().toString().equals("") || binding.sum.getText().toString().equals("0"))
                 {

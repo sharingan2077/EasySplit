@@ -80,29 +80,29 @@ public class AddFriendToGroupFragment extends Fragment {
 
     private void initRecyclerView()
     {
-//        adapter = new UsersRecyclerAdapter(requireActivity(), addFriendToGroupViewModel.getUsers().getValue(), () -> {
-//
-//
-//            NavigationUtils.navigateSafe(navController, R.id.action_whoPaidFragment_to_addExpenseFragment, null);
-//        });
+        adapter = new UsersRecyclerAdapter(requireActivity(), addFriendToGroupViewModel.getUsers().getValue(), new UsersRecyclerAdapter.onUserClickListener() {
+            @Override
+            public void onClick(String userId, String userName) {
+                addFriendToGroupViewModel.addFriendToGroup(groupId, userId, new UserRepository.AddFriendToGroupListener() {
+                    @Override
+                    public void successful() {
+                        bundle = new Bundle();
+                        bundle.putString("groupId", groupId);
+                        bundle.putString("nameOfGroup", nameOfGroup);
+                        bundle.putInt("countGroupMembers", countGroupMembers);
+                        NavigationUtils.navigateSafe(navController, R.id.action_addFriendToGroupFragment_to_groupEnterFragment, bundle);
+                    }
 
-        adapter = new UsersRecyclerAdapter(requireActivity(), addFriendToGroupViewModel.getUsers().getValue(), userId -> {
-            addFriendToGroupViewModel.addFriendToGroup(groupId, userId, new UserRepository.AddFriendToGroupListener() {
-                @Override
-                public void successful() {
-                    bundle = new Bundle();
-                    bundle.putString("groupId", groupId);
-                    bundle.putString("nameOfGroup", nameOfGroup);
-                    bundle.putInt("countGroupMembers", countGroupMembers);
-                    NavigationUtils.navigateSafe(navController, R.id.action_addFriendToGroupFragment_to_groupEnterFragment, bundle);
-                }
-                @Override
-                public void unSuccessful() {
-                    Toast.makeText(requireActivity(), "Этот друг уже добавлен!", Toast.LENGTH_SHORT).show();
-                }
-            });
+                    @Override
+                    public void unSuccessful() {
+                        Toast.makeText(requireActivity(), "Этот друг уже добавлен!", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+            }
         });
-        binding.recyclerView.setAdapter(adapter);
+
+                binding.recyclerView.setAdapter(adapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 }

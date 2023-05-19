@@ -27,7 +27,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Имя"
+                android:text="Никнейм"
                 android:textColor="@color/black"
                 style="@style/InterRegular16"
                 android:layout_marginStart="2dp"/>

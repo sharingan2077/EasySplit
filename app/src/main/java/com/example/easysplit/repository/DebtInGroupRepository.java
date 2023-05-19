@@ -144,9 +144,7 @@ public class DebtInGroupRepository {
                         }
                     });
                 }
-
                 //listener.successful();
-
             }
             @Override
             public void unSuccessful() {

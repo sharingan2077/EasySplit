@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.easysplit.R;
+import com.example.easysplit.model.FriendsImages;
 import com.example.easysplit.model.User;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class UsersRecyclerAdapter extends RecyclerView.Adapter<UsersRecyclerAdap
 {
 
     public interface onUserClickListener{
-        void onClick(String userId);
+        void onClick(String userId, String userName);
     }
     private List<User> users =  new ArrayList<>();
     UsersRecyclerAdapter.onUserClickListener listener;
@@ -48,10 +49,13 @@ public class UsersRecyclerAdapter extends RecyclerView.Adapter<UsersRecyclerAdap
     @Override
     public void onBindViewHolder(@NonNull UsersRecyclerAdapter.ViewHolder holder, int position) {
 
-        holder.imageView.setImageResource(R.drawable.ic_user_54);
+        FriendsImages friendsImages = new FriendsImages();
+        int image = friendsImages.getImageFriends().get(Integer.valueOf(users.get(position).getUserImage()));
+        holder.imageView.setImageResource(image);
+
         holder.userName.setText(users.get(position).getUserName());
         holder.parentLayout.setOnClickListener(v -> {
-            listener.onClick(users.get(position).getUID());
+            listener.onClick(users.get(position).getUID(), users.get(position).getUserName());
         });
 
     }

@@ -9,16 +9,21 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.easysplit.model.FriendsImages;
 import com.example.easysplit.model.User;
+import com.example.easysplit.view.listeners.CompleteListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class AuthAppRepository {
     private static final String TAG = "AuthAppRepository";
@@ -33,6 +38,8 @@ public class AuthAppRepository {
     private MutableLiveData<Boolean> loggedOutLiveData;
 
     private MutableLiveData<Boolean> isVerified;
+
+    FriendsImages friendsImages;
 
     public MutableLiveData<Boolean> getIsVerified() {
         return isVerified;
@@ -57,8 +64,13 @@ public class AuthAppRepository {
         // Генерация токена для пользователя - число от 10000 до 99999
         int randomNum = 10000 + (int)(Math.random() * ((89999 - 10000) + 10000));
         String id = Integer.toString(randomNum);
+        friendsImages = new FriendsImages();
+        //List<String> imageUrls = friendsImages.getImageUrls();
+        List<Integer> imageFriends = friendsImages.getImageFriends();
+        int randomImage = ThreadLocalRandom.current().nextInt(0, imageFriends.size());
+
         // Создание объекта User (с именем при регистрации и созданным токеном)
-        User user = new User(userName, id);
+        User user = new User(userName, id, String.valueOf(randomImage), "0");
         // Добавление в базу данных пользователя
         FirebaseDatabase.getInstance().getReference().child("User")
                 .child(FirebaseAuth.getInstance().getUid())
@@ -69,7 +81,10 @@ public class AuthAppRepository {
                 .child(FirebaseAuth.getInstance().getUid()).child("userGroups").setValue("");
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("ACCOUNT_FILE_KEY", userName + "#" + id);
+
+        editor.putString("UserNameAndId", userName + "#" + id);
+        editor.putString("UserEmail", FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        editor.putString("UserImage", Integer.toString(randomImage));
         editor.apply();
     }
 
@@ -133,11 +148,39 @@ public class AuthAppRepository {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Если такой пользователь найден, то добавление в userLiveData этого пользователя
-                            userLiveData.postValue(firebaseAuth.getCurrentUser());
+                            refreshSharedPreferences(new CompleteListener() {
+                                @Override
+                                public void successful() {
+                                    userLiveData.postValue(firebaseAuth.getCurrentUser());
+                                }
+
+                                @Override
+                                public void unSuccessful() {
+                                }
+                            });
+
                         } else {
                             // В другом случае вывод ошибки
-                            Toast.makeText(application.getApplicationContext(), "Login Failure: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(application.getApplicationContext(), "Login Failure: 9999" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
+                    }
+                });
+    }
+
+    public void refreshSharedPreferences(CompleteListener listener)
+    {
+        FirebaseDatabase.getInstance().getReference()
+                .child("User").child(firebaseAuth.getCurrentUser().getUid())
+                .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        User user = task.getResult().getValue(User.class);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("UserNameAndId", user.getUserName()+"#"+user.getId());
+                        editor.putString("UserEmail", FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                        editor.putString("UserImage", user.getUserImage());
+                        editor.apply();
+
                     }
                 });
     }

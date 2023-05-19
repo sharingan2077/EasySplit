@@ -17,11 +17,13 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.easysplit.databinding.ActivityMainBinding;
+import com.example.easysplit.model.FriendsImages;
 import com.example.easysplit.viewModel.MainActivityViewModel;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setBackgroundToBottomNavigation();
-
+        binding.bottomNavigationBar.setItemIconTintList(null);
         mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         mainActivityViewModel.init(this);
         mainActivityViewModel.initFab();
@@ -49,6 +51,19 @@ public class MainActivity extends AppCompatActivity {
             else hideBottomNavigationBar();
         };
         mainActivityViewModel.getIsShowBottomBar().observe(this, booleanObserver);
+
+
+        final Observer<String> observerUserImage = new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                Log.d(TAG, "observerUserImage " + s);
+                FriendsImages friendsImages = new FriendsImages();
+                int drawableId = friendsImages.getImageFriends().get(Integer.valueOf(s));
+                Menu navView = binding.bottomNavigationBar.getMenu();
+                navView.findItem(R.id.profileFragment).setIcon(drawableId);
+            }
+        };
+        mainActivityViewModel.getUserImage().observe(this, observerUserImage);
 
 
         binding.bottomNavigationBar.setOnItemSelectedListener(item -> {

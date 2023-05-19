@@ -1,0 +1,93 @@
+Index: app/src/main/java/com/example/easysplit/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/easysplit/MainActivity.java b/app/src/main/java/com/example/easysplit/MainActivity.java
+--- a/app/src/main/java/com/example/easysplit/MainActivity.java	
++++ b/app/src/main/java/com/example/easysplit/MainActivity.java	(date 1684398011071)
+@@ -5,11 +5,16 @@
+ import androidx.annotation.NonNull;
+ import androidx.annotation.Nullable;
+ import androidx.appcompat.app.AppCompatActivity;
++import androidx.core.content.ContextCompat;
++import androidx.fragment.app.Fragment;
++import androidx.fragment.app.FragmentManager;
+ import androidx.lifecycle.Observer;
+ import androidx.lifecycle.ViewModelProvider;
+ import androidx.navigation.NavController;
+ import androidx.navigation.NavDestination;
+ import androidx.navigation.Navigation;
++import androidx.navigation.fragment.NavHostFragment;
++import androidx.navigation.ui.AppBarConfiguration;
+ import androidx.navigation.ui.NavigationUI;
+ 
+ import android.app.Activity;
+@@ -17,12 +22,16 @@
+ import android.os.Build;
+ import android.os.Bundle;
+ import android.util.Log;
++import android.view.MenuItem;
+ import android.view.View;
+ import android.view.Window;
+ import android.view.WindowManager;
+ 
++import com.example.easysplit.R;
+ import com.example.easysplit.databinding.ActivityMainBinding;
+ import com.example.easysplit.viewModel.MainActivityViewModel;
++import com.google.android.material.bottomnavigation.BottomNavigationView;
++import com.google.android.material.navigation.NavigationBarView;
+ 
+ public class MainActivity extends AppCompatActivity {
+     ActivityMainBinding binding;
+@@ -40,7 +49,7 @@
+         setBackgroundToBottomNavigation();
+ 
+         mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+-        mainActivityViewModel.init(this);
++        mainActivityViewModel.init();
+         mainActivityViewModel.initFab();
+ 
+ 
+@@ -57,33 +66,23 @@
+         });
+ 
+         navController = Navigation.findNavController(this, R.id.navHostFragment);
++        //AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+         NavigationUI.setupWithNavController(binding.bottomNavigationBar, navController);
+         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+             @Override
+             public void onDestinationChanged(@NonNull NavController controller,
+                                              @NonNull NavDestination destination, @Nullable Bundle arguments) {
+-                int id = destination.getId();
+-                if(id == R.id.groupsFragment || id == R.id.friendsFragment
+-                || id == R.id.activityFragment || id == R.id.profileFragment) {
+-                    showBottomNavigationBar();
+-
+-                }
+-//                else if (id == R.id.groupEnterFragment)
+-//                {
+-//                    showBottomNavigationBar();
+-//                }
+-                else
+-                {
++                if(destination.getId() == R.id.groupCreateFragment || destination.getId() == R.id.addExpenseFragment) {
+                     hideBottomNavigationBar();
++                } else {
++                    showBottomNavigationBar();
+                 }
+             }
+-        });
+-        binding.fab.setOnClickListener(new View.OnClickListener() {
+-            @Override
+-            public void onClick(View v) {
+-                mainActivityViewModel.setIsGoToMakeExpense();
+-            }
+         });
++
++
++        binding.fab.setOnClickListener(v -> {mainActivityViewModel.setIsGoToMakeExpense();});
++
+         setTransparentStatusBar();
+     }
+     private void setBackgroundToBottomNavigation()

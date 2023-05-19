@@ -1,6 +1,7 @@
 package com.example.easysplit.viewModel;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -17,14 +18,28 @@ public class MainActivityViewModel extends ViewModel {
 
     private final MutableLiveData<Boolean> isGoToMakeExpense = new MutableLiveData<>();
 
+    private final MutableLiveData<String> userImage = new MutableLiveData<>();
+
     private  Context mContext;
 
     private int countOfGroups = 0;
+
+    public LiveData<String> getUserImage() {
+        return userImage;
+    }
+
     public void init(Context context)
     {
         isShowBottomBar.setValue(false);
         mContext = context;
+        setUserImage();
 
+    }
+
+    public void setUserImage()
+    {
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences("ACCOUNT_FILE_KEY", Context.MODE_PRIVATE);
+        userImage.setValue(sharedPreferences.getString("UserImage", "0"));
     }
     public void initFab()
     {

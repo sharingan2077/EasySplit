@@ -14,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.easysplit.R;
+import com.example.easysplit.model.FriendsImages;
 import com.example.easysplit.model.User;
 
 import java.util.ArrayList;
@@ -59,7 +60,10 @@ public class UsersSplitEquallyAdapter extends RecyclerView.Adapter<UsersSplitEqu
     @Override
     public void onBindViewHolder(@NonNull UsersSplitEquallyAdapter.ViewHolder holder, int position) {
 
-        holder.imageView.setImageResource(R.drawable.ic_user_54);
+        FriendsImages friendsImages = new FriendsImages();
+        int image = friendsImages.getImageFriends().get(Integer.valueOf(users.get(position).getUserImage()));
+        holder.imageView.setImageResource(image);
+
         holder.userName.setText(users.get(position).getUserName());
 
         if (!usersId.contains(users.get(position).getUID()))

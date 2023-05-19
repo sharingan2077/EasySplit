@@ -56,6 +56,12 @@ public class SplitEquallyFragment extends Fragment {
     private long[] usersSum;
 
 
+    private String nameOfGroup;
+    private String nameOfUser;
+
+    private int countMemberOfFirstGroup;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +80,10 @@ public class SplitEquallyFragment extends Fragment {
 
         usersId = getArguments().getStringArrayList("usersId");
         usersSum = getArguments().getLongArray("usersSum");
+
+        nameOfGroup = getArguments().getString("nameOfGroup", "*2_39/");
+        nameOfUser = getArguments().getString("nameOfUser", "*2_39/");
+        countMemberOfFirstGroup = getArguments().getInt("countMemberOfFirstGroup", -1);
 
         whoPaidViewModel = new ViewModelProvider(requireActivity()).get(WhoPaidViewModel.class);
         whoPaidViewModel.init(groupId, new CompleteListener() {
@@ -102,6 +112,11 @@ public class SplitEquallyFragment extends Fragment {
                 bundle.putString("userId", userId);
                 bundle.putStringArrayList("usersId", usersIdCash);
                 bundle.putLongArray("usersSum", usersSum);
+
+                bundle.putString("nameOfUser", nameOfUser);
+                bundle.putString("nameOfGroup", nameOfGroup);
+                bundle.putInt("countMemberOfFirstGroup", countMemberOfFirstGroup);
+
                 //Log.d(TAG, "put" + Integer.toString(usersIdCash.size()));
                 NavigationUtils.navigateSafe(navController, R.id.action_splitEquallyFragment_to_addExpenseFragment, bundle);
             }
@@ -120,6 +135,12 @@ public class SplitEquallyFragment extends Fragment {
                         bundle.putString("expenseSum", expenseSumString);
                         bundle.putString("userId", userId);
                         bundle.putStringArrayList("usersId", usersId);
+
+                        bundle.putString("nameOfUser", nameOfUser);
+                        bundle.putString("nameOfGroup", nameOfGroup);
+                        bundle.putInt("countMemberOfFirstGroup", countMemberOfFirstGroup);
+
+
                         NavigationUtils.navigateSafe(navController, R.id.action_splitEquallyFragment_to_addExpenseFragment, bundle);
                     }
                     @Override
@@ -146,6 +167,10 @@ public class SplitEquallyFragment extends Fragment {
 
                 bundle.putStringArrayList("usersId", usersId);
                 bundle.putLongArray("usersSum", usersSum);
+
+                bundle.putString("nameOfUser", nameOfUser);
+                bundle.putString("nameOfGroup", nameOfGroup);
+                bundle.putInt("countMemberOfFirstGroup", countMemberOfFirstGroup);
 
                 NavigationUtils.navigateSafe(navController, R.id.action_splitEquallyFragment_to_splitUnequallyFragment, bundle);
             }

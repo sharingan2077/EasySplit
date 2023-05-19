@@ -18,12 +18,15 @@ import android.view.ViewGroup;
 
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.LoginFragmentBinding;
+import com.example.easysplit.viewModel.MainActivityViewModel;
 import com.example.easysplit.viewModel.authentication.LoginRegisterViewModel;
 
 public class LoginFragment extends Fragment {
     private static final String TAG = "LoginFragment";
     LoginFragmentBinding binding;
     LoginRegisterViewModel loginRegisterViewModel;
+
+    MainActivityViewModel mainActivityViewModel;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,7 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = LoginFragmentBinding.inflate(inflater, container, false);
         loginRegisterViewModel = new ViewModelProvider(requireActivity()).get(LoginRegisterViewModel.class);
+        mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
         loginRegisterViewModel.refreshLoggedOutLiveData();
 
         //Navigation.findNavController(binding.getRoot()).navigate(R.id.action_loginFragment_to_groupsFragment);
@@ -49,6 +53,7 @@ public class LoginFragment extends Fragment {
             String password = binding.passwordText.getText().toString();
             loginRegisterViewModel.login(email, password);
             loginRegisterViewModel.refreshLoggedOutLiveData();
+            mainActivityViewModel.setUserImage();
             //Navigation.findNavController(binding.getRoot()).navigate(R.id.action_loginFragment_to_groupsFragment);
 
 //            {

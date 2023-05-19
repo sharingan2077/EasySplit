@@ -45,6 +45,11 @@ public class ChooseGroupFragment extends Fragment {
     private ArrayList<String> usersId;
     private long[] usersSum;
 
+    private String nameOfGroup;
+    private String nameOfUser;
+
+    private int countMemberOfFirstGroup;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,6 +71,12 @@ public class ChooseGroupFragment extends Fragment {
 
         usersId = getArguments().getStringArrayList("usersId");
         usersSum = getArguments().getLongArray("usersSum");
+
+
+        nameOfGroup = getArguments().getString("nameOfGroup", "*2_39/");
+        nameOfUser = getArguments().getString("nameOfUser", "*2_39/");
+        countMemberOfFirstGroup = getArguments().getInt("countMemberOfFirstGroup", -1);
+
         groupsViewModel.init(new CompleteListener() {
             @Override
             public void successful() {
@@ -101,6 +112,10 @@ public class ChooseGroupFragment extends Fragment {
                 bundle.putStringArrayList("usersId", usersId);
                 bundle.putLongArray("usersSum", usersSum);
 
+                bundle.putString("nameOfUser", nameOfUser);
+                bundle.putString("nameOfGroup", nameOfGroup);
+                bundle.putInt("countMemberOfFirstGroup", countMemberOfFirstGroup);
+
                 NavigationUtils.navigateSafe(navController, R.id.action_chooseGroupFragment_to_addExpenseFragment, bundle);
             }
         });
@@ -121,6 +136,10 @@ public class ChooseGroupFragment extends Fragment {
                 bundle.putString("expenseName", expenseName);
                 bundle.putString("expenseSum", expenseSumString);
                 bundle.putString("userId", userId);
+
+                bundle.putString("nameOfUser", nameOfUser);
+                bundle.putString("nameOfGroup", nameOfGroup);
+                bundle.putInt("countMemberOfFirstGroup", countMemberOfFirstGroup);
 
                 if (countGroupMembers == 1)
                 {

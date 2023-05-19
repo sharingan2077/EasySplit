@@ -10,20 +10,55 @@ public class User {
 
     private String id;
 
+    public void setUserImage(String userImage) {
+        this.userImage = userImage;
+    }
+
+    public String getUserImage() {
+        return userImage;
+    }
+
     private String UID;
+    private long sumOwn;
+    private Boolean youOwn;
+    private String userImage;
+    private List<String> userGroups = new ArrayList<>();
+    private List<String> userFriends = new ArrayList<>();
+
+    public void setSumOwn(long sumOwn) {
+        this.sumOwn = sumOwn;
+    }
+
+    public void setYouOwn(Boolean youOwn) {
+        this.youOwn = youOwn;
+    }
+
+    public long getSumOwn() {
+        return sumOwn;
+    }
+
+    public Boolean getYouOwn() {
+        return youOwn;
+    }
+
+    public User(String userName, String id, String UID, long sumOwn, Boolean youOwn) {
+        this.userName = userName;
+        this.id = id;
+        this.UID = UID;
+        this.sumOwn = sumOwn;
+        this.youOwn = youOwn;
+    }
 
     public User(String userName, String id, String UID) {
         this.userName = userName;
         this.id = id;
         this.UID = UID;
+        this.sumOwn = 0;
     }
 
     public String getUID() {
         return UID;
     }
-
-    private List<String> userGroups = new ArrayList<>();
-    private List<String> userFriends = new ArrayList<>();
 
 //    private HashMap<String, String> userGroups;
 //    private HashMap<String, String> userFriends;
@@ -61,5 +96,11 @@ public class User {
     public User(String userName, String id) {
         this.userName = userName;
         this.id = id;
+    }
+    public User(String userName, String id, String userImage, String UID) {
+        this.userName = userName;
+        this.id = id;
+        this.userImage = userImage;
+        this.UID = UID;
     }
 }

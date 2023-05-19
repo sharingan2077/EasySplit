@@ -14,6 +14,7 @@ import com.example.easysplit.repository.GroupEnterRepository;
 import com.example.easysplit.view.listeners.CheckUsersIdListener;
 import com.example.easysplit.view.listeners.CompleteListener;
 import com.example.easysplit.view.listeners.CompleteListener2;
+import com.example.easysplit.view.listeners.CompleteListenerInt;
 import com.example.easysplit.view.listeners.CompleteListenerListString;
 
 import java.util.ArrayList;
@@ -55,6 +56,10 @@ public class AddExpenseViewModel extends ViewModel {
     public void findNameOfGroupById(String id, CompleteListener2 listener)
     {
         mRepo.findNameOfGroupById(id, listener);
+    }
+    public void findCountOfGroupMemberById(String id, CompleteListenerInt listener)
+    {
+        mRepo.findCountOfGroupMemberById(id, listener);
     }
     public void setGroupId(String id)
     {

@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.easysplit.model.Expense;
 import com.example.easysplit.model.User;
 import com.example.easysplit.view.listeners.AddFriendToUserListener;
 import com.example.easysplit.view.listeners.CompleteListener;
@@ -23,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class UserRepository {
@@ -34,6 +36,7 @@ public class UserRepository {
     MutableLiveData<List<User>> data = new MutableLiveData<>();
 
     private List<String> userFriends;
+    private HashMap<String, Long> allFriendsExpenses;
 
     private Boolean friendExist = false;
 
@@ -75,40 +78,163 @@ public class UserRepository {
         });
     }
 
+//    private void setUserJoinedGroups(ArrayList<String> userFriends, CompleteListener listener)
+//    {
+//        userJoinedGroups = new ArrayList<>();
+//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+//        Query query = reference.child("Group");
+//        query.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren())
+//                {
+//                    if (snapshot.child("groupUsers").hasChild(FirebaseAuth.getInstance().getUid()))
+//                    {
+//                        for (String id : userFriends)
+//                        {
+//                            if (snapshot.child("groupUsers").hasChild(id))
+//                            {
+//                                userJoinedGroups.add(snapshot.getKey());
+//                                break;
+//                            }
+//                        }
+//                    }
+//                }
+//                listener.successful();
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
+    private void setAllFriendsExpenses(List<String> userFriends, CompleteListener listener)
+    {
+        allFriendsExpenses = new HashMap<>();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query query = reference.child("Expense");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Expense expense = snapshot.getValue(Expense.class);
+                    HashMap<String, Long> usersWaste = expense.getUsersWaste();
+                    String expenseOwner = expense.getExpenseOwner();
+                    String UID = FirebaseAuth.getInstance().getUid();
+                    if (expenseOwner.equals(UID))
+                    {
+                        for (String name: usersWaste.keySet()) {
+                            if (userFriends.contains(name))
+                            {
+                                if (allFriendsExpenses.get(name) == null)
+                                {
+                                    allFriendsExpenses.put(name, usersWaste.get(name));
+                                }
+                                else
+                                {
+                                    allFriendsExpenses.put(name, allFriendsExpenses.get(name) + usersWaste.get(name));
+                                }
+                            }
+                        }
+
+                    }
+                    else if (userFriends.contains(expenseOwner))
+                    {
+                        if (usersWaste.get(UID) != null)
+                        {
+                            if (allFriendsExpenses.get(expenseOwner) == null)
+                            {
+                                allFriendsExpenses.put(expenseOwner, usersWaste.get(UID) * (-1));
+                            }
+                            else
+                            {
+                                allFriendsExpenses.put(expenseOwner, allFriendsExpenses.get(expenseOwner) - usersWaste.get(UID));
+                            }
+                        }
+                    }
+                }
+                for (String name : allFriendsExpenses.keySet())
+                {
+                    if (allFriendsExpenses.get(name) == 0)
+                    {
+                        allFriendsExpenses.remove(name);
+                    }
+                }
+                listener.successful();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+
+
+
+
     //Загрузка друзей для текущего пользователя
     private void setUsers(CompleteListener listener)
     {
 
         setUserFriends(new CompleteListener() {
+
+
             @Override
             public void successful() {
-                Log.d(TAG, "successful");
 
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-                Query query = reference.child("User");
-                ValueEventListener postListener = new ValueEventListener() {
+                setAllFriendsExpenses(userFriends, new CompleteListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        dataSet.clear();
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren())
-                        {
-                            if (userFriends.contains(snapshot.getKey()))
-                            {
-                                User user = new User(snapshot.child("userName").getValue().toString(), snapshot.child("id").getValue().toString(), snapshot.getKey());
-                                dataSet.add(user);
+                    public void successful()
+                    {
+                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                        Query query = reference.child("User");
+                        ValueEventListener postListener = new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                dataSet.clear();
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                                {
+                                    if (userFriends.contains(snapshot.getKey()))
+                                    {
+
+
+                                        User user = new User(snapshot.child("userName").getValue().toString(), snapshot.child("id").getValue().toString(), snapshot.child("userImage").getValue().toString(), snapshot.getKey());
+                                        if (allFriendsExpenses.get(snapshot.getKey()) != null)
+                                        {
+                                            if (allFriendsExpenses.get(snapshot.getKey()) > 0)
+                                            {
+                                                user.setYouOwn(true);
+                                                user.setSumOwn(allFriendsExpenses.get(snapshot.getKey()));
+                                            }
+                                            else
+                                            {
+                                                user.setYouOwn(false);
+                                                user.setSumOwn(allFriendsExpenses.get(snapshot.getKey()) * (-1));
+                                            }
+                                        }
+                                        dataSet.add(user);
+                                    }
+                                }
+                                listener.successful();
+                                data.postValue(dataSet);
                             }
-                        }
-                        listener.successful();
-                        data.postValue(dataSet);
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError)
+                            {
+                            }
+                        };
+                        query.addValueEventListener(postListener);
                     }
 
                     @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                };
-                query.addValueEventListener(postListener);
-            }
+                    public void unSuccessful() {
 
+                    }
+                });
+            }
             @Override
             public void unSuccessful() {
 
@@ -359,4 +485,12 @@ public class UserRepository {
             }
         });
     }
+
+    // Вычисление долгов друзей
+
+
+
+
+
+
 }

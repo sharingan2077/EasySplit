@@ -51,7 +51,7 @@ public class WhoPaidRepository {
                 {
                     if (snapshot.child("userGroups").hasChild(id))
                     {
-                        User user = new User(snapshot.child("userName").getValue().toString(), snapshot.child("id").getValue().toString(), snapshot.getKey());
+                        User user = new User(snapshot.child("userName").getValue().toString(), snapshot.child("id").getValue().toString(), snapshot.child("userImage").getValue().toString(), snapshot.getKey());
                         dataSet.add(user);
                     }
                 }

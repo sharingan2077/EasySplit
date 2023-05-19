@@ -49,6 +49,11 @@ public class SplitUnequallyFragment extends Fragment {
 
     private String totalSumString = "0";
 
+    private String nameOfGroup;
+    private String nameOfUser;
+
+    private int countMemberOfFirstGroup;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +79,10 @@ public class SplitUnequallyFragment extends Fragment {
         usersId = getArguments().getStringArrayList("usersId");
         usersSum = getArguments().getLongArray("usersSum");
 
+        nameOfGroup = getArguments().getString("nameOfGroup", "*2_39/");
+        nameOfUser = getArguments().getString("nameOfUser", "*2_39/");
+        countMemberOfFirstGroup = getArguments().getInt("countMemberOfFirstGroup", -1);
+
         whoPaidViewModel = new ViewModelProvider(requireActivity()).get(WhoPaidViewModel.class);
         whoPaidViewModel.init(groupId, new CompleteListener() {
             @Override
@@ -98,6 +107,10 @@ public class SplitUnequallyFragment extends Fragment {
                 bundle.putString("expenseSum", expenseSumString);
                 bundle.putString("userId", userId);
                 bundle.putStringArrayList("usersId", usersId);
+
+                bundle.putString("nameOfUser", nameOfUser);
+                bundle.putString("nameOfGroup", nameOfGroup);
+                bundle.putInt("countMemberOfFirstGroup", countMemberOfFirstGroup);
 
                 NavigationUtils.navigateSafe(navController, R.id.action_splitUnequallyFragment_to_addExpenseFragment, bundle);
             }
@@ -129,6 +142,11 @@ public class SplitUnequallyFragment extends Fragment {
                     bundle.putString("expenseName", expenseName);
                     bundle.putString("expenseSum", expenseSumString);
                     bundle.putString("userId", userId);
+
+                    bundle.putString("nameOfUser", nameOfUser);
+                    bundle.putString("nameOfGroup", nameOfGroup);
+                    bundle.putInt("countMemberOfFirstGroup", countMemberOfFirstGroup);
+
                     //bundle.putString("totalSum", totalSumString);
                     usersId.clear();
                     for (String name: map.keySet()) {
@@ -162,6 +180,10 @@ public class SplitUnequallyFragment extends Fragment {
 
                 bundle.putStringArrayList("usersId", usersId);
                 bundle.putLongArray("usersSum", usersSum);
+
+                bundle.putString("nameOfUser", nameOfUser);
+                bundle.putString("nameOfGroup", nameOfGroup);
+                bundle.putInt("countMemberOfFirstGroup", countMemberOfFirstGroup);
 
                 Log.d(TAG, "size of usersId - " + Integer.toString(usersId.size()));
                 NavigationUtils.navigateSafe(navController, R.id.action_splitUnequallyFragment_to_splitEquallyFragment, bundle);

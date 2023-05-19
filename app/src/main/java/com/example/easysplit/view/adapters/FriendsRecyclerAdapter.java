@@ -9,10 +9,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.easysplit.R;
+import com.example.easysplit.model.FriendsImages;
 import com.example.easysplit.model.User;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,14 +44,44 @@ public class FriendsRecyclerAdapter extends RecyclerView.Adapter<FriendsRecycler
     public FriendsRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item_friend, parent, false);
         FriendsRecyclerAdapter.ViewHolder holder = new FriendsRecyclerAdapter.ViewHolder(view);
+
+
+
         return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull FriendsRecyclerAdapter.ViewHolder holder, int position) {
+        FriendsImages friendsImages = new FriendsImages();
+        int image = friendsImages.getImageFriends().get(Integer.valueOf(users.get(position).getUserImage()));
+        holder.imageView.setImageResource(image);
 
-        holder.imageView.setImageResource(R.drawable.ic_user_54);
+
         holder.userName.setText(users.get(position).getUserName());
+        long ownSum = users.get(position).getSumOwn();
+        if (ownSum != 0)
+        {
+            Boolean youOwn = users.get(position).getYouOwn();
+            if (youOwn)
+            {
+                holder.owe.setTextColor(ContextCompat.getColor(mContext, R.color.aqua));
+                holder.sum.setTextColor(ContextCompat.getColor(mContext, R.color.aqua));
+                holder.owe.setText("должен тебе");
+                holder.sum.setText(Long.toString(ownSum) + "руб");
+            }
+            else
+            {
+                holder.owe.setTextColor(ContextCompat.getColor(mContext, R.color.red));
+                holder.sum.setTextColor(ContextCompat.getColor(mContext, R.color.red));
+                holder.owe.setText("ты должен");
+                holder.sum.setText(Long.toString(ownSum) + "руб");
+            }
+        }
+        else
+        {
+            holder.owe.setVisibility(View.GONE);
+            holder.sum.setVisibility(View.GONE);
+        }
 //        holder.parentLayout.setOnClickListener(v -> {
 //            //listener.onClick();
 //            if (holder.checkBox.isChecked())

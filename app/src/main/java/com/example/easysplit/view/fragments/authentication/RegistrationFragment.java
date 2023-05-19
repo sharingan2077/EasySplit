@@ -55,6 +55,11 @@ public class RegistrationFragment extends Fragment {
                 {
                     Toast.makeText(requireActivity(), "Пароли не совпадают!", Toast.LENGTH_SHORT).show();
                 }
+                else if (name.length() > 10)
+                {
+                    Toast.makeText(requireContext(), "Длина никнейма не должна превышать 10 символов", Toast.LENGTH_SHORT).show();
+                }
+
                 else  {
                     loginRegisterViewModel.register(email, password, name);
                     loginRegisterViewModel.refreshLoggedOutLiveData();

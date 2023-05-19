@@ -4,12 +4,12 @@
     <item
         android:id="@+id/groupsFragment"
         android:title="Группы"
-        android:icon="@drawable/ic_member"
+        android:icon="@drawable/group_selector"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/friendsFragment"
         android:title="Друзья"
-        android:icon="@drawable/ic_user"
+        android:icon="@drawable/friend_selector"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/delete"
@@ -18,8 +18,8 @@
         android:enabled="false"/>
     <item
         android:id="@+id/activityFragment"
-        android:title="Расходы"
-        android:icon="@drawable/ic_notepad"
+        android:title="Действия"
+        android:icon="@drawable/activity_selector"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/profileFragment"

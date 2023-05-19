@@ -2,6 +2,7 @@ package com.example.easysplit.view.fragments.groups;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -178,12 +179,12 @@ public class GroupEnterFragment extends Fragment {
                     }
                     if (totalSum >= 0)
                     {
-                        binding.owedOverall.setTextColor(ContextCompat.getColor(requireContext(), R.color.aqua));
+                        binding.owedOverall.setTextColor(Color.parseColor("#08FFC8"));
                         binding.owedOverall.setText("Всего тебе должны ₽" + Long.toString(totalSum));
                     }
                     else
                     {
-                        binding.owedOverall.setTextColor(ContextCompat.getColor(requireContext(), R.color.red));
+                        binding.owedOverall.setTextColor(Color.parseColor("#CB2424"));
                         binding.owedOverall.setText("Всего ты должен ₽" + Long.toString(totalSum * (-1)));
                     }
                 }

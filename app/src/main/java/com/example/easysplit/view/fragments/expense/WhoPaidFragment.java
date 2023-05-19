@@ -46,6 +46,11 @@ public class WhoPaidFragment extends Fragment {
     private ArrayList<String> usersId;
     private long[] usersSum;
 
+    private String nameOfGroup;
+    private String nameOfUser;
+
+    private int countMemberOfFirstGroup;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,6 +72,10 @@ public class WhoPaidFragment extends Fragment {
 
         usersId = getArguments().getStringArrayList("usersId");
         usersSum = getArguments().getLongArray("usersSum");
+
+        nameOfGroup = getArguments().getString("nameOfGroup", "*2_39/");
+        nameOfUser = getArguments().getString("nameOfUser", "*2_39/");
+        countMemberOfFirstGroup = getArguments().getInt("countMemberOfFirstGroup", -1);
 
         whoPaidViewModel.init(groupId, new CompleteListener() {
             @Override
@@ -104,6 +113,10 @@ public class WhoPaidFragment extends Fragment {
                 bundle.putStringArrayList("usersId", usersId);
                 bundle.putLongArray("usersSum", usersSum);
 
+                bundle.putString("nameOfUser", nameOfUser);
+                bundle.putString("nameOfGroup", nameOfGroup);
+                bundle.putInt("countMemberOfFirstGroup", countMemberOfFirstGroup);
+
                 NavigationUtils.navigateSafe(navController, R.id.action_whoPaidFragment_to_addExpenseFragment, bundle);
             }
         });
@@ -112,19 +125,28 @@ public class WhoPaidFragment extends Fragment {
 
     private void initRecyclerView()
     {
-        adapter = new UsersRecyclerAdapter(requireActivity(), whoPaidViewModel.getUsers().getValue(), userId -> {
-            Bundle bundle = new Bundle();
-            bundle.putInt("ActionToLastFragment", actionToLastFragment);
-            bundle.putString("groupId", groupId);
-            bundle.putString("userId", userId);
-            bundle.putString("expenseId", expenseId);
-            bundle.putString("expenseName", expenseName);
-            bundle.putString("expenseSum", expenseSumString);
+        adapter = new UsersRecyclerAdapter(requireActivity(), whoPaidViewModel.getUsers().getValue(), new UsersRecyclerAdapter.onUserClickListener() {
+            @Override
+            public void onClick(String userId, String userName) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("ActionToLastFragment", actionToLastFragment);
+                bundle.putString("groupId", groupId);
 
-            bundle.putStringArrayList("usersId", usersId);
-            bundle.putLongArray("usersSum", usersSum);
+                bundle.putString("userId", userId);
 
-            NavigationUtils.navigateSafe(navController, R.id.action_whoPaidFragment_to_addExpenseFragment, bundle);
+                bundle.putString("nameOfUser", userName);
+                bundle.putString("nameOfGroup", nameOfGroup);
+
+                bundle.putString("expenseId", expenseId);
+                bundle.putString("expenseName", expenseName);
+                bundle.putString("expenseSum", expenseSumString);
+
+                bundle.putStringArrayList("usersId", usersId);
+                bundle.putLongArray("usersSum", usersSum);
+                bundle.putInt("countMemberOfFirstGroup", countMemberOfFirstGroup);
+
+                NavigationUtils.navigateSafe(navController, R.id.action_whoPaidFragment_to_addExpenseFragment, bundle);
+            }
         });
         binding.recyclerViewUsers.setAdapter(adapter);
         binding.recyclerViewUsers.setLayoutManager(new LinearLayoutManager(getActivity()));

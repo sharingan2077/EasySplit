@@ -37,10 +37,12 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
+                android:id="@+id/changeImage"
+                android:visibility="visible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="83dp"
-                android:layout_marginTop="79dp"
+                android:layout_marginStart="90dp"
+                android:layout_marginTop="95dp"
                 android:src="@drawable/ic_photo_camera"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -54,6 +56,7 @@
             <TextView
                 android:id="@+id/userNameAndId"
                 style="@style/InterLight22"
+                android:textSize="18sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="22dp"
@@ -73,6 +76,7 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/changeUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"

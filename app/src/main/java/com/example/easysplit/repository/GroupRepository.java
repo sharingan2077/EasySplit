@@ -171,5 +171,11 @@ public class GroupRepository {
         });
     }
 
+    private void clearExpensesInDataBase()
+    {
+
+    }
+
+
 
 }

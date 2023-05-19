@@ -117,7 +117,7 @@
             android:id="@+id/who_paid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text = "  Вы  "
+            android:text = "                  "
             android:textColor="@color/blue"
             style="@style/InterRegular18"
             android:layout_marginStart="37dp"/>

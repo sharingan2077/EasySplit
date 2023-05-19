@@ -10,6 +10,7 @@ import com.example.easysplit.model.Group;
 import com.example.easysplit.view.listeners.CheckUsersIdListener;
 import com.example.easysplit.view.listeners.CompleteListener;
 import com.example.easysplit.view.listeners.CompleteListener2;
+import com.example.easysplit.view.listeners.CompleteListenerInt;
 import com.example.easysplit.view.listeners.CompleteListenerListString;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -118,6 +119,24 @@ public class AddExpenseRepository {
                     dataNameOfGroup = task.getResult().getValue().toString();
                     nameOfGroup.setValue(dataNameOfGroup);
                     listener.successful(dataNameOfGroup);
+                }
+                else
+                {
+                    Log.d(TAG, "onSuccessful");
+                }
+            }
+        });
+    }
+    public void findCountOfGroupMemberById(String id, CompleteListenerInt listener)
+    {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        reference.child("Group").child(id).child("countMember").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful())
+                {
+                    Log.d(TAG, "Successful");
+                    listener.successful(Integer.valueOf(task.getResult().getValue().toString()));
                 }
                 else
                 {

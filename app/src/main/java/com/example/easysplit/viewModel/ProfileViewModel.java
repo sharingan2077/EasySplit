@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.easysplit.repository.AccountRepository;
 import com.example.easysplit.repository.AuthAppRepository;
 import com.example.easysplit.repository.GroupRepository;
+import com.example.easysplit.view.listeners.CompleteListener;
 
 public class ProfileViewModel extends ViewModel {
 
@@ -23,6 +24,8 @@ public class ProfileViewModel extends ViewModel {
     MutableLiveData<String> userNameAndId = new MutableLiveData<>();
     MutableLiveData<Boolean> loadAccount = new MutableLiveData<>();
 
+    MutableLiveData<String> userImage = new MutableLiveData<>();
+
 
     public void init(Context mContext)
     {
@@ -30,7 +33,32 @@ public class ProfileViewModel extends ViewModel {
         mRepo = AccountRepository.getInstance(mContext);
         userEmail = mRepo.getUserEmail();
         userNameAndId = mRepo.getUserNameAndId();
+        userImage = mRepo.getUserImage();
         //loadAccount.setValue(true);
+    }
+
+    public void changeImageUser(CompleteListener listener)
+    {
+        mRepo.changeUserImage(listener);
+    }
+    public void changeNickNameUser(String name, String id, CompleteListener listener)
+    {
+        mRepo.changeNickNameUser(name, id, listener);
+    }
+
+    public void refreshUserNameAndId()
+    {
+        userNameAndId = mRepo.getUserNameAndId();
+    }
+
+
+    public void refreshUserImage()
+    {
+        userImage = mRepo.getUserImage();
+    }
+
+    public LiveData<String> getUserImage() {
+        return userImage;
     }
 
     public LiveData<String> getUserNameAndId() {

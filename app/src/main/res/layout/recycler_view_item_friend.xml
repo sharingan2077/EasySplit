@@ -12,10 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="20dp"
-        android:src="@drawable/ic_user_54"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+<!--    android:src="@drawable/ic_user_54"-->
 
     <TextView
         android:id="@+id/nameOfUser"
@@ -35,9 +35,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center"
-        android:layout_marginStart="100dp">
+        android:layout_marginStart="75dp">
         <TextView
-            android:visibility="gone"
             android:id="@+id/owe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,7 +44,6 @@
             style="@style/InterLight16"
             android:textColor="@color/red"/>
         <TextView
-            android:visibility="gone"
             android:id="@+id/sum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

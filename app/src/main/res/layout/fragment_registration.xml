@@ -31,14 +31,14 @@
 
 
     <EditText
-        android:text="Максим"
+        android:text="Sharingan2077"
         android:id="@+id/name"
         style="@style/InterSemiBold16"
         android:layout_width="280dp"
         android:layout_height="47dp"
         android:layout_marginTop="47dp"
         android:background="@drawable/style_login"
-        android:hint="Имя"
+        android:hint="Никнейм"
         android:inputType="textCapSentences"
         android:paddingStart="14dp"
         android:textColorHint="@color/grey"
