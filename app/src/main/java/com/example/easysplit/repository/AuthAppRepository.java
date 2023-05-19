@@ -140,7 +140,7 @@ public class AuthAppRepository {
             //isVerified.setValue(false);
         }
     }
-    public void login(String email, String password) {
+    public void login(String email, String password, CompleteListener listener) {
 
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(application.getMainExecutor(), new OnCompleteListener<AuthResult>() {
@@ -152,6 +152,7 @@ public class AuthAppRepository {
                                 @Override
                                 public void successful() {
                                     userLiveData.postValue(firebaseAuth.getCurrentUser());
+                                    listener.successful();
                                 }
 
                                 @Override
@@ -161,7 +162,7 @@ public class AuthAppRepository {
 
                         } else {
                             // В другом случае вывод ошибки
-                            Toast.makeText(application.getApplicationContext(), "Login Failure: 9999" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(application.getApplicationContext(), "Login Failure: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

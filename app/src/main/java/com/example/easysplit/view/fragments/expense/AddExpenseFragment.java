@@ -219,6 +219,7 @@ public class AddExpenseFragment extends Fragment {
         binding.toolbar.back.setOnClickListener(v -> {
             addExpenseViewModel.deleteExpense(expenseId);
             mainActivityViewModel.setIsNotToMakeExpense();
+            mainActivityViewModel.showBottomNavigationBar();
             NavigationUtils.navigateSafe(navController, actionToLastFragment, null);
         });
 

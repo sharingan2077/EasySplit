@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.easysplit.repository.AuthAppRepository;
+import com.example.easysplit.view.listeners.CompleteListener;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
@@ -30,9 +31,9 @@ public class LoginRegisterViewModel extends AndroidViewModel {
     }
 
 
-    public void login(String email, String password) {
+    public void login(String email, String password, CompleteListener listener) {
 
-        authAppRepository.login(email, password);
+        authAppRepository.login(email, password, listener);
     }
 
 

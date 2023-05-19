@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.LoginFragmentBinding;
+import com.example.easysplit.view.listeners.CompleteListener;
 import com.example.easysplit.viewModel.MainActivityViewModel;
 import com.example.easysplit.viewModel.authentication.LoginRegisterViewModel;
 
@@ -51,7 +52,17 @@ public class LoginFragment extends Fragment {
         binding.btnEnter.setOnClickListener(v -> {
             String email = binding.loginText.getText().toString().replace(" ", "");
             String password = binding.passwordText.getText().toString();
-            loginRegisterViewModel.login(email, password);
+            loginRegisterViewModel.login(email, password, new CompleteListener() {
+                @Override
+                public void successful() {
+
+                }
+
+                @Override
+                public void unSuccessful() {
+
+                }
+            });
             loginRegisterViewModel.refreshLoggedOutLiveData();
             mainActivityViewModel.setUserImage();
             //Navigation.findNavController(binding.getRoot()).navigate(R.id.action_loginFragment_to_groupsFragment);

@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         setBackgroundToBottomNavigation();
         binding.bottomNavigationBar.setItemIconTintList(null);
+
+
         mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         mainActivityViewModel.init(this);
         mainActivityViewModel.initFab();
@@ -108,14 +110,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void showBottomNavigationBar()
     {
+        binding.fab.setVisibility(View.GONE);
+        binding.bottomAppBar.setVisibility(View.GONE);
         binding.bottomAppBar.setVisibility(View.VISIBLE);
+        //binding.fab.setLayoutDirection(R.id.bottomAppBar);
         binding.fab.setVisibility(View.VISIBLE);
     }
 
     private void hideBottomNavigationBar()
     {
-        binding.bottomAppBar.setVisibility(View.GONE);
         binding.fab.setVisibility(View.GONE);
+        binding.bottomAppBar.setVisibility(View.GONE);
     }
 
     public void setTransparentStatusBar()
