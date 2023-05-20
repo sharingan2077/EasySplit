@@ -8,6 +8,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,11 @@ public class AddFriendToGroupFragment extends Fragment {
     private String nameOfGroup;
     private int countGroupMembers;
 
+    private int imageDrawable;
+
     UsersRecyclerAdapter adapter;
+
+    private static final String TAG = "AddFriendToGroupFragmen";
 
     Bundle bundle;
 
@@ -61,6 +66,9 @@ public class AddFriendToGroupFragment extends Fragment {
         groupId = getArguments().getString("groupId");
         nameOfGroup = getArguments().getString("nameOfGroup", "0");
         countGroupMembers = getArguments().getInt("countGroupMembers", 0);
+        imageDrawable = getArguments().getInt("imageDrawable", 0);
+
+        Log.d(TAG, String.valueOf(imageDrawable));
 
         initRecyclerView();
         binding.toolbar.textToolbar.setText("Добавить в группу");
@@ -71,6 +79,7 @@ public class AddFriendToGroupFragment extends Fragment {
                 bundle.putString("groupId", groupId);
                 bundle.putString("nameOfGroup", nameOfGroup);
                 bundle.putInt("countGroupMembers", countGroupMembers);
+                bundle.putInt("imageDrawable", imageDrawable);
                 NavigationUtils.navigateSafe(navController, R.id.action_addFriendToGroupFragment_to_groupEnterFragment, bundle);
             }
         });
@@ -89,7 +98,8 @@ public class AddFriendToGroupFragment extends Fragment {
                         bundle = new Bundle();
                         bundle.putString("groupId", groupId);
                         bundle.putString("nameOfGroup", nameOfGroup);
-                        bundle.putInt("countGroupMembers", countGroupMembers);
+                        bundle.putInt("countGroupMembers", countGroupMembers + 1);
+                        bundle.putInt("imageDrawable", imageDrawable);
                         NavigationUtils.navigateSafe(navController, R.id.action_addFriendToGroupFragment_to_groupEnterFragment, bundle);
                     }
 
@@ -102,7 +112,7 @@ public class AddFriendToGroupFragment extends Fragment {
             }
         });
 
-                binding.recyclerView.setAdapter(adapter);
+        binding.recyclerView.setAdapter(adapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 }

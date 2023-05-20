@@ -72,14 +72,19 @@ public class GroupEnterViewModel extends ViewModel {
 //            }
 //        });
 //    }
-    public void gettingCountOfGroupMembers(String groupId, CompleteListenerInt listenerInt)
+//    public void gettingCountOfGroupMembers(String groupId, CompleteListenerInt listenerInt)
+//    {
+//        mRepo.getCountOfGroupMembers(groupId, listenerInt);
+//    }
+
+    public void changeNameOfGroup(String name, String groupId)
     {
-        mRepo.getCountOfGroupMembers(groupId, listenerInt);
+        mRepo.changeNameOfGroup(name, groupId);
     }
 
-    public LiveData<Integer> getCountOfGroupMembers() {
-        return countOfGroupMembers;
-    }
+//    public LiveData<Integer> getCountOfGroupMembers() {
+//        return countOfGroupMembers;
+//    }
 
     public LiveData<List<ExpenseInGroup>> getExpensesInGroups()
     {

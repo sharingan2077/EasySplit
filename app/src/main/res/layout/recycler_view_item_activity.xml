@@ -9,7 +9,7 @@
         android:id="@+id/imgOfGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/activity_1"
+        android:src="@drawable/ic_cheque_aqua"
         android:layout_marginStart="20dp"
         android:layout_gravity="center"/>
     <LinearLayout

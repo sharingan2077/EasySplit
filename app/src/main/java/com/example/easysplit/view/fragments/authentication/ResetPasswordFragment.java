@@ -18,6 +18,8 @@ public class ResetPasswordFragment extends Fragment {
     FragmentResetPasswordBinding binding;
     NavController navController;
 
+    String successfulLogin;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +29,15 @@ public class ResetPasswordFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentResetPasswordBinding.inflate(inflater, container, false);
         navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
-        binding.toolbar.back.setOnClickListener(v -> NavigationUtils.navigateSafe(navController, R.id.action_resetPasswordFragment_to_loginFragment, null));
+        successfulLogin = getArguments().getString("successLogin", "a");
+        binding.toolbar.back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("successLogin", successfulLogin);
+                NavigationUtils.navigateSafe(navController, R.id.action_resetPasswordFragment_to_loginFragment, bundle);
+            }
+        });
         binding.toolbar.textToolbar.setText("Сброс пароля");
 //        binding.btnSendCode.setOnClickListener(new View.OnClickListener() {
 //            @Override

@@ -128,7 +128,7 @@ public class ChooseGroupFragment extends Fragment {
     {
         adapter = new GroupsRecyclerAdapter(getActivity(), groupsViewModel.getGroups().getValue(), new GroupsRecyclerAdapter.onGroupClickListener() {
             @Override
-            public void onClick(String groupId, String nameOfGroup, int countGroupMembers) {
+            public void onClick(String groupId, String nameOfGroup, int countGroupMembers, int imageDrawable) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("ActionToLastFragment", actionToLastFragment);
                 bundle.putString("groupId", groupId);
@@ -139,7 +139,7 @@ public class ChooseGroupFragment extends Fragment {
 
                 bundle.putString("nameOfUser", nameOfUser);
                 bundle.putString("nameOfGroup", nameOfGroup);
-                bundle.putInt("countMemberOfFirstGroup", countMemberOfFirstGroup);
+//                bundle.putInt("countMemberOfFirstGroup", countMemberOfFirstGroup);
 
                 if (countGroupMembers == 1)
                 {

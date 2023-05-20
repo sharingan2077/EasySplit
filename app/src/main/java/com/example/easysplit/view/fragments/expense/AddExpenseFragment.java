@@ -24,6 +24,7 @@ import com.example.easysplit.R;
 import com.example.easysplit.databinding.FragmentAddExpenseBinding;
 import com.example.easysplit.model.Expense;
 import com.example.easysplit.view.listeners.CheckUsersIdListener;
+import com.example.easysplit.view.listeners.CompleteListener;
 import com.example.easysplit.view.listeners.CompleteListener2;
 import com.example.easysplit.view.listeners.CompleteListenerInt;
 import com.example.easysplit.view.listeners.CompleteListenerListString;
@@ -69,6 +70,7 @@ public class AddExpenseFragment extends Fragment {
 
 
 
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -102,7 +104,6 @@ public class AddExpenseFragment extends Fragment {
         countMemberOfFirstGroup = getArguments().getInt("countMemberOfFirstGroup", -1);
 
         //totalSum = getArguments().getString("totalSum", "-");
-
 
         if (!expenseSumString.equals("0"))
         {
@@ -149,7 +150,28 @@ public class AddExpenseFragment extends Fragment {
 
         if (groupId.equals("0"))
         {
-            addExpenseViewModel.getFirstGroupId();
+            Log.d("Releasing", "gettingFirstGroupId");
+            addExpenseViewModel.getFirstGroupId(new CompleteListener2() {
+                @Override
+                public void successful(String data) {
+                    groupId = data;
+                    Log.d(TAG, "idOfGroupObserver - " + groupId);
+                    addExpenseViewModel.findNameOfGroupById(groupId, new CompleteListener2() {
+                        @Override
+                        public void successful(String data) {
+                            Log.d(TAG, "nameOfGroup in Observer - " + data);
+                            nameOfGroup = data;
+                            binding.group.setText(data);
+                        }
+                    });
+                    addExpenseViewModel.findCountOfGroupMemberById(groupId, new CompleteListenerInt() {
+                        @Override
+                        public void successful(int data) {
+                            countMemberOfFirstGroup = data;
+                        }
+                    });
+                }
+            });
         }
 //        else
 //        {
@@ -157,63 +179,77 @@ public class AddExpenseFragment extends Fragment {
 //        }
         if (userId.equals("0"))
         {
-            addExpenseViewModel.getFirstUserId();
+            addExpenseViewModel.getFirstUserId(new CompleteListener2() {
+                @Override
+                public void successful(String data) {
+                    userId = data;
+                    Log.d(TAG, "on Changed id of User - " + userId);
+                    addExpenseViewModel.findNameOfUserById(userId, new CompleteListener2() {
+                        @Override
+                        public void successful(String data) {
+                            Log.d(TAG, "nameOfUser in Observer - " + data);
+                            nameOfUser = data;
+                            binding.whoPaid.setText("  " + data + "  ");
+                        }
+                    });
+                }
+            });
         }
 //        else
 //        {
 //            addExpenseViewModel.setUserId(userId);
 //        }
 
-        final Observer<String> idOfGroupObserver = new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                if (s != null)
-                {
-                    Log.d(TAG, "idOfGroupObserver - " + groupId);
-                    if (groupId.equals("0"))
-                    {
-                        groupId = s;
-                        addExpenseViewModel.findNameOfGroupById(s, new CompleteListener2() {
-                            @Override
-                            public void successful(String data) {
-                                Log.d(TAG, "nameOfGroup in Observer - " + data);
-                                nameOfGroup = data;
-                                binding.group.setText(data);
-                            }
-                        });
-                        addExpenseViewModel.findCountOfGroupMemberById(s, new CompleteListenerInt() {
-                            @Override
-                            public void successful(int data) {
-                                countMemberOfFirstGroup = data;
-                            }
-                        });
-                    }
-                }
-            }
-        };
-        addExpenseViewModel.getIdOfGroup().observe(getViewLifecycleOwner(), idOfGroupObserver);
-        final Observer<String> idOfUserObserver = new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                if (s != null)
-                {
-                    if (userId.equals("0"))
-                    {
-                        userId = s;
-                        Log.d(TAG, "on Changed id of User - " + s);
-                        addExpenseViewModel.findNameOfUserById(s, new CompleteListener2() {
-                            @Override
-                            public void successful(String data) {
-                                Log.d(TAG, "nameOfUser in Observer - " + data);
-                                nameOfUser = data;
-                                binding.whoPaid.setText("  " + data + "  ");
-                            }
-                        });
-                    }
-                }
-            }
-        };
-        addExpenseViewModel.getIdOfUser().observe(getViewLifecycleOwner(), idOfUserObserver);
+//        final Observer<String> idOfGroupObserver = new Observer<String>() {
+//            @Override
+//            public void onChanged(String s) {
+//                if (s != null)
+//                {
+//                    Log.d(TAG, "idOfGroupObserver - " + groupId);
+//                    if (groupId.equals("0"))
+//                    {
+//                        groupId = s;
+//                        addExpenseViewModel.findNameOfGroupById(s, new CompleteListener2() {
+//                            @Override
+//                            public void successful(String data) {
+//                                Log.d(TAG, "nameOfGroup in Observer - " + data);
+//                                nameOfGroup = data;
+//                                binding.group.setText(data);
+//                            }
+//                        });
+//                        addExpenseViewModel.findCountOfGroupMemberById(s, new CompleteListenerInt() {
+//                            @Override
+//                            public void successful(int data) {
+//                                countMemberOfFirstGroup = data;
+//                            }
+//                        });
+//                    }
+//                }
+//            }
+//        };
+//        addExpenseViewModel.getIdOfGroup().observe(getViewLifecycleOwner(), idOfGroupObserver);
+//        final Observer<String> idOfUserObserver = new Observer<String>() {
+//            @Override
+//            public void onChanged(String s) {
+//                if (s != null)
+//                {
+//                    if (userId.equals("0"))
+//                    {
+//                        userId = s;
+//                        Log.d(TAG, "on Changed id of User - " + s);
+//                        addExpenseViewModel.findNameOfUserById(s, new CompleteListener2() {
+//                            @Override
+//                            public void successful(String data) {
+//                                Log.d(TAG, "nameOfUser in Observer - " + data);
+//                                nameOfUser = data;
+//                                binding.whoPaid.setText("  " + data + "  ");
+//                            }
+//                        });
+//                    }
+//                }
+//            }
+//        };
+//        addExpenseViewModel.getIdOfUser().observe(getViewLifecycleOwner(), idOfUserObserver);
 
         mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
         binding.toolbar.back.setOnClickListener(v -> {

@@ -36,7 +36,7 @@ public class ActivityRecyclerAdapter extends RecyclerView.Adapter<ActivityRecycl
     @Override
     public void onBindViewHolder(@NonNull ActivityRecyclerAdapter.ViewHolder holder, int position) {
 
-        holder.imgOfGroup.setImageResource(R.drawable.activity_1);
+        //holder.imgOfGroup.setImageResource(R.drawable.activity_1);
         holder.userName.setText(activities.get(position).getUserName());
         holder.nameOfExpense.setText(activities.get(position).getNameOfExpense());
         holder.nameOfGroup.setText(activities.get(position).getNameOfGroup());

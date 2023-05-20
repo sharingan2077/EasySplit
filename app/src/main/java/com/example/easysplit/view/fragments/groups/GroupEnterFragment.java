@@ -15,12 +15,15 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.FragmentGroupEnterBinding;
@@ -59,6 +62,8 @@ public class GroupEnterFragment extends Fragment {
 
     private Boolean expensesExist = false;
 
+    private int imageDrawable;
+
     NavController navController;
 
     @Override
@@ -70,30 +75,44 @@ public class GroupEnterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentGroupEnterBinding.inflate(inflater, container, false);
         navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
+        showProgressing();
 
         groupId = getArguments().getString("groupId", "0");
         nameOfGroup = getArguments().getString("nameOfGroup", "0");
         countGroupMembers = getArguments().getInt("countGroupMembers", 0);
-        Log.d("Bundle", groupId);
+        imageDrawable = getArguments().getInt("imageDrawable", 0);
+
+        binding.imageView3.setImageResource(imageDrawable);
+
         binding.nameOfGroup.setText(nameOfGroup);
+
         settingTextCountOfMembers(countGroupMembers);
 
         groupEnterViewModel = new ViewModelProvider(requireActivity()).get(GroupEnterViewModel.class);
+
+        if (countGroupMembers == 1)
+        {
+            hideFriendsInGroup();
+        }
         groupEnterViewModel.init(groupId, new CompleteListener2() {
             @Override
             public void successful(String data) {
                 if (data.equals("expense"))
                 {
+                    showExpensesInGroup();
                     adapter.notifyDataSetChanged();
                 }
                 else if (data.equals("debt"))
                 {
                     adapter2.notifyDataSetChanged();
                 }
+                else if (data.equals("noExpenses") && countGroupMembers > 1)
+                {
+                    Log.d(TAG, "noExpenses");
+                    hideExpensesInGroup();
+                }
             }
         });
-
-
 //        final Observer<Integer> countOfGroupMembersObserver = new Observer<Integer>() {
 //            @Override
 //            public void onChanged(Integer integer) {
@@ -111,55 +130,54 @@ public class GroupEnterFragment extends Fragment {
 //            }
 //        };
 //        groupEnterViewModel.getCountOfGroupMembers().observe(getViewLifecycleOwner(), countOfGroupMembersObserver);
-
         initRecyclerView();
-        final Observer<List<ExpenseInGroup>> observerNewExpenseInGroup = new Observer<List<ExpenseInGroup>>() {
-            @Override
-            public void onChanged(List<ExpenseInGroup> expenseInGroup) {
-                adapter.notifyDataSetChanged();
-                Log.d(TAG, Integer.toString(adapter.getItemCount()));
-                groupEnterViewModel.gettingCountOfGroupMembers(groupId, new CompleteListenerInt() {
-                    @Override
-                    public void successful(int data) {
-                        if (data == 1)
-                        {
-                            hideFriendsInGroup();
-                        }
-                        else
-                        {
-                            if (adapter.getItemCount() == 0)
-                            {
-                                hideExpensesInGroup();
-                            }
-                            else
-                            {
-                                showExpensesInGroup();
-                            }
-                        }
-                    }
-                });
-
-//                if (!friendsExist)
-//                {
-//                    Log.d(TAG, "Friends Empty");
-//                    hideFriendsInGroup();
-//                }
-//                else
-//                {
-//                    if (adapter.getItemCount() != 0)
-//                    {
-//                        showExpensesInGroup();
-//                        Log.d(TAG, "Expenses");
+//        final Observer<List<ExpenseInGroup>> observerNewExpenseInGroup = new Observer<List<ExpenseInGroup>>() {
+//            @Override
+//            public void onChanged(List<ExpenseInGroup> expenseInGroup) {
+//                adapter.notifyDataSetChanged();
+//                Log.d(TAG, Integer.toString(adapter.getItemCount()));
+//                groupEnterViewModel.gettingCountOfGroupMembers(groupId, new CompleteListenerInt() {
+//                    @Override
+//                    public void successful(int data) {
+//                        if (data == 1)
+//                        {
+//                            hideFriendsInGroup();
+//                        }
+//                        else
+//                        {
+////                            if (adapter.getItemCount() == 0)
+////                            {
+////                                hideExpensesInGroup();
+////                            }
+////                            else
+////                            {
+////                                showExpensesInGroup();
+////                            }
+//                        }
 //                    }
-//                    else
-//                    {
-//                        hideExpensesInGroup();
-//                        Log.d(TAG, "Expenses empty");
-//                    }
-//                }
-            }
-        };
-        groupEnterViewModel.getExpensesInGroups().observe(requireActivity(), observerNewExpenseInGroup);
+//                });
+//
+////                if (!friendsExist)
+////                {
+////                    Log.d(TAG, "Friends Empty");
+////                    hideFriendsInGroup();
+////                }
+////                else
+////                {
+////                    if (adapter.getItemCount() != 0)
+////                    {
+////                        showExpensesInGroup();
+////                        Log.d(TAG, "Expenses");
+////                    }
+////                    else
+////                    {
+////                        hideExpensesInGroup();
+////                        Log.d(TAG, "Expenses empty");
+////                    }
+////                }
+//            }
+//        };
+//        groupEnterViewModel.getExpensesInGroups().observe(requireActivity(), observerNewExpenseInGroup);
 
         final Observer<List<DebtInGroup>> observerNewDebtsInGroup = new Observer<List<DebtInGroup>>() {
             @Override
@@ -224,6 +242,10 @@ public class GroupEnterFragment extends Fragment {
                 bundle.putString("groupId", groupId);
                 bundle.putString("nameOfGroup", nameOfGroup);
                 bundle.putInt("countGroupMembers", countGroupMembers);
+
+                Log.d(TAG, "Putting in bundle - " + Integer.toString(imageDrawable));
+                bundle.putInt("imageDrawable", imageDrawable);
+
                 NavigationUtils.navigateSafe(navController, R.id.action_groupEnterFragment_to_addFriendToGroupFragment, bundle);
             }
         });
@@ -255,12 +277,74 @@ public class GroupEnterFragment extends Fragment {
 //            binding.owedOverall.setTextColor(ContextCompat.getColor(requireContext(), R.color.red));
 //            binding.owedOverall.setText("Всего ты должен ₽" + Long.toString(totalSum));
 //        }
+
+
+        binding.editNameOfGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(requireContext());
+                final EditText edittext = new EditText(requireContext());
+                edittext.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+                alert.setMessage("Введите в поле ниже новое название группы");
+                alert.setTitle("Изменить название группы");
+                alert.setView(edittext);
+                alert.setPositiveButton("Изменить", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                    }
+                });
+
+                alert.setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        return;
+                    }
+                });
+                final AlertDialog dialog = alert.create();
+                dialog.show();
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        Boolean wantToCloseDialog = false;
+                        String newNameOfGroup = edittext.getText().toString();
+                        String oldNameOfGroup = binding.nameOfGroup.getText().toString();
+                        if (newNameOfGroup.equals(oldNameOfGroup))
+                        {
+                            Toast.makeText(requireContext(), "Группа уже имеет это название", Toast.LENGTH_SHORT).show();
+                        }
+                        else if (newNameOfGroup.equals(""))
+                        {
+                            Toast.makeText(requireContext(), "Введите название группы", Toast.LENGTH_SHORT).show();
+                        }
+                        else if (containsWhiteSpace(newNameOfGroup))
+                        {
+                            Toast.makeText(requireContext(), "Название группы не может содержать пробелов", Toast.LENGTH_SHORT).show();
+                        }
+                        else if (newNameOfGroup.length() > 20)
+                        {
+                            Toast.makeText(requireContext(), "Длина названия не должна превышать 15 символов", Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            wantToCloseDialog = true;
+                        }
+                        if(wantToCloseDialog)
+                        {
+                            groupEnterViewModel.changeNameOfGroup(newNameOfGroup, groupId);
+                            binding.nameOfGroup.setText(newNameOfGroup);
+                            dialog.dismiss();
+                        }
+                    }
+                });
+            }
+        });
     }
 
     private void settingTextCountOfMembers(int countGroupMembers)
     {
         if (countGroupMembers == 1)
         {
+            hideFriendsInGroup();
             binding.countGroupMembers.setText("1 участник");
         }
         else
@@ -269,17 +353,30 @@ public class GroupEnterFragment extends Fragment {
         }
     }
 
+    private void showProgressing()
+    {
+        binding.txtNoExpenses.setVisibility(View.GONE);
+        binding.txtNoExpenses2.setVisibility(View.GONE);
+        binding.arrow.setVisibility(View.GONE);
+        binding.txtNoFriends.setVisibility(View.GONE);
+        binding.addFriends.setVisibility(View.GONE);
+        binding.recyclerViewExpense.setVisibility(View.GONE);
+        binding.owedOverall.setVisibility(View.GONE);
+        binding.recyclerViewDebts.setVisibility(View.GONE);
+        binding.progressBar.setVisibility(View.VISIBLE);
+    }
+
 
     private void showExpensesInGroup() {
         binding.txtNoFriends.setVisibility(View.GONE);
         binding.addFriends.setVisibility(View.GONE);
-        //binding.copyLink.setVisibility(View.GONE);
         binding.recyclerViewExpense.setVisibility(View.VISIBLE);
         binding.owedOverall.setVisibility(View.VISIBLE);
         binding.recyclerViewDebts.setVisibility(View.VISIBLE);
         binding.txtNoExpenses.setVisibility(View.GONE);
         binding.txtNoExpenses2.setVisibility(View.GONE);
         binding.arrow.setVisibility(View.GONE);
+        binding.progressBar.setVisibility(View.GONE);
 
     }
     private void hideFriendsInGroup() {
@@ -288,10 +385,10 @@ public class GroupEnterFragment extends Fragment {
         binding.arrow.setVisibility(View.GONE);
         binding.txtNoFriends.setVisibility(View.VISIBLE);
         binding.addFriends.setVisibility(View.VISIBLE);
-        //binding.copyLink.setVisibility(View.VISIBLE);
         binding.recyclerViewExpense.setVisibility(View.GONE);
         binding.owedOverall.setVisibility(View.GONE);
         binding.recyclerViewDebts.setVisibility(View.GONE);
+        binding.progressBar.setVisibility(View.GONE);
     }
 
     private void hideExpensesInGroup() {
@@ -300,10 +397,10 @@ public class GroupEnterFragment extends Fragment {
         binding.arrow.setVisibility(View.VISIBLE);
         binding.txtNoFriends.setVisibility(View.GONE);
         binding.addFriends.setVisibility(View.GONE);
-        //binding.copyLink.setVisibility(View.GONE);
         binding.recyclerViewExpense.setVisibility(View.GONE);
         binding.owedOverall.setVisibility(View.GONE);
         binding.recyclerViewDebts.setVisibility(View.GONE);
+        binding.progressBar.setVisibility(View.GONE);
     }
 
     public void showPopup(View v) {
@@ -319,6 +416,7 @@ public class GroupEnterFragment extends Fragment {
                     bundle.putString("groupId", groupId);
                     bundle.putString("nameOfGroup", nameOfGroup);
                     bundle.putInt("countGroupMembers", countGroupMembers);
+                    bundle.putInt("imageDrawable", imageDrawable);
                     NavigationUtils.navigateSafe(navController, R.id.action_groupEnterFragment_to_addFriendToGroupFragment, bundle);
                     return true;
                 }
@@ -402,6 +500,16 @@ public class GroupEnterFragment extends Fragment {
         } catch (Throwable e) {
             e.printStackTrace();
         }
+    }
+    public boolean containsWhiteSpace(final String testCode){
+        if(testCode != null){
+            for(int i = 0; i < testCode.length(); i++){
+                if(Character.isWhitespace(testCode.charAt(i))){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 

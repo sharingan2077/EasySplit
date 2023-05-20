@@ -66,18 +66,19 @@ public class AddExpenseViewModel extends ViewModel {
         idOfGroup.setValue(id);
     }
 
-    public void getFirstGroupId()
+    public void getFirstGroupId(CompleteListener2 listener)
     {
-        idOfGroup = mRepo.getGroupId();
+        idOfGroup = mRepo.getGroupId(listener);
+    }
+    public void getFirstUserId(CompleteListener2 listener)
+    {
+        //idOfUser.setValue(mRepo.getUserId(listener));
+        mRepo.getUserId(listener);
     }
 
     public void findNameOfUserById(String id, CompleteListener2 listener)
     {
         mRepo.findNameOfUserById(id, listener);
-    }
-    public void getFirstUserId()
-    {
-        idOfUser.postValue(mRepo.getUserId());
     }
     public void setUserId(String id)
     {

@@ -14,7 +14,8 @@
         android:layout_marginStart="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/ic_user_54"/>
 <!--    android:src="@drawable/ic_user_54"-->
 
     <TextView
@@ -30,26 +31,37 @@
         app:layout_constraintStart_toEndOf="@+id/imageOfUser"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center"
-        android:layout_marginStart="75dp">
-        <TextView
-            android:id="@+id/owe"
-            android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
-            android:text="вы должны"
-            style="@style/InterLight16"
-            android:textColor="@color/red"/>
-        <TextView
-            android:id="@+id/sum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="100.50руб"
-            style="@style/InterLight16"
-            android:textColor="@color/red"/>
-    </LinearLayout>
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="25dp">
+
+            <TextView
+                android:id="@+id/owe"
+                style="@style/InterLight16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="должен тебе"
+                android:textColor="@color/red" />
+
+            <TextView
+                android:id="@+id/sum"
+                style="@style/InterLight16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100.50руб"
+                android:textColor="@color/red" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </LinearLayout>

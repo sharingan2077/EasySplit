@@ -151,6 +151,8 @@ public class GroupRepository {
                             if (userGroups.contains(snapshot.getKey())) {
                                 Long i = (Long) snapshot.child("countMember").getValue();
                                 Group group = new Group(snapshot.child("groupName").getValue().toString(), i.intValue(), snapshot.getKey());
+                                group.setGroupType(snapshot.child("groupType").getValue().toString());
+                                group.setGroupImage(snapshot.child("groupImage").getValue().toString());
                                 dataSet.add(group);
                             }
                         }
@@ -171,8 +173,26 @@ public class GroupRepository {
         });
     }
 
-    private void clearExpensesInDataBase()
+    public void clearExpensesInDataBase()
     {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        Query query = reference.child("Expense");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                {
+                    if (!snapshot.hasChild("expenseName"))
+                    {
+                        reference.child("Expense").child(snapshot.getKey()).removeValue();
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
 

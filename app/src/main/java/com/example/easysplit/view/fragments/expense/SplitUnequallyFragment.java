@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.FragmentSplitUnequallyBinding;
@@ -39,7 +40,7 @@ public class SplitUnequallyFragment extends Fragment {
     private String expenseId;
     private String expenseName;
     private String expenseSumString;
-    private String userId;
+    private String userOwnerId;
 
     private ArrayList<String> usersId;
     private ArrayList<Long> usersSumArrayList = new ArrayList<>();
@@ -53,6 +54,9 @@ public class SplitUnequallyFragment extends Fragment {
     private String nameOfUser;
 
     private int countMemberOfFirstGroup;
+
+    private Boolean possibilityOfExpense = true;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,7 +77,8 @@ public class SplitUnequallyFragment extends Fragment {
         binding.sumRemained.setText("₽0 из ₽" + expenseSumString);
 
         expenseName = getArguments().getString("expenseName", "0");
-        userId = getArguments().getString("userId", "0");
+        userOwnerId = getArguments().getString("userId", "0");
+        Log.d(TAG, "userOwnerId - " + userOwnerId);
 
 
         usersId = getArguments().getStringArrayList("usersId");
@@ -105,7 +110,7 @@ public class SplitUnequallyFragment extends Fragment {
                 bundle.putString("groupId", groupId);
                 bundle.putString("expenseName", expenseName);
                 bundle.putString("expenseSum", expenseSumString);
-                bundle.putString("userId", userId);
+                bundle.putString("userId", userOwnerId);
                 bundle.putStringArrayList("usersId", usersId);
 
                 bundle.putString("nameOfUser", nameOfUser);
@@ -133,6 +138,12 @@ public class SplitUnequallyFragment extends Fragment {
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }
+
+                else if (!possibilityOfExpense)
+                {
+                    Toast.makeText(requireContext(), "Расход не может быть поделен между одним и тем же участником", Toast.LENGTH_SHORT).show();
+                }
+
                 else
                 {
                     Bundle bundle = new Bundle();
@@ -141,7 +152,7 @@ public class SplitUnequallyFragment extends Fragment {
                     bundle.putString("groupId", groupId);
                     bundle.putString("expenseName", expenseName);
                     bundle.putString("expenseSum", expenseSumString);
-                    bundle.putString("userId", userId);
+                    bundle.putString("userId", userOwnerId);
 
                     bundle.putString("nameOfUser", nameOfUser);
                     bundle.putString("nameOfGroup", nameOfGroup);
@@ -176,7 +187,7 @@ public class SplitUnequallyFragment extends Fragment {
                 bundle.putString("expenseId", expenseId);
                 bundle.putString("expenseName", expenseName);
                 bundle.putString("expenseSum", expenseSumString);
-                bundle.putString("userId", userId);
+                bundle.putString("userId", userOwnerId);
 
                 bundle.putStringArrayList("usersId", usersId);
                 bundle.putLongArray("usersSum", usersSum);
@@ -203,7 +214,7 @@ public class SplitUnequallyFragment extends Fragment {
                     long s = Long.parseLong(sum);
                     map.put(userId, s);
                 }
-                else
+                else if (sum.equals("0") || sum.equals(""))
                 {
                     map.remove(userId);
                 }
@@ -211,6 +222,18 @@ public class SplitUnequallyFragment extends Fragment {
                 for (String name: map.keySet()) {
                     totalSum += map.get(name);
                 }
+                possibilityOfExpense = true;
+                if (map.get(userOwnerId) != null && map.get(userOwnerId) != 0)
+                {
+                    Log.d(TAG, "userOwnerIdSum - " + Long.toString(map.get(userOwnerId)));
+                    Log.d(TAG, "expenseSum - " + expenseSumString);
+                    if (Long.toString(map.get(userOwnerId)).equals(expenseSumString))
+                    {
+                        Log.d(TAG, "setting false");
+                        possibilityOfExpense = false;
+                    }
+                }
+
                 totalSumString = Long.toString(totalSum);
                 binding.sumRemained.setText("₽" + Long.toString(totalSum) + " из ₽" + expenseSumString);
             }

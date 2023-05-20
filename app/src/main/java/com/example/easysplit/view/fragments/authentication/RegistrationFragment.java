@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.FragmentRegistrationBinding;
+import com.example.easysplit.view.listeners.CompleteListener;
 import com.example.easysplit.view.utils.NavigationUtils;
 import com.example.easysplit.viewModel.authentication.LoginRegisterViewModel;
 
@@ -23,6 +24,8 @@ public class RegistrationFragment extends Fragment {
 
     LoginRegisterViewModel loginRegisterViewModel;
     NavController navController;
+
+    String successfulLogin = "a";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,8 @@ public class RegistrationFragment extends Fragment {
         binding = FragmentRegistrationBinding.inflate(inflater, container, false);
         navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
         loginRegisterViewModel = new ViewModelProvider(requireActivity()).get(LoginRegisterViewModel.class);
+
+        successfulLogin = getArguments().getString("successLogin", "a");
         binding.btnRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,24 +66,41 @@ public class RegistrationFragment extends Fragment {
                 }
 
                 else  {
-                    loginRegisterViewModel.register(email, password, name);
-                    loginRegisterViewModel.refreshLoggedOutLiveData();
+                    loginRegisterViewModel.register(email, password, name, new CompleteListener() {
+                        @Override
+                        public void successful() {
+                            Bundle bundle = new Bundle();
+                            bundle.putString("successLogin", "true");
+                            NavigationUtils.navigateSafe(navController, R.id.action_registrationFragment_to_loginFragment, bundle);
+                        }
+                        @Override
+                        public void unSuccessful() {
+
+                        }
+                    });
+                    //loginRegisterViewModel.refreshLoggedOutLiveData();
                 }
             }
         });
 
-        final Observer<Boolean> successRegObserver = new Observer<Boolean>() {
+//        final Observer<Boolean> successRegObserver = new Observer<Boolean>() {
+//            @Override
+//            public void onChanged(Boolean aBoolean) {
+//                if (!aBoolean)
+//                {
+//                    NavigationUtils.navigateSafe(navController, R.id.action_registrationFragment_to_loginFragment, null);
+//                }
+//            }
+//        };
+//        loginRegisterViewModel.getLoggedOutLiveData().observe(getViewLifecycleOwner(), successRegObserver);
+        binding.login.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(Boolean aBoolean) {
-                if (!aBoolean)
-                {
-                    NavigationUtils.navigateSafe(navController, R.id.action_registrationFragment_to_loginFragment, null);
-                }
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("successLogin", successfulLogin);
+                NavigationUtils.navigateSafe(navController, R.id.action_registrationFragment_to_loginFragment, bundle);
             }
-        };
-        loginRegisterViewModel.getLoggedOutLiveData().observe(getViewLifecycleOwner(), successRegObserver);
-
-        binding.login.setOnClickListener(v -> NavigationUtils.navigateSafe(navController, R.id.action_registrationFragment_to_loginFragment, null));
+        });
 
         return binding.getRoot();
     }

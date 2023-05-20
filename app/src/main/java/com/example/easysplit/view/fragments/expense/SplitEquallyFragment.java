@@ -62,6 +62,7 @@ public class SplitEquallyFragment extends Fragment {
     private int countMemberOfFirstGroup;
 
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

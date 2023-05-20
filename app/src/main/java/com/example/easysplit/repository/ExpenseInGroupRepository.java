@@ -37,6 +37,8 @@ public class ExpenseInGroupRepository {
 
     private List<Expense> expensesInGroup;
 
+    private Boolean expenseExist;
+
 
     public static ExpenseInGroupRepository getInstance()
     {
@@ -107,6 +109,10 @@ public class ExpenseInGroupRepository {
         setExpensesInArray(groupId, new CompleteListener() {
             @Override
             public void successful() {
+                if (expensesInGroup.size() == 0)
+                {
+                    listener.successful("noExpenses");
+                }
                 dataSet.clear();
                 for (Expense expense : expensesInGroup)
                 {

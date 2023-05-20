@@ -28,6 +28,7 @@ public class GroupsViewModel extends ViewModel {
             return;
         }
         mRepo = GroupRepository.getInstance();
+        mRepo.clearExpensesInDataBase();
         groups = mRepo.getGroups(listener);
     }
 
@@ -50,5 +51,10 @@ public class GroupsViewModel extends ViewModel {
     {
         return groups;
     }
+
+//    public void clearExpensesInDataBase()
+//    {
+//        mRepo.clearExpensesInDataBase();
+//    }
 
 }

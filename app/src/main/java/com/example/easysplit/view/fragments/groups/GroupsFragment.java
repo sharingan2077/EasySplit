@@ -130,11 +130,13 @@ public class GroupsFragment extends Fragment{
     {
         adapter = new GroupsRecyclerAdapter(getActivity(), groupsViewModel.getGroups().getValue(), new GroupsRecyclerAdapter.onGroupClickListener() {
             @Override
-            public void onClick(String groupId, String nameOfGroup, int countGroupMembers) {
+            public void onClick(String groupId, String nameOfGroup, int countGroupMembers, int imageDrawable) {
                 Bundle bundle = new Bundle();
                 bundle.putString("groupId", groupId);
                 bundle.putString("nameOfGroup", nameOfGroup);
                 bundle.putInt("countGroupMembers", countGroupMembers);
+                bundle.putInt("imageDrawable", imageDrawable);
+
                 NavigationUtils.navigateSafe(navController, R.id.action_groupsFragment_to_groupEnterFragment, bundle);
             }
         });

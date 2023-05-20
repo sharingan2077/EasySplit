@@ -51,7 +51,9 @@ public class GroupEnterRepository {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         Long i = (Long)task.getResult().getValue();
-                        countOfGroupMembers.setValue(i.intValue());
+
+                        Log.d(TAG, "Long - " + Long.toString(i));
+                        countOfGroupMembers.setValue(2);
                         listenerInt.successful(i.intValue());
                         Log.d(TAG, Integer.toString(countOfGroupMembers.getValue()));
                     }
@@ -159,6 +161,20 @@ public class GroupEnterRepository {
 
             }
         });
+    }
+
+    public void changeNameOfGroup(String name, String groupId)
+    {
+        FirebaseDatabase.getInstance().getReference()
+                .child("Group")
+                .child(groupId)
+                .child("groupName").setValue(name).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                    }
+                });
+
     }
 
 }

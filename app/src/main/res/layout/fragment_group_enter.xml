@@ -26,36 +26,60 @@
                 android:id="@+id/toolbar"/>
             <ImageView
                 android:id="@+id/imageView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_marginStart="35dp"
-                android:layout_marginTop="75dp"
-                android:src="@drawable/group_48"
+                android:layout_marginTop="70dp"
+                android:src="@drawable/ic_group_1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </RelativeLayout>
-        <TextView
-            android:id="@+id/nameOfGroup"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Example"
-            style="@style/InterMedium24"
-            android:textColor="@color/black"
-            android:layout_marginStart="35dp"
-            android:layout_marginTop="10dp"/>
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/nameOfGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Example"
+                style="@style/InterMedium24"
+                android:textColor="@color/black"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"/>
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:id="@+id/editNameOfGroup"
+                android:src="@drawable/ic_edit"
+                android:layout_marginTop="14dp"
+                android:layout_marginStart="10dp" />
+        </LinearLayout>
+
         <TextView
             android:id="@+id/countGroupMembers"
+            style="@style/InterLight16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1 участник"
-            style="@style/InterLight16"
-            android:textColor="@color/grey"
             android:layout_marginStart="35dp"
-            android:layout_marginTop="6dp"/>
+            android:layout_marginTop="6dp"
+            android:text="1 участник"
+            android:textColor="@color/grey" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.37" />
 
             <TextView
                 android:visibility="gone"
@@ -64,7 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="В сумме тебе должны 100руб"
+                android:text="В сумме тебе должны 0руб"
                 android:textColor="@color/aqua"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -120,9 +144,9 @@
                 android:visibility="gone"
                 android:id="@+id/arrow"
                 android:layout_marginTop="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/frame"
+                android:layout_width="256dp"
+                android:layout_height="256dp"
+                android:src="@drawable/no_expenses"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtNoExpenses2" />
@@ -135,13 +159,13 @@
                 android:layout_marginTop="41dp"
                 android:text="Пока ты здесь один"
                 android:textColor="@color/black"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
-                android:visibility="visible"
+                android:visibility="gone"
                 android:id="@+id/addFriends"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"

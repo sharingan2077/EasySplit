@@ -168,11 +168,17 @@ public class ActivityRepository {
                                String date = snapshot.child("expenseDate").getValue().toString();
 
                                String day = date.substring(0, 2) + "." + date.substring(2, 4);
+                               int day2 = Integer.valueOf(date.substring(0,2));
                                String nowDay = new SimpleDateFormat("ddMM").format(Calendar.getInstance().getTime());
                                String nowDay2 = nowDay.substring(0, 2) + "." + nowDay.substring(2, 4);
+                               int nowDay22 = Integer.valueOf(nowDay2.substring(0,2));
                                if (nowDay2.equals(day))
                                {
                                    day = "Сегодня";
+                               }
+                               else if (date.substring(2,4).equals(nowDay.substring(2,4)) && nowDay22 - day2 == 1)
+                               {
+                                   day = "Вчера";
                                }
                                String newDate = day + ", " + date.substring(5, 7) + ":" + date.substring(7);
                                activity.setDate(newDate);

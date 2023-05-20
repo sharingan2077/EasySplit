@@ -79,7 +79,7 @@ public class AddExpenseRepository {
         });
     }
 
-    public void getFirstGroupId()
+    public void getFirstGroupId(CompleteListener2 listener)
     {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Query query = reference.child("User").child(FirebaseAuth.getInstance().getUid()).child("userGroups");
@@ -88,8 +88,10 @@ public class AddExpenseRepository {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren())
                 {
+                    Log.d("Releasing", "setting FirstGroupId - " + snapshot.getKey());
                     dataSet = snapshot.getKey();
                     data.setValue(dataSet);
+                    listener.successful(dataSet);
                     Log.d(TAG, dataSet);
                     break;
                 }
@@ -101,9 +103,9 @@ public class AddExpenseRepository {
             }
         });
     }
-    public MutableLiveData<String> getGroupId()
+    public MutableLiveData<String> getGroupId(CompleteListener2 listener)
     {
-        getFirstGroupId();
+        getFirstGroupId(listener);
         data.setValue(dataSet);
         return data;
     }
@@ -175,9 +177,10 @@ public class AddExpenseRepository {
 //            }
 //        });
 //    }
-    public String getUserId()
+    public void getUserId(CompleteListener2 listener)
     {
-        return FirebaseAuth.getInstance().getUid();
+        listener.successful(FirebaseAuth.getInstance().getUid());
+        //return FirebaseAuth.getInstance().getUid();
     }
 
     public void findNameOfUserById(String id, CompleteListener2 listener)

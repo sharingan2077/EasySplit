@@ -27,17 +27,21 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class AuthAppRepository {
     private static final String TAG = "AuthAppRepository";
-    private Application application;
 
-    private FirebaseAuth firebaseAuth;
+    private static AuthAppRepository instance;
+    //private Application application;
 
-    private SharedPreferences sharedPreferences;
-    private MutableLiveData<FirebaseUser> userLiveData;
+    //private FirebaseAuth firebaseAuth;
+
+    //private SharedPreferences sharedPreferences;
+    private MutableLiveData<FirebaseUser> userLiveData = new MutableLiveData<>();
 
     // loggedOutLiveData хранит true - текущего пользователя нет, false - пользователь есть
-    private MutableLiveData<Boolean> loggedOutLiveData;
+    private MutableLiveData<Boolean> loggedOutLiveData = new MutableLiveData<>();
 
-    private MutableLiveData<Boolean> isVerified;
+    private Boolean loggedOutDataSet = true;
+
+    private MutableLiveData<Boolean> isVerified = new MutableLiveData<>();
 
     FriendsImages friendsImages;
 
@@ -45,18 +49,29 @@ public class AuthAppRepository {
         return isVerified;
     }
 
+    private static Context mContext;
+
     // Инициализация репозитория
-    public AuthAppRepository(Application application) {
-        this.application = application;
-        this.firebaseAuth = FirebaseAuth.getInstance();
-        this.sharedPreferences = application.getSharedPreferences("ACCOUNT_FILE_KEY", Context.MODE_PRIVATE);
-        this.userLiveData = new MutableLiveData<>();
-        this.loggedOutLiveData = new MutableLiveData<>();
-        this.isVerified = new MutableLiveData<>();
-        if (firebaseAuth.getCurrentUser() != null) {
-            userLiveData.postValue(firebaseAuth.getCurrentUser());
-            loggedOutLiveData.postValue(false);
+//    public AuthAppRepository(Application application) {
+//        this.application = application;
+//        this.firebaseAuth = FirebaseAuth.getInstance();
+//        this.sharedPreferences = application.getSharedPreferences("ACCOUNT_FILE_KEY", Context.MODE_PRIVATE);
+//        this.userLiveData = new MutableLiveData<>();
+//        this.loggedOutLiveData = new MutableLiveData<>();
+//        this.isVerified = new MutableLiveData<>();
+//        if (firebaseAuth.getCurrentUser() != null) {
+//            userLiveData.postValue(firebaseAuth.getCurrentUser());
+//            loggedOutLiveData.postValue(false);
+//        }
+//    }
+    public static AuthAppRepository getInstance(Context context)
+    {
+        mContext = context;
+        if (instance == null)
+        {
+            instance = new AuthAppRepository();
         }
+        return instance;
     }
 
     public void addingUserToDataBase(String userName)
@@ -76,9 +91,15 @@ public class AuthAppRepository {
                 .child(FirebaseAuth.getInstance().getUid())
                 .setValue(user);
         FirebaseDatabase.getInstance().getReference().child("User")
+                .child(FirebaseAuth.getInstance().getUid()).child("sumOwn").removeValue();
+        FirebaseDatabase.getInstance().getReference().child("User")
+                .child(FirebaseAuth.getInstance().getUid()).child("uid").removeValue();
+        FirebaseDatabase.getInstance().getReference().child("User")
                 .child(FirebaseAuth.getInstance().getUid()).child("userFriends").setValue("");
         FirebaseDatabase.getInstance().getReference().child("User")
                 .child(FirebaseAuth.getInstance().getUid()).child("userGroups").setValue("");
+
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences("ACCOUNT_FILE_KEY", Context.MODE_PRIVATE);
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -90,9 +111,9 @@ public class AuthAppRepository {
 
 
     // Регистрация пользователя с помощью FireBase
-    public void register(String email, String password, String userName) {
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(application.getMainExecutor(), new OnCompleteListener<AuthResult>() {
+    public void register(String email, String password, String userName, CompleteListener listener) {
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(mContext.getMainExecutor(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -100,18 +121,19 @@ public class AuthAppRepository {
                             // Добавление пользователя в базу данных при успешной регистрации
                             addingUserToDataBase(userName);
                             // Добавления в userLiveData зарегистрированного пользователя
-                            userLiveData.postValue(firebaseAuth.getCurrentUser());
+                            userLiveData.postValue(FirebaseAuth.getInstance().getCurrentUser());
                             sendVerificationEmail();
+                            listener.successful();
                         } else {
                             // Зарегистрировать не удалось
-                            Toast.makeText(application.getApplicationContext(), "Registration Failure: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext.getApplicationContext(), "Registration Failure: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
     public void sendVerificationEmail()
     {
-        firebaseAuth.getCurrentUser().sendEmailVerification()
+        FirebaseAuth.getInstance().getCurrentUser().sendEmailVerification()
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -126,14 +148,31 @@ public class AuthAppRepository {
                     }
                 });
     }
+
+    public void resetPassword(String email, CompleteListener listener) {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        auth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "Email sent.");
+                            Toast.makeText(mContext, "Check Your Email", Toast.LENGTH_SHORT).show();
+                            listener.successful();
+                        } else {
+                            Toast.makeText(mContext, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
     public void checkIfEmailVerified()
     {
-        FirebaseUser user = firebaseAuth.getCurrentUser();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user.isEmailVerified())
         {
             isVerified.setValue(true);
-            firebaseAuth.signOut();
+            FirebaseAuth.getInstance().signOut();
         }
         else
         {
@@ -142,8 +181,8 @@ public class AuthAppRepository {
     }
     public void login(String email, String password, CompleteListener listener) {
 
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(application.getMainExecutor(), new OnCompleteListener<AuthResult>() {
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(mContext.getMainExecutor(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -151,7 +190,7 @@ public class AuthAppRepository {
                             refreshSharedPreferences(new CompleteListener() {
                                 @Override
                                 public void successful() {
-                                    userLiveData.postValue(firebaseAuth.getCurrentUser());
+                                    userLiveData.postValue(FirebaseAuth.getInstance().getCurrentUser());
                                     listener.successful();
                                 }
 
@@ -162,7 +201,7 @@ public class AuthAppRepository {
 
                         } else {
                             // В другом случае вывод ошибки
-                            Toast.makeText(application.getApplicationContext(), "Login Failure: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext.getApplicationContext(), "Login Failure: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -171,16 +210,18 @@ public class AuthAppRepository {
     public void refreshSharedPreferences(CompleteListener listener)
     {
         FirebaseDatabase.getInstance().getReference()
-                .child("User").child(firebaseAuth.getCurrentUser().getUid())
+                .child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         User user = task.getResult().getValue(User.class);
+                        SharedPreferences sharedPreferences = mContext.getSharedPreferences("ACCOUNT_FILE_KEY", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("UserNameAndId", user.getUserName()+"#"+user.getId());
                         editor.putString("UserEmail", FirebaseAuth.getInstance().getCurrentUser().getEmail());
                         editor.putString("UserImage", user.getUserImage());
                         editor.apply();
+                        listener.successful();
 
                     }
                 });
@@ -189,15 +230,15 @@ public class AuthAppRepository {
     public void logOut() {
 
         // Выход текущего пользователя из FireBase
-        firebaseAuth.signOut();
-
+        FirebaseAuth.getInstance().signOut();
+        loggedOutLiveData.setValue(true);
         // Добавление в loggedOutLiveData значения true
-        refreshLoggedOut();
+        //refreshLoggedOut();
     }
 
     public void refreshLoggedOut()
     {
-        if (firebaseAuth.getCurrentUser() == null)
+        if (FirebaseAuth.getInstance().getCurrentUser() == null)
         {
             loggedOutLiveData.setValue(true);
         }
@@ -211,8 +252,31 @@ public class AuthAppRepository {
         return userLiveData;
     }
 
-    public MutableLiveData<Boolean> getLoggedOutLiveData() {
+    public MutableLiveData<Boolean> getLoggedOutLiveData(CompleteListener listener) {
+
+        setLoggedOutData(listener);
+        loggedOutLiveData.setValue(loggedOutDataSet);
         return loggedOutLiveData;
+    }
+
+
+
+    private void setLoggedOutData(CompleteListener listener)
+    {
+        if (FirebaseAuth.getInstance().getCurrentUser() == null)
+        {
+            loggedOutDataSet = true;
+            loggedOutLiveData.setValue(loggedOutDataSet);
+            listener.unSuccessful();
+            //listener.successful();
+        }
+        else
+        {
+            loggedOutDataSet = false;
+            loggedOutLiveData.setValue(loggedOutDataSet);
+            listener.successful();
+            //listener.successful();
+        }
     }
 
 }
