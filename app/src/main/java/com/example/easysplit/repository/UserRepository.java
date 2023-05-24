@@ -77,37 +77,6 @@ public class UserRepository {
             }
         });
     }
-
-//    private void setUserJoinedGroups(ArrayList<String> userFriends, CompleteListener listener)
-//    {
-//        userJoinedGroups = new ArrayList<>();
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-//        Query query = reference.child("Group");
-//        query.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren())
-//                {
-//                    if (snapshot.child("groupUsers").hasChild(FirebaseAuth.getInstance().getUid()))
-//                    {
-//                        for (String id : userFriends)
-//                        {
-//                            if (snapshot.child("groupUsers").hasChild(id))
-//                            {
-//                                userJoinedGroups.add(snapshot.getKey());
-//                                break;
-//                            }
-//                        }
-//                    }
-//                }
-//                listener.successful();
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
     private void setAllFriendsExpenses(List<String> userFriends, CompleteListener listener)
     {
         allFriendsExpenses = new HashMap<>();
@@ -465,7 +434,6 @@ public class UserRepository {
                             if (userFriends.contains(snapshot.getKey()))
                             {
                                 User user = snapshot.getValue(User.class);
-                                //User user = new User(snapshot.child("userName").getValue().toString(), snapshot.child("id").getValue().toString(), snapshot.getKey());
                                 dataSet.add(user);
                             }
                         }
@@ -486,8 +454,6 @@ public class UserRepository {
             }
         });
     }
-
-    // Вычисление долгов друзей
 
 
 

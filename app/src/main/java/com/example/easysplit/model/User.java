@@ -60,9 +60,6 @@ public class User {
         return UID;
     }
 
-//    private HashMap<String, String> userGroups;
-//    private HashMap<String, String> userFriends;
-
     public User() {
     }
 
@@ -77,22 +74,6 @@ public class User {
     public String getId() {
         return id;
     }
-
-//    public HashMap<String, String> getUserGroups() {
-//        return userGroups;
-//    }
-//
-//    public HashMap<String, String> getUserFriends() {
-//        return userFriends;
-//    }
-//
-//    public User(String userName, String id, HashMap<String, String> userGroups, HashMap<String, String> userFriends) {
-//        this.userName = userName;
-//        this.id = id;
-//        this.userGroups = userGroups;
-//        this.userFriends = userFriends;
-//    }
-
     public User(String userName, String id) {
         this.userName = userName;
         this.id = id;

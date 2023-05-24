@@ -31,13 +31,8 @@ public class ExpenseInGroupRepository {
     MutableLiveData<List<ExpenseInGroup>> dataExpense = new MutableLiveData<>();
 
     private static final String TAG = "ExpenseInGroupRepositor";
-
-
-    private List<String> groupExpensesId;
-
     private List<Expense> expensesInGroup;
 
-    private Boolean expenseExist;
 
 
     public static ExpenseInGroupRepository getInstance()
@@ -54,31 +49,6 @@ public class ExpenseInGroupRepository {
         dataExpense.setValue(dataSet);
         return dataExpense;
     }
-
-
-
-//    private void setGroupExpensesId(String groupId, CompleteListener listener)
-//    {
-//        groupExpensesId = new ArrayList<>();
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-//        Query query = reference.child("Group").child(groupId).child("groupExpenses");;
-//        ValueEventListener postListener = new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                    groupExpensesId.add(snapshot.getKey());
-//                }
-//                listener.successful();
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        };
-//        query.addValueEventListener(postListener);
-//    }
-
-
     private void setExpensesInArray(String groupId, CompleteListener listener)
     {
         expensesInGroup = new ArrayList<>();
@@ -154,8 +124,6 @@ public class ExpenseInGroupRepository {
                         }
                     });
                 }
-//                dataExpense.setValue(dataSet);
-//                listener.successful();
             }
 
             @Override
@@ -188,13 +156,4 @@ public class ExpenseInGroupRepository {
             });
         }
     }
-
-
-
-
-
-//        dataSet.clear();
-//        dataSet.add(new ExpenseInGroup("Potato", "20.09", "Misha", 1000));
-//        dataSet.add(new ExpenseInGroup("Banana", "21.09", "You", 2000));
-
 }

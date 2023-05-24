@@ -29,11 +29,6 @@ public class AuthAppRepository {
     private static final String TAG = "AuthAppRepository";
 
     private static AuthAppRepository instance;
-    //private Application application;
-
-    //private FirebaseAuth firebaseAuth;
-
-    //private SharedPreferences sharedPreferences;
     private MutableLiveData<FirebaseUser> userLiveData = new MutableLiveData<>();
 
     // loggedOutLiveData хранит true - текущего пользователя нет, false - пользователь есть
@@ -52,18 +47,6 @@ public class AuthAppRepository {
     private static Context mContext;
 
     // Инициализация репозитория
-//    public AuthAppRepository(Application application) {
-//        this.application = application;
-//        this.firebaseAuth = FirebaseAuth.getInstance();
-//        this.sharedPreferences = application.getSharedPreferences("ACCOUNT_FILE_KEY", Context.MODE_PRIVATE);
-//        this.userLiveData = new MutableLiveData<>();
-//        this.loggedOutLiveData = new MutableLiveData<>();
-//        this.isVerified = new MutableLiveData<>();
-//        if (firebaseAuth.getCurrentUser() != null) {
-//            userLiveData.postValue(firebaseAuth.getCurrentUser());
-//            loggedOutLiveData.postValue(false);
-//        }
-//    }
     public static AuthAppRepository getInstance(Context context)
     {
         mContext = context;

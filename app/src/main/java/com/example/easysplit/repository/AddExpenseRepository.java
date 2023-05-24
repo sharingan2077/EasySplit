@@ -38,11 +38,6 @@ public class AddExpenseRepository {
     private MutableLiveData<String> nameOfGroup = new MutableLiveData<>();
     private String dataNameOfGroup;
     MutableLiveData<String> data = new MutableLiveData<>();
-
-
-    private  MutableLiveData<String> data2 = new MutableLiveData<>();
-    private String dataSet2;
-
     private MutableLiveData<String> nameOfUser = new MutableLiveData<>();
 
     private  String dataNameOfUser;
@@ -147,40 +142,9 @@ public class AddExpenseRepository {
             }
         });
     }
-//    public MutableLiveData<String> getNameOfGroup(String id)
-//    {
-//        findNameOfGroupById(id);
-//        nameOfGroup.setValue(dataNameOfGroup);
-//        return nameOfGroup;
-//    }
-
-
-//    public void getFirstUserId()
-//    {
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-//        Query query = reference.child("User");
-//        query.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren())
-//                {
-//                    dataSet2 = snapshot.getKey();
-//                    data2.setValue(dataSet2);
-//                    //Log.d(TAG, dataSet);
-//                    break;
-//                }
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Log.d(TAG, "onCancelled");
-//
-//            }
-//        });
-//    }
     public void getUserId(CompleteListener2 listener)
     {
         listener.successful(FirebaseAuth.getInstance().getUid());
-        //return FirebaseAuth.getInstance().getUid();
     }
 
     public void findNameOfUserById(String id, CompleteListener2 listener)
@@ -203,13 +167,6 @@ public class AddExpenseRepository {
             }
         });
     }
-//    public MutableLiveData<String> getNameOfUser(String id)
-//    {
-//        nameOfUser.setValue(dataNameOfUser);
-//        return nameOfUser;
-//    }
-
-
     public void addExpense(String id)
     {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();

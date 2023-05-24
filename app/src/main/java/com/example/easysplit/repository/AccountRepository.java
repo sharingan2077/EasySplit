@@ -32,10 +32,6 @@ public class AccountRepository {
 
     private MutableLiveData<String> userImage = new MutableLiveData<>();
 
-
-    private String userName;
-    private String userId;
-
     private int userImageNumber;
 
     private Context mContext;
@@ -62,7 +58,6 @@ public class AccountRepository {
 
     public MutableLiveData<String> getUserEmail()
     {
-        //userEmail.setValue(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         sharedPreferences = mContext.getSharedPreferences("ACCOUNT_FILE_KEY", Context.MODE_PRIVATE);
         userEmail.setValue(sharedPreferences.getString("UserEmail", "user@gmail.com"));
         return userEmail;
@@ -71,43 +66,6 @@ public class AccountRepository {
     {
         sharedPreferences = mContext.getSharedPreferences("ACCOUNT_FILE_KEY", Context.MODE_PRIVATE);
         userNameAndId.setValue(sharedPreferences.getString("UserNameAndId", "User#45012"));
-//        FirebaseDatabase.getInstance().getReference().child("User")
-//                .child(FirebaseAuth.getInstance().getUid())
-//                .child("userName").get()
-//                .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                        if (task.isSuccessful())
-//                        {
-//                            Log.d("UserName", userName = task.getResult().getValue().toString());
-//                            userName = task.getResult().getValue().toString();
-//                        }
-//                        else
-//                        {
-//                            Log.d(TAG, "Task to find userName unSuccess");
-//                        }
-//
-//                    }
-//                });
-//        FirebaseDatabase.getInstance().getReference().child("User")
-//                .child(FirebaseAuth.getInstance().getUid())
-//                .child("id").get()
-//                .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                        if (task.isSuccessful())
-//                        {
-//                            userId = task.getResult().getValue().toString();
-//                        }
-//                        else
-//                        {
-//                            Log.d(TAG, "Task to find userId unSuccess");
-//                        }
-//
-//                    }
-//                });
-//
-//        userNameAndId.setValue(userName + "#" + userId);
         return userNameAndId;
     }
 

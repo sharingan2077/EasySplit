@@ -42,11 +42,6 @@ public class DebtInGroupAdapter extends RecyclerView.Adapter<DebtInGroupAdapter.
         return holder;
     }
 
-    public long getTotalSum() {
-        Log.d(TAG, "getting total Sum - " + Long.toString(totalSum));
-        return totalSum;
-    }
-
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull DebtInGroupAdapter.ViewHolder holder, int position) {

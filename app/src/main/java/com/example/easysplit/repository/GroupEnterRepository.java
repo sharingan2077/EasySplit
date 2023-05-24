@@ -30,8 +30,6 @@ public class GroupEnterRepository {
     private MutableLiveData<Integer> countOfGroupMembers = new MutableLiveData<>();
 
     private List<String> groupUsers;
-    private List<String> groupExpenses;
-
     public static GroupEnterRepository getInstance()
     {
         if (instance == null)
@@ -41,30 +39,6 @@ public class GroupEnterRepository {
         return instance;
     }
 
-
-    public void getCountOfGroupMembers(String groupId, CompleteListenerInt listenerInt)
-    {
-        FirebaseDatabase.getInstance().getReference()
-                .child("Group")
-                .child(groupId)
-                .child("countMember").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        Long i = (Long)task.getResult().getValue();
-
-                        Log.d(TAG, "Long - " + Long.toString(i));
-                        countOfGroupMembers.setValue(2);
-                        listenerInt.successful(i.intValue());
-                        Log.d(TAG, Integer.toString(countOfGroupMembers.getValue()));
-                    }
-                });
-    }
-//    public MutableLiveData<Integer> getCountOfGroupMembers()
-//    {
-//
-//
-//        return countOfGroupMembers;
-//    }
     public void leaveGroup(String id)
     {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();

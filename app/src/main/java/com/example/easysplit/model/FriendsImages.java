@@ -40,17 +40,10 @@ public class FriendsImages {
         imageFriends.add(R.drawable.ic_user_10);
         imageFriends.add(R.drawable.ic_user_11);
         imageFriends.add(R.drawable.ic_user_12);
-        //imageFriends.add(R.drawable.ic_user_14);
-        //imageFriends.add(R.drawable.ic_user_15);
-        //imageFriends.add(R.drawable.ic_user_17);
         imageFriends.add(R.drawable.ic_user_18);
-        //imageFriends.add(R.drawable.ic_user_19);
         imageFriends.add(R.drawable.ic_user_20);
         imageFriends.add(R.drawable.ic_user_21);
-        //imageFriends.add(R.drawable.ic_user_22);
-        //imageFriends.add(R.drawable.ic_user_23);
         imageFriends.add(R.drawable.ic_user_24);
-        //imageFriends.add(R.drawable.ic_user_25);
         imageFriends.add(R.drawable.ic_user_26);
         imageFriends.add(R.drawable.ic_user_27);
         imageFriends.add(R.drawable.ic_user_28);

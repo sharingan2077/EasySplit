@@ -40,7 +40,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:text="maksvish135@yandex.ru"
         android:id="@+id/loginText"
         style="@style/InterSemiBold16"
         android:layout_width="260dp"
@@ -56,7 +55,6 @@
         android:inputType="text"/>
 
     <EditText
-        android:text="qwerty"
         android:inputType="textPassword"
         android:id="@+id/passwordText"
         style="@style/InterSemiBold16"
