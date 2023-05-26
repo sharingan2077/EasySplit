@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Группы"
+        android:text="@string/groups"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +30,8 @@
         android:src="@drawable/no_group_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/todo"/>
 
     <TextView
         android:visibility="gone"
@@ -39,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="У вас пока нет групп"
+        android:text="@string/textGroup2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgOfGroups"
@@ -82,7 +83,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="4dp"
-            android:src="@drawable/ic_member_2" />
+            android:src="@drawable/ic_member_2"
+            android:contentDescription="@string/todo"/>
 
         <TextView
             android:id="@+id/textView5"
@@ -91,7 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="2dp"
-            android:text="Создать группу"
+            android:text="@string/textGroup3"
             android:textColor="@color/aqua" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,27 +3,23 @@ package com.example.easysplit.view.fragments.expense;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.FragmentWhoPaidBinding;
-import com.example.easysplit.model.User;
 import com.example.easysplit.view.adapters.UsersRecyclerAdapter;
 import com.example.easysplit.view.listeners.CompleteListener;
 import com.example.easysplit.view.utils.NavigationUtils;
-import com.example.easysplit.viewModel.WhoPaidViewModel;
+import com.example.easysplit.viewModel.expense.WhoPaidViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class WhoPaidFragment extends Fragment {
 
@@ -91,63 +87,48 @@ public class WhoPaidFragment extends Fragment {
         });
         initRecyclerView();
         binding.toolbar.textToolbar.setText("Кто платит?");
+        binding.toolbar.back.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("ActionToLastFragment", actionToLastFragment);
+            bundle.putString("groupId", groupId);
+            bundle.putString("expenseId", expenseId);
+            bundle.putString("userId", userId);
+            bundle.putString("expenseName", expenseName);
+            bundle.putString("expenseSum", expenseSumString);
 
-//        final Observer<List<User>> observerNewUsers = new Observer<List<User>>() {
-//            @Override
-//            public void onChanged(List<User> user) {
-//                Log.d(TAG, Integer.toString(adapter.getItemCount()));
-//                adapter.notifyDataSetChanged();
-//            }
-//        };
-//        whoPaidViewModel.getUsers().observe(getViewLifecycleOwner(), observerNewUsers);
-        binding.toolbar.back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("ActionToLastFragment", actionToLastFragment);
-                bundle.putString("groupId", groupId);
-                bundle.putString("expenseId", expenseId);
-                bundle.putString("userId", userId);
-                bundle.putString("expenseName", expenseName);
-                bundle.putString("expenseSum", expenseSumString);
+            bundle.putStringArrayList("usersId", usersId);
+            bundle.putLongArray("usersSum", usersSum);
 
-                bundle.putStringArrayList("usersId", usersId);
-                bundle.putLongArray("usersSum", usersSum);
+            bundle.putString("nameOfUser", nameOfUser);
+            bundle.putString("nameOfGroup", nameOfGroup);
+            bundle.putInt("countMemberOfFirstGroup", countMemberOfFirstGroup);
 
-                bundle.putString("nameOfUser", nameOfUser);
-                bundle.putString("nameOfGroup", nameOfGroup);
-                bundle.putInt("countMemberOfFirstGroup", countMemberOfFirstGroup);
-
-                NavigationUtils.navigateSafe(navController, R.id.action_whoPaidFragment_to_addExpenseFragment, bundle);
-            }
+            NavigationUtils.navigateSafe(navController, R.id.action_whoPaidFragment_to_addExpenseFragment, bundle);
         });
         return binding.getRoot();
     }
 
     private void initRecyclerView()
     {
-        adapter = new UsersRecyclerAdapter(requireActivity(), whoPaidViewModel.getUsers().getValue(), new UsersRecyclerAdapter.onUserClickListener() {
-            @Override
-            public void onClick(String userId, String userName) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("ActionToLastFragment", actionToLastFragment);
-                bundle.putString("groupId", groupId);
+        adapter = new UsersRecyclerAdapter(requireActivity(), whoPaidViewModel.getUsers().getValue(), (userId, userName) -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("ActionToLastFragment", actionToLastFragment);
+            bundle.putString("groupId", groupId);
 
-                bundle.putString("userId", userId);
+            bundle.putString("userId", userId);
 
-                bundle.putString("nameOfUser", userName);
-                bundle.putString("nameOfGroup", nameOfGroup);
+            bundle.putString("nameOfUser", userName);
+            bundle.putString("nameOfGroup", nameOfGroup);
 
-                bundle.putString("expenseId", expenseId);
-                bundle.putString("expenseName", expenseName);
-                bundle.putString("expenseSum", expenseSumString);
+            bundle.putString("expenseId", expenseId);
+            bundle.putString("expenseName", expenseName);
+            bundle.putString("expenseSum", expenseSumString);
 
-                bundle.putStringArrayList("usersId", usersId);
-                bundle.putLongArray("usersSum", usersSum);
-                bundle.putInt("countMemberOfFirstGroup", countMemberOfFirstGroup);
+            bundle.putStringArrayList("usersId", usersId);
+            bundle.putLongArray("usersSum", usersSum);
+            bundle.putInt("countMemberOfFirstGroup", countMemberOfFirstGroup);
 
-                NavigationUtils.navigateSafe(navController, R.id.action_whoPaidFragment_to_addExpenseFragment, bundle);
-            }
+            NavigationUtils.navigateSafe(navController, R.id.action_whoPaidFragment_to_addExpenseFragment, bundle);
         });
         binding.recyclerViewUsers.setAdapter(adapter);
         binding.recyclerViewUsers.setLayoutManager(new LinearLayoutManager(getActivity()));

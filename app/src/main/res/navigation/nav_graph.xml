@@ -36,13 +36,10 @@
         <action
             android:id="@+id/action_registrationFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
-        <action
-            android:id="@+id/action_registrationFragment_to_verificationUserFragment"
-            app:destination="@id/verificationUserFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.easysplit.view.fragments.ProfileFragment"
+        android:name="com.example.easysplit.view.fragments.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -54,7 +51,7 @@
     </fragment>
     <fragment
         android:id="@+id/activityFragment"
-        android:name="com.example.easysplit.view.fragments.ActivityFragment"
+        android:name="com.example.easysplit.view.fragments.activity.ActivityFragment"
         android:label="fragment_activity"
         tools:layout="@layout/fragment_activity" >
         <action
@@ -84,9 +81,6 @@
         <action
             android:id="@+id/action_groupEnterFragment_to_groupsFragment"
             app:destination="@id/groupsFragment" />
-        <action
-            android:id="@+id/action_groupEnterFragment_to_addExpenseFragment"
-            app:destination="@id/addExpenseFragment" />
         <argument
             android:name="groupId"
             app:argType="string" />
@@ -108,9 +102,6 @@
         <action
             android:id="@+id/action_addExpenseFragment_to_groupsFragment"
             app:destination="@id/groupsFragment" />
-        <action
-            android:id="@+id/action_addExpenseFragment_to_groupEnterFragment"
-            app:destination="@id/groupEnterFragment" />
         <action
             android:id="@+id/action_addExpenseFragment_to_whoPaidFragment"
             app:destination="@id/whoPaidFragment" />
@@ -146,18 +137,6 @@
             app:destination="@id/splitUnequallyFragment" />
     </fragment>
     <fragment
-        android:id="@+id/verificationUserFragment"
-        android:name="com.example.easysplit.view.fragments.authentication.VerificationUserFragment"
-        android:label="fragment_verification_user"
-        tools:layout="@layout/fragment_verification_user" >
-        <action
-            android:id="@+id/action_verificationUserFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-        <action
-            android:id="@+id/action_verificationUserFragment_to_registrationFragment"
-            app:destination="@id/registrationFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/whoPaidFragment"
         android:name="com.example.easysplit.view.fragments.expense.WhoPaidFragment"
         android:label="fragment_who_paid"
@@ -167,25 +146,10 @@
             app:destination="@id/addExpenseFragment" />
     </fragment>
     <fragment
-        android:id="@+id/resetPasswordFragment"
-        android:name="com.example.easysplit.view.fragments.authentication.ResetPasswordFragment"
-        android:label="fragment_reset_password"
-        tools:layout="@layout/fragment_reset_password" >
-        <action
-            android:id="@+id/action_resetPasswordFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-        <action
-            android:id="@+id/action_resetPasswordFragment_to_loginFragment2"
-            app:destination="@id/loginFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/resetPasswordVerificationFragment"
         android:name="com.example.easysplit.view.fragments.authentication.ResetPasswordVerificationFragment"
         android:label="fragment_reset_password_verification"
         tools:layout="@layout/fragment_reset_password_verification" >
-        <action
-            android:id="@+id/action_resetPasswordVerificationFragment_to_resetPasswordFragment"
-            app:destination="@id/resetPasswordFragment" />
         <action
             android:id="@+id/action_resetPasswordVerificationFragment_to_loginFragment"
             app:destination="@id/loginFragment" />

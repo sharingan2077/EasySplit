@@ -18,7 +18,8 @@
         android:src="@drawable/no_friends_6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/todo" />
     <TextView
         android:visibility="gone"
         android:id="@+id/friends"
@@ -26,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Друзья"
+        android:text="@string/friends"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="24dp"
-        android:text="Друзья появятся здесь"
+        android:text="@string/textFriends"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgOfFriends" />
@@ -63,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
         android:layout_marginTop="66dp"
-        android:text="В сумме, вы должны"
+        android:text="@string/ownSum"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -75,7 +76,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="66dp"
-        android:text="100.50руб"
+        android:text="@string/_100_50"
         android:textColor="@color/red"
         app:layout_constraintStart_toEndOf="@+id/totalSum"
         app:layout_constraintTop_toTopOf="parent"
@@ -109,7 +110,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="4dp"
-            android:src="@drawable/ic_add_friend" />
+            android:src="@drawable/ic_add_friend"
+            android:contentDescription="@string/todo" />
 
         <TextView
             android:id="@+id/textView5"
@@ -118,7 +120,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="8dp"
-            android:text="Добавить друзей"
+            android:text="@string/addFriends"
             android:textColor="@color/aqua" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,7 +2,6 @@ package com.example.easysplit.view.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,25 +21,14 @@ import java.util.List;
 
 public class ExpenseInGroupRecyclerAdapter extends RecyclerView.Adapter<ExpenseInGroupRecyclerAdapter.ViewHolder> {
 
-    public interface onGroupClickListener{
-        void onClick();
-    }
-
     private static final String TAG = "ExpenseInGroupRecyclerA";
     private List<ExpenseInGroup> expensesInGroup =  new ArrayList<>();
-    ExpenseInGroupRecyclerAdapter.onGroupClickListener listener;
 
     private Context mContext;
 
     public ExpenseInGroupRecyclerAdapter(Context mContext, List<ExpenseInGroup> expensesInGroup) {
         this.expensesInGroup = expensesInGroup;
         this.mContext = mContext;
-    }
-
-    public ExpenseInGroupRecyclerAdapter(Context mContext, List<ExpenseInGroup> expensesInGroup, ExpenseInGroupRecyclerAdapter.onGroupClickListener listener) {
-        this.expensesInGroup = expensesInGroup;;
-        this.mContext = mContext;
-        this.listener=listener;
     }
 
     @NonNull
@@ -79,12 +67,6 @@ public class ExpenseInGroupRecyclerAdapter extends RecyclerView.Adapter<ExpenseI
             }
         }
         holder.cost.setText(Long.toString(ownSum));
-
-
-        //holder.imageView.setImageResource(R.drawable.group_item_1);
-//        holder.parentLayout.setOnClickListener(v -> {
-//            listener.onClick();
-//        });
 
     }
     public String getMonth(String month)

@@ -20,11 +20,9 @@ import com.example.easysplit.view.adapters.UsersSplitEquallyAdapter;
 import com.example.easysplit.view.listeners.CheckUsersIdListener;
 import com.example.easysplit.view.listeners.CompleteListener;
 import com.example.easysplit.view.utils.NavigationUtils;
-import com.example.easysplit.viewModel.SplitEquallyViewModel;
-import com.example.easysplit.viewModel.WhoPaidViewModel;
+import com.example.easysplit.viewModel.expense.WhoPaidViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SplitEquallyFragment extends Fragment {
 
@@ -35,8 +33,6 @@ public class SplitEquallyFragment extends Fragment {
     NavController navController;
 
     UsersSplitEquallyAdapter adapter;
-
-    SplitEquallyViewModel splitEquallyViewModel;
     WhoPaidViewModel whoPaidViewModel;
 
     private int actionToLastFragment;
@@ -99,82 +95,70 @@ public class SplitEquallyFragment extends Fragment {
             }
         });
         initRecyclerView();
-        binding.toolbar.back.setOnClickListener(new View.OnClickListener() {
+        binding.toolbar.back.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            usersIdCash = getArguments().getStringArrayList("usersId");
+            Log.d(TAG, "onClicl - " + Integer.toString(usersIdCash.size()));
+            bundle.putInt("ActionToLastFragment", actionToLastFragment);
+            bundle.putString("expenseId", expenseId);
+            bundle.putString("groupId", groupId);
+            bundle.putString("expenseName", expenseName);
+            bundle.putString("expenseSum", expenseSumString);
+            bundle.putString("userId", userId);
+            bundle.putStringArrayList("usersId", usersIdCash);
+            bundle.putLongArray("usersSum", usersSum);
+
+            bundle.putString("nameOfUser", nameOfUser);
+            bundle.putString("nameOfGroup", nameOfGroup);
+            bundle.putInt("countMemberOfFirstGroup", countMemberOfFirstGroup);
+
+            NavigationUtils.navigateSafe(navController, R.id.action_splitEquallyFragment_to_addExpenseFragment, bundle);
+        });
+        binding.toolbar.done.setOnClickListener(v -> whoPaidViewModel.checkUsersId(usersId, userId, new CheckUsersIdListener() {
             @Override
-            public void onClick(View v) {
+            public void successful() {
                 Bundle bundle = new Bundle();
-                usersIdCash = getArguments().getStringArrayList("usersId");
-                Log.d(TAG, "onClicl - " + Integer.toString(usersIdCash.size()));
                 bundle.putInt("ActionToLastFragment", actionToLastFragment);
                 bundle.putString("expenseId", expenseId);
                 bundle.putString("groupId", groupId);
                 bundle.putString("expenseName", expenseName);
                 bundle.putString("expenseSum", expenseSumString);
                 bundle.putString("userId", userId);
-                bundle.putStringArrayList("usersId", usersIdCash);
-                bundle.putLongArray("usersSum", usersSum);
+                bundle.putStringArrayList("usersId", usersId);
 
                 bundle.putString("nameOfUser", nameOfUser);
                 bundle.putString("nameOfGroup", nameOfGroup);
                 bundle.putInt("countMemberOfFirstGroup", countMemberOfFirstGroup);
 
-                //Log.d(TAG, "put" + Integer.toString(usersIdCash.size()));
+
                 NavigationUtils.navigateSafe(navController, R.id.action_splitEquallyFragment_to_addExpenseFragment, bundle);
             }
-        });
-        binding.toolbar.done.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                whoPaidViewModel.checkUsersId(usersId, userId, new CheckUsersIdListener() {
-                    @Override
-                    public void successful() {
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("ActionToLastFragment", actionToLastFragment);
-                        bundle.putString("expenseId", expenseId);
-                        bundle.putString("groupId", groupId);
-                        bundle.putString("expenseName", expenseName);
-                        bundle.putString("expenseSum", expenseSumString);
-                        bundle.putString("userId", userId);
-                        bundle.putStringArrayList("usersId", usersId);
-
-                        bundle.putString("nameOfUser", nameOfUser);
-                        bundle.putString("nameOfGroup", nameOfGroup);
-                        bundle.putInt("countMemberOfFirstGroup", countMemberOfFirstGroup);
-
-
-                        NavigationUtils.navigateSafe(navController, R.id.action_splitEquallyFragment_to_addExpenseFragment, bundle);
-                    }
-                    @Override
-                    public void noUsersId() {
-                        Toast.makeText(requireContext(), "Вы должны выбрать хотя бы 1 человека, участвующего в расходе", Toast.LENGTH_SHORT).show();
-                    }
-                    @Override
-                    public void onlyOwnUserId() {
-                        Toast.makeText(requireContext(), "Расход не может быть поделен между одним и тем же участником!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+            public void noUsersId() {
+                Toast.makeText(requireContext(), "Вы должны выбрать хотя бы 1 человека, участвующего в расходе", Toast.LENGTH_SHORT).show();
             }
-        });
-        binding.splitUnequally.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("ActionToLastFragment", actionToLastFragment);
-                bundle.putString("groupId", groupId);
-                bundle.putString("expenseId", expenseId);
-                bundle.putString("expenseName", expenseName);
-                bundle.putString("expenseSum", expenseSumString);
-                bundle.putString("userId", userId);
-
-                bundle.putStringArrayList("usersId", usersId);
-                bundle.putLongArray("usersSum", usersSum);
-
-                bundle.putString("nameOfUser", nameOfUser);
-                bundle.putString("nameOfGroup", nameOfGroup);
-                bundle.putInt("countMemberOfFirstGroup", countMemberOfFirstGroup);
-
-                NavigationUtils.navigateSafe(navController, R.id.action_splitEquallyFragment_to_splitUnequallyFragment, bundle);
+            public void onlyOwnUserId() {
+                Toast.makeText(requireContext(), "Расход не может быть поделен между одним и тем же участником!", Toast.LENGTH_SHORT).show();
             }
+        }));
+        binding.splitUnequally.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("ActionToLastFragment", actionToLastFragment);
+            bundle.putString("groupId", groupId);
+            bundle.putString("expenseId", expenseId);
+            bundle.putString("expenseName", expenseName);
+            bundle.putString("expenseSum", expenseSumString);
+            bundle.putString("userId", userId);
+
+            bundle.putStringArrayList("usersId", usersId);
+            bundle.putLongArray("usersSum", usersSum);
+
+            bundle.putString("nameOfUser", nameOfUser);
+            bundle.putString("nameOfGroup", nameOfGroup);
+            bundle.putInt("countMemberOfFirstGroup", countMemberOfFirstGroup);
+
+            NavigationUtils.navigateSafe(navController, R.id.action_splitEquallyFragment_to_splitUnequallyFragment, bundle);
         });
 
 

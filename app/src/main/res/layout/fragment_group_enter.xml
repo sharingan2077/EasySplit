@@ -2,13 +2,12 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -32,7 +31,8 @@
                 android:layout_marginTop="70dp"
                 android:src="@drawable/ic_group_1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/todo"/>
         </RelativeLayout>
         <LinearLayout
             android:layout_width="wrap_content"
@@ -42,7 +42,7 @@
                 android:id="@+id/nameOfGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Example"
+                android:text="@string/textEnterGroup7"
                 style="@style/InterMedium24"
                 android:textColor="@color/black"
                 android:layout_marginStart="35dp"
@@ -53,7 +53,8 @@
                 android:id="@+id/editNameOfGroup"
                 android:src="@drawable/ic_edit"
                 android:layout_marginTop="14dp"
-                android:layout_marginStart="10dp" />
+                android:layout_marginStart="10dp"
+                android:contentDescription="@string/todo"/>
         </LinearLayout>
 
         <TextView
@@ -63,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="35dp"
             android:layout_marginTop="6dp"
-            android:text="1 участник"
+            android:text="@string/textEnterGroup6"
             android:textColor="@color/grey" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -88,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="В сумме тебе должны 0руб"
+                android:text="@string/textEnterGroup5"
                 android:textColor="@color/aqua"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -121,7 +122,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="41dp"
-                android:text="Пока здесь нет расходов"
+                android:text="@string/textEnterGroup4"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -135,7 +136,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:textAlignment="center"
-                android:text="Начни добавлять расходы и все изменится"
+                android:text="@string/textEnterGroup3"
                 android:textColor="@color/grey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -149,7 +150,8 @@
                 android:src="@drawable/no_expenses"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtNoExpenses2" />
+                app:layout_constraintTop_toBottomOf="@+id/txtNoExpenses2"
+                android:contentDescription="@string/todo"/>
             <TextView
                 android:id="@+id/txtNoFriends"
                 style="@style/InterSemiBold17"
@@ -157,7 +159,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="41dp"
-                android:text="Пока ты здесь один"
+                android:text="@string/textEnterGroup2"
                 android:textColor="@color/black"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -178,43 +180,17 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_add_friend_circle" />
+                    android:src="@drawable/ic_add_friend_circle"
+                    android:contentDescription="@string/todo"/>
                 <TextView
                     style="@style/InterSemiBold17"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="17dp"
-                    android:text="Добавить участника"
+                    android:text="@string/addToGroup"
                     android:textColor="@color/blue" />
             </LinearLayout>
-
-<!--            <LinearLayout-->
-<!--                android:visibility="visible"-->
-<!--                android:id="@+id/copyLink"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="40dp"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:layout_marginTop="14dp"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/addFriends">-->
-
-<!--                <ImageView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:src="@drawable/ic_copy_link" />-->
-
-<!--                <TextView-->
-<!--                    style="@style/InterSemiBold17"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:layout_marginStart="17dp"-->
-<!--                    android:text="Поделиться ссылкой"-->
-<!--                    android:textColor="@color/blue" />-->
-<!--            </LinearLayout>-->
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </ScrollView>

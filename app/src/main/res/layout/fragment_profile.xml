@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".view.fragments.ProfileFragment">
+    tools:context=".view.fragments.profile.ProfileFragment">
 
 
     <TextView
@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="23dp"
         android:layout_marginTop="77dp"
-        android:text="Профиль"
+        android:text="@string/profile"
         android:textColor="@color/black" />
 
     <LinearLayout
@@ -34,7 +34,8 @@
                 android:layout_height="110dp"
                 android:src="@drawable/ic_user_9_92"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/todo"/>
 
             <ImageView
                 android:id="@+id/changeImage"
@@ -45,7 +46,8 @@
                 android:layout_marginTop="95dp"
                 android:src="@drawable/ic_photo_camera"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/todo"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
@@ -61,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="22dp"
                 android:layout_marginTop="28dp"
-                android:text="Maks#876051"
+                android:text="@string/maks_876051"
                 android:textColor="@color/black" />
 
             <TextView
@@ -71,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="22dp"
                 android:layout_marginTop="9dp"
-                android:text="maksvish135@gmail.com"
+                android:text="@string/maksvish135_gmail_com"
                 android:textColor="@color/black" />
         </LinearLayout>
 
@@ -81,7 +83,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="40dp"
-            android:src="@drawable/ic_edit" />
+            android:src="@drawable/ic_edit"
+            android:contentDescription="@string/todo"/>
     </LinearLayout>
 
     <LinearLayout
@@ -101,14 +104,15 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_log_out" />
+                android:src="@drawable/ic_log_out"
+                android:contentDescription="@string/todo"/>
 
             <TextView
                 style="@style/InterRegular16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:text="Выйти из аккаунта"
+                android:text="@string/profileText1"
                 android:textColor="@color/aqua" />
         </LinearLayout>
     </LinearLayout>

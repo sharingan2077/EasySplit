@@ -19,8 +19,8 @@
             android:layout_height="80dp"
             android:layout_marginStart="20dp"
             android:src="@drawable/ic_group_2"
-            android:id="@+id/imageGroupCreate"/>
-        <!--android:src="@drawable/group_45"-->
+            android:id="@+id/imageGroupCreate"
+            android:contentDescription="@string/todo" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -31,7 +31,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Имя группы"
+                android:text="@string/nameOfGroup"
                 android:textColor="@color/grey"
                 style="@style/InterMedium16"
                 android:layout_marginTop="14dp"/>
@@ -39,7 +39,6 @@
                 android:id="@+id/nameOfGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Example"
                 android:inputType="text"
                 style="@style/InterMedium16"
                 android:backgroundTint="@color/aqua"/>
@@ -52,7 +51,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Для чего ваша группа?"
+        android:text="@string/textEnterGroup"
         style="@style/InterMedium16"
         android:textColor="@color/grey"
         android:layout_marginTop="33dp"
@@ -80,12 +79,13 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_home"
                     android:layout_marginStart="11dp"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/todo" />
                 <TextView
                     android:id="@+id/home2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Дом"
+                    android:text="@string/home"
                     android:layout_marginStart="14dp"
                     android:layout_gravity="center"
                     android:textColor="@color/grey"
@@ -105,12 +105,13 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_traveler"
                     android:layout_marginStart="11dp"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/todo"/>
                 <TextView
                     android:id="@+id/trip2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Поездка"
+                    android:text="@string/trip"
                     android:layout_marginStart="5dp"
                     android:layout_gravity="center"
                     android:textColor="@color/grey"
@@ -130,12 +131,13 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_party_hat"
                     android:layout_marginStart="11dp"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/todo"/>
                 <TextView
                     android:id="@+id/party2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Мероприятие"
+                    android:text="@string/party"
                     android:layout_gravity="center"
                     android:textColor="@color/grey"
                     style="@style/InterMedium14"/>
@@ -154,12 +156,13 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/icons8_bullet_list_1"
                     android:layout_marginStart="11dp"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/todo"/>
                 <TextView
                     android:id="@+id/other2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Другое"
+                    android:text="@string/other"
                     android:layout_marginStart="7dp"
                     android:layout_gravity="center"
                     android:textColor="@color/grey"
@@ -184,12 +187,13 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_family"
                     android:layout_marginStart="11dp"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/todo"/>
                 <TextView
                     android:id="@+id/family2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Семья"
+                    android:text="@string/family"
                     android:layout_marginStart="7dp"
                     android:layout_gravity="center"
                     android:textColor="@color/grey"
@@ -209,12 +213,13 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_lawyer"
                     android:layout_marginStart="11dp"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/todo"/>
                 <TextView
                     android:id="@+id/work2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Работа"
+                    android:text="@string/work"
                     android:layout_marginStart="5dp"
                     android:layout_gravity="center"
                     android:textColor="@color/grey"
@@ -234,12 +239,13 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_favourite"
                     android:layout_marginStart="11dp"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/todo"/>
                 <TextView
                     android:id="@+id/love2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Отношения"
+                    android:text="@string/love"
                     android:layout_gravity="center"
                     android:layout_marginStart="7dp"
                     android:textColor="@color/grey"

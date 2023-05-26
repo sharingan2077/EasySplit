@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.FragmentAddFriendToGroupBinding;
-import com.example.easysplit.repository.UserRepository;
+import com.example.easysplit.repository.friends.UserRepository;
 import com.example.easysplit.view.adapters.UsersRecyclerAdapter;
 import com.example.easysplit.view.listeners.CompleteListener;
 import com.example.easysplit.view.utils.NavigationUtils;
@@ -72,16 +72,13 @@ public class AddFriendToGroupFragment extends Fragment {
 
         initRecyclerView();
         binding.toolbar.textToolbar.setText("Добавить в группу");
-        binding.toolbar.back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bundle = new Bundle();
-                bundle.putString("groupId", groupId);
-                bundle.putString("nameOfGroup", nameOfGroup);
-                bundle.putInt("countGroupMembers", countGroupMembers);
-                bundle.putInt("imageDrawable", imageDrawable);
-                NavigationUtils.navigateSafe(navController, R.id.action_addFriendToGroupFragment_to_groupEnterFragment, bundle);
-            }
+        binding.toolbar.back.setOnClickListener(v -> {
+            bundle = new Bundle();
+            bundle.putString("groupId", groupId);
+            bundle.putString("nameOfGroup", nameOfGroup);
+            bundle.putInt("countGroupMembers", countGroupMembers);
+            bundle.putInt("imageDrawable", imageDrawable);
+            NavigationUtils.navigateSafe(navController, R.id.action_addFriendToGroupFragment_to_groupEnterFragment, bundle);
         });
 
         return binding.getRoot();

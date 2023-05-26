@@ -28,10 +28,6 @@ public class UsersRecyclerAdapter extends RecyclerView.Adapter<UsersRecyclerAdap
     UsersRecyclerAdapter.onUserClickListener listener;
 
     private Context mContext;
-    public UsersRecyclerAdapter(Context mContext, List<User> users) {
-        this.users = users;
-        this.mContext = mContext;
-    }
     public UsersRecyclerAdapter(Context mContext, List<User> users, UsersRecyclerAdapter.onUserClickListener listener) {
         this.users = users;
         this.mContext = mContext;

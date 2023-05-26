@@ -34,11 +34,6 @@ public class GroupsRecyclerAdapter extends RecyclerView.Adapter<GroupsRecyclerAd
 
     private Context mContext;
 
-    public GroupsRecyclerAdapter(Context mContext, List<Group> groups) {
-        this.groups = groups;
-        this.mContext = mContext;
-    }
-
     public GroupsRecyclerAdapter(Context mContext, List<Group> groups, onGroupClickListener listener) {
         this.groups = groups;
         this.mContext = mContext;
@@ -100,7 +95,6 @@ public class GroupsRecyclerAdapter extends RecyclerView.Adapter<GroupsRecyclerAd
                 holder.imageView.setImageResource(resourceId);
                 break;
         }
-        //holder.imageView.setImageResource(R.drawable.group_item_1);
 
 
         holder.groupName.setText(groups.get(position).getGroupName());

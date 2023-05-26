@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/aqua"
-        android:contentDescription="fab"
+        android:contentDescription="@string/fab"
         android:scaleType="center"
         android:src="@drawable/fab"
         app:layout_anchor="@id/bottomAppBar" />

@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.easysplit.model.User;
-import com.example.easysplit.repository.UserRepository;
+import com.example.easysplit.repository.friends.UserRepository;
 import com.example.easysplit.view.listeners.CompleteListener;
 
 import java.util.List;
@@ -25,11 +25,6 @@ public class AddFriendToGroupViewModel extends ViewModel {
         }
         mRepo = UserRepository.getInstance();
         users = mRepo.getUsers(listener);
-    }
-
-    public void addNewValue(final User user)
-    {
-
     }
 
     public void addFriendToGroup(String groupId, String userId, UserRepository.AddFriendToGroupListener listener)

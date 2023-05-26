@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewStructure;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,16 +31,6 @@ public class UsersSplitEquallyAdapter extends RecyclerView.Adapter<UsersSplitEqu
     UsersSplitEquallyAdapter.onUserClickListener listener;
 
     private Context mContext;
-    public UsersSplitEquallyAdapter(Context mContext, List<User> users) {
-        this.users = users;
-        this.mContext = mContext;
-    }
-    public UsersSplitEquallyAdapter(Context mContext, List<User> users, UsersSplitEquallyAdapter.onUserClickListener listener) {
-        this.users = users;
-        this.mContext = mContext;
-        this.listener=listener;
-    }
-
     public UsersSplitEquallyAdapter(Context mContext, List<User> users, List<String> usersId, onUserClickListener listener) {
         this.users = users;
         this.usersId = usersId;
@@ -73,7 +62,6 @@ public class UsersSplitEquallyAdapter extends RecyclerView.Adapter<UsersSplitEqu
 
 
         holder.parentLayout.setOnClickListener(v -> {
-            //listener.onClick();
             if (holder.checkBox.isChecked())
             {
                 listener.onClickRemove(users.get(position).getUID());

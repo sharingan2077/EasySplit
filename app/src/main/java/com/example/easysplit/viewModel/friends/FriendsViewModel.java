@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.easysplit.model.User;
-import com.example.easysplit.repository.UserRepository;
+import com.example.easysplit.repository.friends.UserRepository;
 import com.example.easysplit.view.listeners.AddFriendToUserListener;
 import com.example.easysplit.view.listeners.CompleteListener;
 
@@ -30,7 +30,6 @@ public class FriendsViewModel extends ViewModel {
     public void addNewValue(String userName, String id, AddFriendToUserListener listener)
     {
         mRepo.addFriend(userName, id, listener);
-        //users = mRepo.getUsers();
     }
 
     public LiveData<List<User>> getUsers()

@@ -1,6 +1,5 @@
 package com.example.easysplit.view.activities;
 
-import static androidx.navigation.ui.NavigationUI.setupActionBarWithNavController;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,7 +24,7 @@ import android.view.WindowManager;
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.ActivityMainBinding;
 import com.example.easysplit.model.FriendsImages;
-import com.example.easysplit.viewModel.MainActivityViewModel;
+import com.example.easysplit.viewModel.mainActivity.MainActivityViewModel;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
@@ -56,15 +55,12 @@ public class MainActivity extends AppCompatActivity {
         mainActivityViewModel.getIsShowBottomBar().observe(this, booleanObserver);
 
 
-        final Observer<String> observerUserImage = new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                Log.d(TAG, "observerUserImage " + s);
-                FriendsImages friendsImages = new FriendsImages();
-                int drawableId = friendsImages.getImageFriends().get(Integer.valueOf(s));
-                Menu navView = binding.bottomNavigationBar.getMenu();
-                navView.findItem(R.id.profileFragment).setIcon(drawableId);
-            }
+        final Observer<String> observerUserImage = s -> {
+            Log.d(TAG, "observerUserImage " + s);
+            FriendsImages friendsImages = new FriendsImages();
+            int drawableId = friendsImages.getImageFriends().get(Integer.valueOf(s));
+            Menu navView = binding.bottomNavigationBar.getMenu();
+            navView.findItem(R.id.profileFragment).setIcon(drawableId);
         };
         mainActivityViewModel.getUserImage().observe(this, observerUserImage);
 
@@ -76,28 +72,19 @@ public class MainActivity extends AppCompatActivity {
 
         navController = Navigation.findNavController(this, R.id.navHostFragment);
         NavigationUI.setupWithNavController(binding.bottomNavigationBar, navController);
-        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
-            @Override
-            public void onDestinationChanged(@NonNull NavController controller,
-                                             @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                int id = destination.getId();
-                if(id == R.id.groupsFragment || id == R.id.friendsFragment
-                || id == R.id.activityFragment || id == R.id.profileFragment) {
-                    showBottomNavigationBar();
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            int id = destination.getId();
+            if(id == R.id.groupsFragment || id == R.id.friendsFragment
+            || id == R.id.activityFragment || id == R.id.profileFragment) {
+                showBottomNavigationBar();
 
-                }
-                else
-                {
-                    hideBottomNavigationBar();
-                }
+            }
+            else
+            {
+                hideBottomNavigationBar();
             }
         });
-        binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainActivityViewModel.setIsGoToMakeExpense();
-            }
-        });
+        binding.fab.setOnClickListener(v -> mainActivityViewModel.setIsGoToMakeExpense());
         setTransparentStatusBar();
     }
     private void setBackgroundToBottomNavigation()
@@ -121,17 +108,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void setTransparentStatusBar()
     {
-        if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
-            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true);
-        }
-        if (Build.VERSION.SDK_INT >= 19) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        }
-
-        if (Build.VERSION.SDK_INT >= 21) {
-            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
-        }
+        setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
     }
 
     public static void setWindowFlag(Activity activity, final int bits, boolean on) {

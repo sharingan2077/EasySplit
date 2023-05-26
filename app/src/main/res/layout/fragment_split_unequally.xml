@@ -18,14 +18,14 @@
             android:id="@+id/splitEqually"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Поровну"
+            android:text="@string/equally2"
             style="@style/InterMedium18"
             android:textColor="@color/grey"
             android:layout_marginStart="19dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Непоровну"
+            android:text="@string/unequally2"
             style="@style/InterMedium18"
             android:textColor="@color/aqua"
             android:layout_marginStart="29dp"/>
@@ -40,7 +40,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Поделить точными частями"
+        android:text="@string/textUnequally"
         android:layout_gravity="center"
         style="@style/InterSemiBold18"
         android:textColor="@color/black"
@@ -49,7 +49,7 @@
     <TextView
         android:layout_width="234dp"
         android:layout_height="wrap_content"
-        android:text="укажите точно, сколько должен каждый человек"
+        android:text="@string/textUnequally1"
         android:layout_gravity="center"
         style="@style/InterRegular18"
         android:textColor="@color/grey"
@@ -77,7 +77,7 @@
                 android:id="@+id/sumRemained"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="₽0 из ₽100"
+                android:text="@string/_0_100"
                 android:layout_gravity="center"
                 android:textAlignment="center"
                 android:textColor="@color/black"

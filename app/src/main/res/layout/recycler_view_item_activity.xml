@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_cheque_aqua"
         android:layout_marginStart="20dp"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:contentDescription="@string/todo"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,21 +26,21 @@
                 android:id="@+id/userName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Вы"
+                android:text="@string/you"
                 style="@style/InterSemiBold18"
                 android:textColor="@color/black" />
             <TextView
                 android:id="@+id/adding"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" добавил"
+                android:text="@string/textActivity1"
                 style="@style/InterLight18"
                 android:textColor="@color/black" />
             <TextView
                 android:id="@+id/nameOfExpense"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Бананы"
+                android:text="@string/textActivity2"
                 style="@style/InterSemiBold18"
                 android:textColor="@color/black"
                 android:layout_marginStart="3dp"/>
@@ -52,14 +53,14 @@
                 android:id="@+id/inGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="в группу"
+                android:text="@string/textActivity3"
                 style="@style/InterLight18"
                 android:textColor="@color/black" />
             <TextView
                 android:id="@+id/nameOfGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Check"
+                android:text="@string/textActivity4"
                 style="@style/InterSemiBold18"
                 android:textColor="@color/black"
                 android:layout_marginStart="3dp"/>
@@ -68,7 +69,7 @@
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Сегодня, 18:09"
+            android:text="@string/textActivity5"
             style="@style/InterLight13"
             android:textColor="@color/grey"/>
     </LinearLayout>

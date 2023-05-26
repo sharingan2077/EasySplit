@@ -12,11 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.easysplit.R;
 import com.example.easysplit.model.FriendsImages;
 import com.example.easysplit.model.User;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,17 +24,11 @@ public class FriendsRecyclerAdapter extends RecyclerView.Adapter<FriendsRecycler
         void onClick();
     }
     private List<User> users =  new ArrayList<>();
-    FriendsRecyclerAdapter.onUserClickListener listener;
 
     private Context mContext;
     public FriendsRecyclerAdapter(Context mContext, List<User> users) {
         this.users = users;
         this.mContext = mContext;
-    }
-    public FriendsRecyclerAdapter(Context mContext, List<User> users, FriendsRecyclerAdapter.onUserClickListener listener) {
-        this.users = users;
-        this.mContext = mContext;
-        this.listener=listener;
     }
 
     @NonNull
@@ -82,18 +74,6 @@ public class FriendsRecyclerAdapter extends RecyclerView.Adapter<FriendsRecycler
             holder.owe.setVisibility(View.GONE);
             holder.sum.setVisibility(View.GONE);
         }
-//        holder.parentLayout.setOnClickListener(v -> {
-//            //listener.onClick();
-//            if (holder.checkBox.isChecked())
-//            {
-//                holder.checkBox.setChecked(false);
-//            }
-//            else
-//            {
-//                holder.checkBox.setChecked(true);
-//            }
-//        });
-
     }
 
     @Override

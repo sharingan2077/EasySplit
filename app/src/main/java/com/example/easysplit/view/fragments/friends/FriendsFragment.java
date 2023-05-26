@@ -19,7 +19,7 @@ import com.example.easysplit.databinding.FragmentFriendsBinding;
 import com.example.easysplit.view.adapters.FriendsRecyclerAdapter;
 import com.example.easysplit.view.listeners.CompleteListener;
 import com.example.easysplit.view.utils.NavigationUtils;
-import com.example.easysplit.viewModel.MainActivityViewModel;
+import com.example.easysplit.viewModel.mainActivity.MainActivityViewModel;
 import com.example.easysplit.viewModel.friends.FriendsViewModel;
 
 public class FriendsFragment extends Fragment {
@@ -67,26 +67,7 @@ public class FriendsFragment extends Fragment {
             }
         });
 
-
         initRecyclerView();
-
-//        final Observer<List<User>> observerNewFriends = new Observer<List<User>>() {
-//            @Override
-//            public void onChanged(List<User> users) {
-//                adapter.notifyDataSetChanged();
-//                if (adapter.getItemCount() == 0)
-//                {
-//                    hideFriends();
-//                }
-//                else
-//                {
-//                    showFriends();
-//                }
-//
-//            }
-//        };
-//        friendsViewModel.getUsers().observe(requireActivity(), observerNewFriends);
-
 
         mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
         final Observer<Boolean> isGoToExpenseObserver = aBoolean -> {
@@ -99,12 +80,7 @@ public class FriendsFragment extends Fragment {
         };
         mainActivityViewModel.getIsGoToMakeExpense().observe(getViewLifecycleOwner(), isGoToExpenseObserver);
 
-        binding.addFriend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavigationUtils.navigateSafe(navController, R.id.action_friendsFragment_to_addFriendFragment, null);
-            }
-        });
+        binding.addFriend.setOnClickListener(v -> NavigationUtils.navigateSafe(navController, R.id.action_friendsFragment_to_addFriendFragment, null));
 
 
 
@@ -124,8 +100,6 @@ public class FriendsFragment extends Fragment {
         binding.imgOfFriends.setVisibility(View.GONE);
         binding.txtEmptyFriends.setVisibility(View.GONE);
         binding.friends.setVisibility(View.GONE);
-        //binding.totalSum.setVisibility(View.GONE);
-        //binding.totalSumValue.setVisibility(View.GONE);
         binding.recyclerView.setVisibility(View.GONE);
         binding.addFriend.setVisibility(View.GONE);
 
@@ -137,8 +111,6 @@ public class FriendsFragment extends Fragment {
         binding.imgOfFriends.setVisibility(View.GONE);
         binding.txtEmptyFriends.setVisibility(View.GONE);
         binding.friends.setVisibility(View.VISIBLE);
-        //binding.totalSum.setVisibility(View.VISIBLE);
-        //binding.totalSumValue.setVisibility(View.VISIBLE);
         binding.recyclerView.setVisibility(View.VISIBLE);
         binding.addFriend.setVisibility(View.VISIBLE);
     }
@@ -148,8 +120,6 @@ public class FriendsFragment extends Fragment {
         binding.imgOfFriends.setVisibility(View.VISIBLE);
         binding.txtEmptyFriends.setVisibility(View.VISIBLE);
         binding.friends.setVisibility(View.GONE);
-        //binding.totalSum.setVisibility(View.GONE);
-        //binding.totalSumValue.setVisibility(View.GONE);
         binding.recyclerView.setVisibility(View.GONE);
         binding.addFriend.setVisibility(View.VISIBLE);
 

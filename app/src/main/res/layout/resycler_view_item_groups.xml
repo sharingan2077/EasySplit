@@ -13,7 +13,8 @@
         android:src="@drawable/ic_group_1"
         android:layout_marginStart="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/todo"/>
 
     <TextView
         android:id="@+id/nameOfGroup"
@@ -22,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="7dp"
         android:layout_marginTop="24dp"
-        android:text="Example"
+        android:text="@string/example"
         android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/imageOfGroup"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="7dp"
-        android:text="1 участник"
+        android:text="@string/oneMember"
         android:textColor="@color/grey"
         app:layout_constraintStart_toEndOf="@+id/imageOfGroup"
         app:layout_constraintTop_toBottomOf="@+id/nameOfGroup"

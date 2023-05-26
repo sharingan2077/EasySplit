@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:inputType="numberSigned"
         android:layout_marginStart="6dp"
-        android:text="123456"
+        android:text="@string/_123456"
         style="@style/InterBold24"
         android:textSize="32sp"
         android:layout_marginTop="27dp"/>
@@ -22,7 +22,7 @@
     <TextView
         android:layout_width="276dp"
         android:layout_height="wrap_content"
-        android:text="Мы прислали код для верификации на"
+        android:text="@string/textVerification"
         style="@style/InterMedium14"
         android:textColor="@color/black"
         android:layout_marginTop = "53dp"
@@ -35,13 +35,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="вашу почту"
+            android:text="@string/textVerification2"
             style="@style/InterMedium14"
             android:textColor="@color/black"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="maksvish135@yandex.ru"
+            android:text="@string/maksvish135_gmail_com"
             android:textColor="@color/blue"
             style="@style/InterMedium14"
             android:layout_marginStart="5dp"/>
@@ -49,7 +49,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Проверьте ящик"
+        android:text="@string/textVerification3"
         style="@style/InterMedium14"
         android:textColor="@color/black"
         android:layout_marginStart="6dp"/>
@@ -59,7 +59,7 @@
         android:layout_width="343dp"
         android:layout_height="56dp"
         android:background="@drawable/style_for_verification"
-        android:text="Подтвердить"
+        android:text="@string/confirm"
         android:textColor="@color/white"
         android:layout_gravity="center"
         android:layout_marginTop="70dp"/>

@@ -3,7 +3,6 @@ package com.example.easysplit.view.adapters;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,16 +38,6 @@ public class UsersSplitUnequallyAdapter extends RecyclerView.Adapter<UsersSplitU
 
     private onSumClickListener listener;
 
-    public UsersSplitUnequallyAdapter(Context mContext, List<User> users) {
-        this.users = users;
-        this.mContext = mContext;
-    }
-
-    public UsersSplitUnequallyAdapter(Context mContext, List<User> users, onSumClickListener listener) {
-        this.users = users;
-        this.mContext = mContext;
-        this.listener = listener;
-    }
 
     public UsersSplitUnequallyAdapter(Context mContext, List<User> users, ArrayList<String> usersId, long[] usersSum, onSumClickListener listener) {
         this.users = users;

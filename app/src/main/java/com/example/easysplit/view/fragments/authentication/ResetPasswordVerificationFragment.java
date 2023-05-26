@@ -17,7 +17,6 @@ import com.example.easysplit.R;
 import com.example.easysplit.databinding.FragmentResetPasswordVerificationBinding;
 import com.example.easysplit.view.listeners.CompleteListener;
 import com.example.easysplit.view.utils.NavigationUtils;
-import com.example.easysplit.viewModel.authentication.LoginRegisterViewModel;
 import com.example.easysplit.viewModel.authentication.VerificationUserViewModel;
 
 public class ResetPasswordVerificationFragment extends Fragment {
@@ -41,44 +40,35 @@ public class ResetPasswordVerificationFragment extends Fragment {
         successfulLogin = getArguments().getString("successLogin", "a");
 
         binding.toolbar.textToolbar.setText("Забыли пароль");
-        binding.toolbar.back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("successLogin", successfulLogin);
-                NavigationUtils.navigateSafe(navController, R.id.action_resetPasswordVerificationFragment_to_loginFragment, bundle);
-            }
+        binding.toolbar.back.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("successLogin", successfulLogin);
+            NavigationUtils.navigateSafe(navController, R.id.action_resetPasswordVerificationFragment_to_loginFragment, bundle);
         });
 
-        binding.btnSendCode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = binding.email.getText().toString();
-                verificationUserViewModel.sendVerificationEmail(email, new CompleteListener() {
-                    @Override
-                    public void successful() {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
-                        builder.setTitle("Сброс пароля");
-                        builder.setMessage("На указанную вами почту " + email + " пришла ссылка для сброса пароля");
-                        builder.setPositiveButton("Ок", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Bundle bundle = new Bundle();
-                                bundle.putString("successLogin", successfulLogin);
-                                NavigationUtils.navigateSafe(navController, R.id.action_resetPasswordVerificationFragment_to_loginFragment, bundle);
-                                return;
-                            }
-                        });
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
-                    }
+        binding.btnSendCode.setOnClickListener(v -> {
+            String email = binding.email.getText().toString();
+            verificationUserViewModel.sendVerificationEmail(email, new CompleteListener() {
+                @Override
+                public void successful() {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+                    builder.setTitle("Сброс пароля");
+                    builder.setMessage("На указанную вами почту " + email + " пришла ссылка для сброса пароля");
+                    builder.setPositiveButton("Ок", (dialog, which) -> {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("successLogin", successfulLogin);
+                        NavigationUtils.navigateSafe(navController, R.id.action_resetPasswordVerificationFragment_to_loginFragment, bundle);
+                        return;
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
 
-                    @Override
-                    public void unSuccessful() {
+                @Override
+                public void unSuccessful() {
 
-                    }
-                });
-            }
+                }
+            });
         });
 
 

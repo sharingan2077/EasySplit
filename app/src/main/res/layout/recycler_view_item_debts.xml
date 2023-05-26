@@ -9,13 +9,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/InterLight13"
-        android:text="Maks должен тебе"
+        android:text="@string/textItemDebt1"
         android:textColor="@color/black" />
     <TextView
         android:id="@+id/sum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="100руб"
+        android:text="@string/textItemDebt2"
         android:textColor="@color/blue"
         android:layout_marginStart="4dp"
         style="@style/InterLight13"/>

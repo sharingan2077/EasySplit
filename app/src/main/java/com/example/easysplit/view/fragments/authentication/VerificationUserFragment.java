@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 
 import com.example.easysplit.R;
 import com.example.easysplit.databinding.FragmentVerificationUserBinding;
-import com.example.easysplit.view.utils.NavigationUtils;
 import com.example.easysplit.viewModel.authentication.LoginRegisterViewModel;
 
 public class VerificationUserFragment extends Fragment {
@@ -35,11 +34,8 @@ public class VerificationUserFragment extends Fragment {
         navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
         loginRegisterViewModel = new ViewModelProvider(requireActivity()).get(LoginRegisterViewModel.class);
         binding.toolbar.textToolbar.setText("Верификация");
-        binding.toolbar.back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavigationUtils.navigateSafe(navController, R.id.action_verificationUserFragment_to_registrationFragment, null);
-            }
+        binding.toolbar.back.setOnClickListener(v -> {
+            //NavigationUtils.navigateSafe(navController, R.id.action_verificationUserFragment_to_registrationFragment, null);
         });
 
 

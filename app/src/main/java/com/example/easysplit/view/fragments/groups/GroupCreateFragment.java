@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -21,7 +22,7 @@ import com.example.easysplit.model.GroupsImages;
 import com.example.easysplit.view.utils.NavigationUtils;
 import com.example.easysplit.R;
 import com.example.easysplit.viewModel.groups.GroupsViewModel;
-import com.example.easysplit.viewModel.MainActivityViewModel;
+import com.example.easysplit.viewModel.mainActivity.MainActivityViewModel;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -38,7 +39,6 @@ public class GroupCreateFragment extends Fragment {
     GroupsViewModel groupsViewModel;
 
     String groupType;
-    String groupImage;
 
     GroupsImages groupsImages;
 
@@ -58,9 +58,9 @@ public class GroupCreateFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentGroupCreateBinding.inflate(inflater, container, false);
-        navController = Navigation.findNavController(getActivity(), R.id.navHostFragment);
+        navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
         mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
         groupsViewModel = new ViewModelProvider(requireActivity()).get(GroupsViewModel.class);
         groupsImages = new GroupsImages();
@@ -102,7 +102,7 @@ public class GroupCreateFragment extends Fragment {
 
 
             clearAllViews();
-            binding.home.setBackground(getResources().getDrawable(R.drawable.style_click_type_group));
+            binding.home.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.style_click_type_group));
             binding.home1.setColorFilter(Color.parseColor(colorAqua));
             binding.home2.setTextColor(Color.parseColor(colorAqua));
             groupItemId = 1;
@@ -118,7 +118,7 @@ public class GroupCreateFragment extends Fragment {
 
 
             clearAllViews();
-            binding.trip.setBackground(getResources().getDrawable(R.drawable.style_click_type_group));
+            binding.trip.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.style_click_type_group));
             binding.trip1.setColorFilter(Color.parseColor(colorAqua));
             binding.trip2.setTextColor(Color.parseColor(colorAqua));
             groupItemId = 2;
@@ -134,7 +134,7 @@ public class GroupCreateFragment extends Fragment {
 
 
             clearAllViews();
-            binding.party.setBackground(getResources().getDrawable(R.drawable.style_click_type_group));
+            binding.party.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.style_click_type_group));
             binding.party1.setColorFilter(Color.parseColor(colorAqua));
             binding.party2.setTextColor(Color.parseColor(colorAqua));
             groupItemId = 3;
@@ -149,7 +149,7 @@ public class GroupCreateFragment extends Fragment {
             imageIndex = imageOtherIndex;
 
             clearAllViews();
-            binding.other.setBackground(getResources().getDrawable(R.drawable.style_click_type_group));
+            binding.other.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.style_click_type_group));
             binding.other1.setColorFilter(Color.parseColor(colorAqua));
             binding.other2.setTextColor(Color.parseColor(colorAqua));
             groupItemId = 4;
@@ -164,7 +164,7 @@ public class GroupCreateFragment extends Fragment {
             imageIndex = imageFamilyIndex;
 
             clearAllViews();
-            binding.family.setBackground(getResources().getDrawable(R.drawable.style_click_type_group));
+            binding.family.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.style_click_type_group));
             binding.family1.setColorFilter(Color.parseColor(colorAqua));
             binding.family2.setTextColor(Color.parseColor(colorAqua));
             groupItemId = 5;
@@ -179,7 +179,7 @@ public class GroupCreateFragment extends Fragment {
             imageIndex = imageWorkIndex;
 
             clearAllViews();
-            binding.work.setBackground(getResources().getDrawable(R.drawable.style_click_type_group));
+            binding.work.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.style_click_type_group));
             binding.work1.setColorFilter(Color.parseColor(colorAqua));
             binding.work2.setTextColor(Color.parseColor(colorAqua));
             groupItemId = 6;
@@ -192,9 +192,8 @@ public class GroupCreateFragment extends Fragment {
             groupType = "love";
             binding.imageGroupCreate.setImageResource(groupsImages.getImageGroupLove().get(imageLoveIndex));
             imageIndex = imageLoveIndex;
-
             clearAllViews();
-            binding.love.setBackground(getResources().getDrawable(R.drawable.style_click_type_group));
+            binding.love.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.style_click_type_group));
             binding.love1.setColorFilter(Color.parseColor(colorAqua));
             binding.love2.setTextColor(Color.parseColor(colorAqua));
             groupItemId = 7;
@@ -207,37 +206,37 @@ public class GroupCreateFragment extends Fragment {
         switch (groupItemId)
         {
             case 1:
-                binding.home.setBackground(getResources().getDrawable(R.drawable.style_choose_group_type));
+                binding.home.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.style_choose_group_type));
                 binding.home1.setColorFilter(Color.parseColor(colorGrey));
                 binding.home2.setTextColor(Color.parseColor(colorGrey));
                 break;
             case 2:
-                binding.trip.setBackground(getResources().getDrawable(R.drawable.style_choose_group_type));
+                binding.trip.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.style_choose_group_type));
                 binding.trip1.setColorFilter(Color.parseColor(colorGrey));
                 binding.trip2.setTextColor(Color.parseColor(colorGrey));
                 break;
             case 3:
-                binding.party.setBackground(getResources().getDrawable(R.drawable.style_choose_group_type));
+                binding.party.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.style_choose_group_type));
                 binding.party1.setColorFilter(Color.parseColor(colorGrey));
                 binding.party2.setTextColor(Color.parseColor(colorGrey));
                 break;
             case 4:
-                binding.other.setBackground(getResources().getDrawable(R.drawable.style_choose_group_type));
+                binding.other.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.style_choose_group_type));
                 binding.other1.setColorFilter(Color.parseColor(colorGrey));
                 binding.other2.setTextColor(Color.parseColor(colorGrey));
                 break;
             case 5:
-                binding.family.setBackground(getResources().getDrawable(R.drawable.style_choose_group_type));
+                binding.family.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.style_choose_group_type));
                 binding.family1.setColorFilter(Color.parseColor(colorGrey));
                 binding.family2.setTextColor(Color.parseColor(colorGrey));
                 break;
             case 6:
-                binding.work.setBackground(getResources().getDrawable(R.drawable.style_choose_group_type));
+                binding.work.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.style_choose_group_type));
                 binding.work1.setColorFilter(Color.parseColor(colorGrey));
                 binding.work2.setTextColor(Color.parseColor(colorGrey));;
                 break;
             case 7:
-                binding.love.setBackground(getResources().getDrawable(R.drawable.style_choose_group_type));
+                binding.love.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.style_choose_group_type));
                 binding.love1.setColorFilter(Color.parseColor(colorGrey));
                 binding.love2.setTextColor(Color.parseColor(colorGrey));
                 break;

@@ -9,7 +9,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,34 +89,26 @@ public class ChooseGroupFragment extends Fragment {
         });
         initRecyclerView();
         binding.toolbar.textToolbar.setText("Выберите группу");
-        final Observer<List<Group>> observerNewGroup = new Observer<List<Group>>() {
-            @Override
-            public void onChanged(List<Group> groups) {
-                adapter.notifyDataSetChanged();
-            }
-        };
+        final Observer<List<Group>> observerNewGroup = groups -> adapter.notifyDataSetChanged();
         groupsViewModel.getGroups().observe(requireActivity(), observerNewGroup);
 
-        binding.toolbar.back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("ActionToLastFragment", actionToLastFragment);
-                bundle.putString("expenseId", expenseId);
-                bundle.putString("groupId", groupId);
-                bundle.putString("expenseName", expenseName);
-                bundle.putString("expenseSum", expenseSumString);
-                bundle.putString("userId", userId);
+        binding.toolbar.back.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("ActionToLastFragment", actionToLastFragment);
+            bundle.putString("expenseId", expenseId);
+            bundle.putString("groupId", groupId);
+            bundle.putString("expenseName", expenseName);
+            bundle.putString("expenseSum", expenseSumString);
+            bundle.putString("userId", userId);
 
-                bundle.putStringArrayList("usersId", usersId);
-                bundle.putLongArray("usersSum", usersSum);
+            bundle.putStringArrayList("usersId", usersId);
+            bundle.putLongArray("usersSum", usersSum);
 
-                bundle.putString("nameOfUser", nameOfUser);
-                bundle.putString("nameOfGroup", nameOfGroup);
-                bundle.putInt("countMemberOfFirstGroup", countMemberOfFirstGroup);
+            bundle.putString("nameOfUser", nameOfUser);
+            bundle.putString("nameOfGroup", nameOfGroup);
+            bundle.putInt("countMemberOfFirstGroup", countMemberOfFirstGroup);
 
-                NavigationUtils.navigateSafe(navController, R.id.action_chooseGroupFragment_to_addExpenseFragment, bundle);
-            }
+            NavigationUtils.navigateSafe(navController, R.id.action_chooseGroupFragment_to_addExpenseFragment, bundle);
         });
 
 
@@ -126,29 +117,25 @@ public class ChooseGroupFragment extends Fragment {
 
     private void initRecyclerView()
     {
-        adapter = new GroupsRecyclerAdapter(getActivity(), groupsViewModel.getGroups().getValue(), new GroupsRecyclerAdapter.onGroupClickListener() {
-            @Override
-            public void onClick(String groupId, String nameOfGroup, int countGroupMembers, int imageDrawable) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("ActionToLastFragment", actionToLastFragment);
-                bundle.putString("groupId", groupId);
-                bundle.putString("expenseId", expenseId);
-                bundle.putString("expenseName", expenseName);
-                bundle.putString("expenseSum", expenseSumString);
-                bundle.putString("userId", userId);
+        adapter = new GroupsRecyclerAdapter(getActivity(), groupsViewModel.getGroups().getValue(), (groupId, nameOfGroup, countGroupMembers, imageDrawable) -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("ActionToLastFragment", actionToLastFragment);
+            bundle.putString("groupId", groupId);
+            bundle.putString("expenseId", expenseId);
+            bundle.putString("expenseName", expenseName);
+            bundle.putString("expenseSum", expenseSumString);
+            bundle.putString("userId", userId);
 
-                bundle.putString("nameOfUser", nameOfUser);
-                bundle.putString("nameOfGroup", nameOfGroup);
-//                bundle.putInt("countMemberOfFirstGroup", countMemberOfFirstGroup);
+            bundle.putString("nameOfUser", nameOfUser);
+            bundle.putString("nameOfGroup", nameOfGroup);
 
-                if (countGroupMembers == 1)
-                {
-                    Toast.makeText(requireContext(), "В группе должно быть как минимум 2 участника", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    NavigationUtils.navigateSafe(navController, R.id.action_chooseGroupFragment_to_addExpenseFragment, bundle);
-                }
+            if (countGroupMembers == 1)
+            {
+                Toast.makeText(requireContext(), "В группе должно быть как минимум 2 участника", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                NavigationUtils.navigateSafe(navController, R.id.action_chooseGroupFragment_to_addExpenseFragment, bundle);
             }
         });
         binding.recyclerViewGroup.setAdapter(adapter);

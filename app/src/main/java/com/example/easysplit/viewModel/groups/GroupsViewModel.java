@@ -7,17 +7,15 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.easysplit.model.Group;
-import com.example.easysplit.repository.GroupRepository;
+import com.example.easysplit.repository.groups.GroupRepository;
 import com.example.easysplit.view.listeners.CompleteListener;
 
 import java.util.List;
 
 public class GroupsViewModel extends ViewModel {
-    private static final String TAG = "GroupsViewModel";
 
     private MutableLiveData<List<Group>> groups;
 
-    private MutableLiveData<Boolean> dataLoaded;
     private GroupRepository mRepo;
 
     public void init(CompleteListener listener)
@@ -38,23 +36,10 @@ public class GroupsViewModel extends ViewModel {
         groups = mRepo.getGroups();
     }
 
-    public void leaveGroup(String id)
-    {
-        mRepo.deleteGroup(id);
-    }
-
-    public LiveData<Boolean> getDataLoaded() {
-        return dataLoaded;
-    }
-
     public LiveData<List<Group>> getGroups()
     {
         return groups;
     }
 
-//    public void clearExpensesInDataBase()
-//    {
-//        mRepo.clearExpensesInDataBase();
-//    }
 
 }
