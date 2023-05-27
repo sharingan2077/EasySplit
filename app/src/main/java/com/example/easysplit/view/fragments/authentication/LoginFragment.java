@@ -19,7 +19,6 @@ import com.example.easysplit.viewModel.mainActivity.MainActivityViewModel;
 import com.example.easysplit.viewModel.authentication.LoginRegisterViewModel;
 
 public class LoginFragment extends Fragment {
-    private static final String TAG = "LoginFragment";
     LoginFragmentBinding binding;
     LoginRegisterViewModel loginRegisterViewModel;
 
@@ -47,7 +46,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void successful()
             {
-                Log.d(TAG, "successful");
+
             }
             @Override
             public void unSuccessful() {
@@ -79,7 +78,7 @@ public class LoginFragment extends Fragment {
         });
 
         final Observer<Boolean> loggedOutObserver = aBoolean -> {
-            if (aBoolean != null)  Log.d(TAG, aBoolean.toString());
+            if (aBoolean != null) {}
             if (aBoolean != null && !aBoolean && !successfulLogin.equals("true"))
             {
                 Navigation.findNavController(binding.getRoot()).navigate(R.id.action_loginFragment_to_groupsFragment);
