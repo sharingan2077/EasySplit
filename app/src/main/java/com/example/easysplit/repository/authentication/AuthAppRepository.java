@@ -237,6 +237,7 @@ public class AuthAppRepository {
         {
             loggedOutDataSet = false;
             loggedOutLiveData.setValue(loggedOutDataSet);
+            Log.d(TAG, "setting false");
             listener.successful();
             //listener.successful();
         }

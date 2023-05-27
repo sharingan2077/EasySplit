@@ -24,6 +24,8 @@ public class LoginFragment extends Fragment {
 
     MainActivityViewModel mainActivityViewModel;
 
+    private static final String TAG = "LoginFragment";
+
 
     String successfulLogin = "a";
     @Override
@@ -46,7 +48,6 @@ public class LoginFragment extends Fragment {
             @Override
             public void successful()
             {
-
             }
             @Override
             public void unSuccessful() {
@@ -81,6 +82,7 @@ public class LoginFragment extends Fragment {
             if (aBoolean != null) {}
             if (aBoolean != null && !aBoolean && !successfulLogin.equals("true"))
             {
+                Log.d(TAG, "Navigate///");
                 Navigation.findNavController(binding.getRoot()).navigate(R.id.action_loginFragment_to_groupsFragment);
             }
         };
