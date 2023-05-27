@@ -125,7 +125,7 @@
             android:id="@+id/who_paid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text = "@string/_______"
+            android:text = "                   "
             android:textColor="@color/blue"
             style="@style/InterRegular18"
             android:layout_marginStart="37dp"/>
@@ -148,7 +148,7 @@
             android:id="@+id/how_split"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text = "@string/equally"
+            android:text = "  Поровну  "
             android:textColor="@color/blue"
             style="@style/InterRegular18"
             android:layout_marginStart="25dp"/>

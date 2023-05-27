@@ -100,4 +100,5 @@
     <string name="textToolbar">Выберите группу</string>
     <string name="textToolbar2">Добавить расход</string>
     <string name="group">Группы</string>
+    <string name="addGroup">Добавить группу</string>
 </resources>
